@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>HTML</title>
+		<meta name="description" content="">
+		<meta name="author" content="john.heidelberg">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="css/cert.css">
+	</head>
+
+	<body>
+		<div>
+			<header>
+				<h1>Cast Data Entry</h1>
+				<div>
+					<hr class="topln">
+					CERTIFIED ANALYSIS
+				</div>
+				<div class="dataent">
+					<div  class="txtent"> Customer: <input type="text" name="customer" /><br> </div>
+					<div  class="txtent"> Part: <input type="text" name="part" /><br> </div>
+					<div  class="txtent"> Heat: <input type="text" name="heat" /><br> </div>
+					<div  class="txtent"> Cust Order #: <input type="text" name="order" /><br> </div>
+					<div  class="txtent"> # of parts: <input type="text" name="parts" /><br> </div>
+					<div  class="txtent"> Spec No: <input type="text" name="spec" /><br> </div>
+					<div  class="txtent"> Class: <input type="text" name="class" /><br> </div>
+				</div>
+				<br>
+				<div>
+				<p>I find the above part(s) to be withing the specifications and class as stated.</p>
+				<div > Signed: <input type="text" name="signed" /><br> </div>
+				<div > Date:&nbsp;&nbsp;&nbsp;  <input type="text" name="date" /><br> </div>
+				</div>
+			</header>
+			<form enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
+				<input type="hidden" name="report" value="cert" />
+				<nav>
+					<p>
+						
+					</p>
+				</nav>
+				<div class="heading"><br>Chemistry</div>
+	
+				<div id="Chemistry">
+					<div class="rptlbl" > Carbon: <label id="Carbon"> </label>         </div>
+					<div class="rptlbl" > Silicon: <label id="Silicon"> </label>       </div>
+					<div class="rptlbl" > Chromium: <label id="Chromium"> </label>     </div>
+					<div class="rptlbl" > Manganese: <label id="Manganese"> </label>   </div>
+					<div class="rptlbl" > Copper: <label id="Copper"> </label>         </div>
+					<div class="rptlbl" > Aluminum: <label id="Aluminum"> </label>     </div>
+					<div class="rptlbl" > Phosphorus: <label id="Phosphorus"> </label> </div>
+					<div class="rptlbl" > Nickel: <label id="Nickel"> </label>         </div>
+					<div class="rptlbl" > Magnesium: <label id="Magnesium"> </label>   </div>
+					<div class="rptlbl" > Sulfer: <label id="Sulfer"> </label>         </div>
+					<div class="rptlbl" > Moly.: <label id="Moly"> </label>            </div>
+				</div>
+				
+				<div class="heading"><br>Physical</div>
+				
+				<div id="Physical">
+					<div class="rptlbl" > Tensile: <label id="Tensile"> </label>       </div>
+					<div class="rptlbl" > As Cast Brinell: <label id="AsBr"> </label>  </div>
+					<div class="rptlbl" > Elongation: <label id="Elongation"> </label> </div>
+					<div class="rptlbl" > A.H.T. Brinell: <label id="AHTBri"> </label> </div>
+					<div class="rptlbl" > Yield: <label id="Yield"> </label>           </div>
+				</div>
+				
+				<div class="heading"><br>Microstructure</div>
+				
+				<div id="Microstructure">
+					<div class="rptlbl" > Percent Nodules: <label id="Nodules"> </label> </div>
+					<div class="rptlbl" > Size: <label id="Size"> </label>               </div>
+					<div class="rptlbl" > Count: <label id="Count"> </label>             </div>
+					<div class="rptlbl" > Pearlite: <label id="Pearlite"> </label>       </div>
+					<div class="rptlbl" > Carbide: <label id="Carbide"> </label>         </div>
+					<div class="rptlbl" > Ferrite: <label id="Ferrite"> </label>         </div>
+					
+				</div>
+				<div id="htproc">
+					<div class="rptlbl" > Heat Treat Procedure: <label id="HeatTreat"> </label> </div>
+				</div>	
+				
+				<br>
+				<input type="submit" class="submit" value="Submit" id="submitbtn"/>
+
+			</form>
+			<footer>
+			</footer>
+		</div>
+		<!--
+			
+				Carbon	Cu
+				Silicon	Si
+				Chromium	Cr
+				Manganese	Mn
+				copper	Cu
+				aluminum	Al
+				phosphorus	P
+				nickel	Ni
+				magnesium	Mg
+				sulfur	Si
+Mollybdenum		moly	Mo
+		
+				Tensile	
+As Cast Brinell	ASBR	
+				elongation	
+AHT Brinell		ahtbri	
+				yield	
+		
+	Nodules	
+	Size	
+	Count	
+	Pearlite	
+	Carbide	
+	Ferrite	
+		
+	HeatTreat	
+		
+			-->
+	</body>
+</html>

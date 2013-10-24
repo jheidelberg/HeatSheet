@@ -1,0 +1,40 @@
+body {
+
+}
+.topln{
+	height: 2px;
+	color: #AAAAAA;
+	width: 75%;
+	border: none;
+	background-color: #AAAAAA;
+}
+
+header {
+	text-align: center;
+	
+}
+
+.heading {
+	text-align: center;
+	margin: 15px;
+	text-decoration: underline;
+	font-weight: bold;
+	font-size: larger;
+	
+}
+
+#Chemistry, #Physical, #Microstructure {
+	column-count:4;
+	-moz-column-count:4; /* Firefox */
+	-webkit-column-count:4; /* Safari and Chrome */
+
+	column-width:120px;
+	-moz-column-width:120px; /* Firefox */
+	-webkit-column-width:120px; /* Safari and Chrome */
+	
+	text-align: center;
+}
+
+#htproc {
+	margin: 15px;
+}

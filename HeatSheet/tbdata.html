@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>tapdataent</title>
+		<meta name="description" content="">
+		<meta name="author" content="john.heidelberg">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+
+	</head>
+
+	<body>
+		<div>
+			<header>
+				<h1>Test Bars</h1>
+			</header>
+			<form enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<input type="hidden" name="Table" value="tbdata" />
+			<h2>Heat Info</h2>
+			<div class="dataent">
+				<div  class="txtent"> Date:  <input type="text" name="Date" /><br> </div>
+				<div  class="txtent"> Heat: <input type="text" name="heat" /><br> </div>
+				<div  class="txtent"> Tap: <input type="text" name="tap" /><br> </div>
+			</div>
+			<h2>Other</h2>
+			<div class="dataent">
+				<div  class="txtent"> Tensile: <input type="text" name="tensile" /><br> </div>
+				<div  class="txtent"> Yield: <input type="text" name="yield" /><br> </div>
+				<div  class="txtent"> ELong: <input type="text" name="elong" /><br> </div>
+				<div  class="txtent"> AC Bhn: <input type="text" name="ac_bhn" /><br> </div>
+				<div  class="txtent"> AHT Bhn: <input type="text" name="aht_bhn" /><br> </div>
+			</div>
+				
+			<br>
+			<input type="submit" class="submit" value="Submit"/>
+			</form>
+			<footer>
+				<p>
+					&copy; Copyright  by <a href="/contact" class="contactent">john.heidelberg</a>
+				</p>
+			</footer>
+		</div>
+	</body>
+</html>

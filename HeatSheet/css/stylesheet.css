@@ -1,0 +1,95 @@
+@media all {
+	.dataent{
+	/*	column-count:3;
+	/*	-moz-column-count:3; /* Firefox */
+	/*	-webkit-column-count:3; /* Safari and Chrome */
+	
+		-moz-column-width:240px; /* Firefox */
+		-webkit-column-width:240px; /* Safari and Chrome */
+		column-width:240px;
+	}
+	
+	.txtent{
+		float: right;
+	}
+	
+}
+
+
+@media screen {
+
+footer {
+	size: 9px;
+	position: relative;
+	bottom: 2px;
+	left: 10px;
+	width: 75%;
+	background-color: black;
+	color: white;
+	border-spacing: 10px;
+	margin: 5px;
+}
+
+
+/*
+ * For my own benifit: this is the following rules
+ * .cssclass For assigning to styles named (i.e. class="ladeda")
+ * #cssitemname for assigning to items named (i.e. name="test")
+ * cssname for assining to properties of things (i.e. a for <a href...>)
+ * 
+ * For the states of items, use the item then : and the statename (i.e. a:visited) 
+ */
+.submit{
+	color: rgb(200, 200, 200);
+	font-size: 20px;
+	padding: 8px;
+	text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	background: rgb(0, 20, 20);
+	background: -moz-linear-gradient(75deg, rgb(0, 20, 20) 0%, rgb(150, 82, 80) 88%);
+	background: -webkit-linear-gradient(75deg, rgb(0, 20, 20) 0%, rgb(150, 82, 80) 88%);
+	background: -o-linear-gradient(75deg, rgb(0, 20, 20) 0%, rgb(150, 82, 80) 88%);
+	background: -ms-linear-gradient(75deg, rgb(0, 20, 20) 0%, rgb(150, 82, 80) 88%);
+	background: linear-gradient(345deg, rgb(0, 20, 20) 0%, rgb(150, 82, 80) 88%);
+	-webkit-box-shadow: 4px 5px 12px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    4px 5px 12px rgba(50, 50, 50, 0.75);
+	box-shadow:         4px 5px 12px rgba(50, 50, 50, 0.75);
+}
+
+
+input {
+	color: #000000;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border-color: #AAAAAA;
+	-webkit-box-shadow: 4px 5px 12px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    4px 5px 12px rgba(50, 50, 50, 0.75);
+	box-shadow:         4px 5px 12px rgba(50, 50, 50, 0.75);
+}
+
+
+.contactent:link {color:#FF0000;}      /* unvisited link */
+.contactent:visited {color:#FF0000;}  /* visited link */
+.contactent:hover {color:#FF00FF;}  /* mouse over link */
+.contactent:active {color:#00FFFF;}  /* selected link */
+
+	
+}
+@media print {
+  .submit, footer {
+  	visibility: hidden;
+  }
+  
+  .input {
+  	border: hidden;
+  	border-style: none;
+  	border: #000000;
+  	border-bottom: solid;
+  	
+  }
+  
+}
+  

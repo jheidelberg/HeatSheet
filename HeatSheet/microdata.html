@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>tapdataent</title>
+		<meta name="description" content="">
+		<meta name="author" content="john.heidelberg">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+
+	</head>
+
+	<body>
+		<div>
+			<header>
+				<h1>Micro Data</h1>
+			</header>
+			<form enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<input type="hidden" name="Table" value="microdata" />
+			<h2>Heat Info</h2>
+			<div class="dataent">
+				<div  class="txtent"> Date:  <input type="text" name="Date" /><br> </div>
+				<div  class="txtent"> Heat: <input type="text" name="heat" /><br> </div>
+				<div  class="txtent"> Tap: <input type="text" name="tap" /><br> </div>
+			</div>
+			<h2>Other</h2>
+			<div class="dataent">
+				<div  class="txtent"> Duct: <input type="text" name="Duct" /><br> </div>
+				<div  class="txtent"> Gr Type: <input type="text" name="grtype" /><br> </div>
+				<div  class="txtent"> C Size: <input type="text" name="c_size" /><br> </div>
+				<div  class="txtent"> Ferrite: <input type="text" name="ferrite" /><br> </div>
+				<div  class="txtent"> Pearlite: <input type="text" name="pearlite" /><br> </div>
+				<div  class="txtent"> Carbide: <input type="text" name="carbide" /><br> </div>
+				<div  class="txtent"> D Count: <input type="text" name="d_count" /><br> </div>
+			</div>
+				
+			<br>
+			<input type="submit" class="submit" value="Submit"/>
+
+			<footer>
+				<p>
+					&copy; Copyright  by <a href="/contact" class="contactent">john.heidelberg</a>
+				</p>
+			</footer>
+			</form>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,108 @@
+//rewrote this function to use the server to handle errors.  Hence, took 
+// out the following two lines:
+//var http = require("http");
+//var url = require("url");
+
+var path= require("path");
+var fs = require("fs");
+
+
+var dataent = require("./HeatSheet/CodeBehind/dataent");
+
+//http.createServer(
+
+function Route (request, response) {
+	//console.log("Starting: " + request.url + "  ReqMthd:" + request.method);
+	var filePath = './HeatSheet' + request.url;
+		if (filePath == './HeatSheet/')
+			filePath = './HeatSheet/index.html';
+			var extname = path.extname(filePath);
+		
+		var contentType = 'text/html';
+		switch (extname) {
+			case '.js':
+				contentType = 'text/javascript';
+				break;
+			case '.css':
+				contentType = 'text/css';
+				break;
+		}
+	
+		//console.log("[200] " + request.method + " to " + request.url);
+		var fullBody = '';
+	
+		switch (request.method) {
+			// if this is a POST response, then we should be reciving data that needs
+			// to be parsed and worked with.
+			case 'POST' :
+				request.on('data', function(chunk){
+					fullBody += chunk.toString();
+					});
+				
+				request.on("end", function(){
+					switch (request.url) {
+						case '/DataEnt/FormHandler' :
+							dataent.dataent(request, response, fullBody);
+							break;
+						default:
+							response.writeHead(200, "OK", {'Content-Type': 'text/html'});
+							response.write(request.url);
+							break;
+							
+					}
+				});
+				break;
+				
+			// If this is a get request, there should be a file we are serving up.
+			case 'GET' :
+				//console.log(request.method + " to " + request.url);
+				path.exists(filePath, function(exists) {
+				
+					if (exists) {
+						fs.readFile(filePath, function(error, content) {
+							if (error) {
+								response.writeHead(500);
+								console.log("Error: " + filePath);
+								response.end();
+							}
+							else {
+			
+								response.writeHead(200, { 'Content-Type': contentType});
+								response.end(content, 'utf-8');
+							}
+						});
+					}
+					else {
+						console.log("404 - No Exist");
+						fs.readFile('./HeatSheet/404.html', function(error, content) {
+							if (error) {
+								response.writeHead(500);
+								console.log("Error: " + filePath);
+								response.end();
+							}
+							else {
+			
+								response.writeHead(404, "OK", {'Content-Type': 'text/html'});
+								response.end(content, 'utf-8');
+							}
+						response.end();
+						});
+					}
+				
+				});
+				
+				break;	
+			default: 
+				//console.log(request.method + " to " + request.url);
+				response.writeHead(500);
+				response.end();
+				break;
+			
+
+	//var lookup = path.basename(decodeURI(request.url)) || '/HeatSheet/index.html',f='content/' + lookup
+	
+
+	}
+}
+//).listen(process.env.PORT);
+exports.route= Route;
