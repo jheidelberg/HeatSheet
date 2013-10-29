@@ -6,8 +6,10 @@ Notes:
 
 http://python.org/download/
 http://www.microsoft.com/visualstudio/eng/products/visual-studio-express-products
-npm install sqlite3
+npm install sqlite3 -g
 
+Also, some Node & SQLite3 install probs solved by:
+www.bitbonsai.com/nodejs-npm-and-sqlite3/
 
 
 /*****************************************************************\
@@ -41,7 +43,8 @@ Opening or creating a database
 
 
 /*****************************************************************\
-I like to maintain a database creation script. The code below is a simple example of how I detect and execute the creation script.
+I like to maintain a database creation script. The code below is a 
+simple example of how I detect and execute the creation script.
 \*****************************************************************/
 
 var fs = require('fs');

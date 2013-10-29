@@ -21,6 +21,12 @@ textarea {
 html {
     font-size: 1em;
     line-height: 1.4;
+    height: 98%;
+    width: 100%;
+}
+body {
+    height: 98%;
+    width: 100%;
 }
 
 /*
