@@ -18,33 +18,67 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 		<link rel="stylesheet" type="text/css" href="css/cert.css">
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
+        <script src="js/vendor/jquery.validation.js"></script>
+        <script>
+            $("#Input").valadate();
+        </script>
 	</head>
 
 	<body>
 		<div>
+
 			<header>
-				<h1>Cast Data Entry</h1>
+            <div class="toolbarGlobal">
+                <nav>
+                <ul>
+                    <li><a href="#">Data Entry</a>
+                        <ul>
+				            <li><a href="tapdataent.html" title="Tap Data"  >Tap Data</a></li>
+				            <li><a href="chemdataent.html" title="Chem Data" >Chem Data</a></li>
+				            <li><a href="castdata.html" title="Cast Data" >Cast Data</a></li>
+				            <li><a href="chgdata.html" title="Chg Data" >Chg Data Data</a></li>
+				            <li><a href="furnacedata.html" title="Furnace Data" >Furnace Data</a></li>
+				            <li><a href="productentry.html" title="Product Entry" >Product Entry</a></li>
+				            <li><a href="contractreview.html" title="Contract Review" >Contract Review</a></li>
+				            <li><a href="scrap.html" title="Scrap Entry" >Scrap Entry</a></li>
+				            <li><a href="returns.html" title="Returns Entry" >Returns Entry</a></li>
+				            <li><a href="repair.html" title="Repairs" >Repair</a></li>
+				            <li><a href="tbdata.html" title="TB Entry" >TB Entry</a></li>
+				            <li><a href="microdata.html" title="Micro Data Entry" >Micro Data Entry</a></li>
+				            <li><a href="foentry.html" title="F.O. Entry" >F.O. Entry</a></li>
+                        </ul>
+                    </li>
+				<li><a href="certprint.html" title="Print Certs" target="_blank">Cert Print</a></li>
+				<li><a href="foprint.html" title="F.O. Print" target="_blank">F.O. Print</a></li>
+			
+                </ul>
+            </nav>
+            </div>
+                <h1>Cast Data Entry</h1>
 				<div>
 					<hr class="topln">
 					CERTIFIED ANALYSIS
 				</div>
+			</header>
+			<form id="Input" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
+
+
 				<div class="dataent">
-					<div  class="txtent"> Customer: <input type="text" name="customer" /><br> </div>
-					<div  class="txtent"> Part: <input type="text" name="part" /><br> </div>
-					<div  class="txtent"> Heat: <input type="text" name="heat" /><br> </div>
-					<div  class="txtent"> Cust Order #: <input type="text" name="order" /><br> </div>
-					<div  class="txtent"> # of parts: <input type="text" name="parts" /><br> </div>
-					<div  class="txtent"> Spec No: <input type="text" name="spec" /><br> </div>
-					<div  class="txtent"> Class: <input type="text" name="class" /><br> </div>
+					<div  class="txtent"><p>Customer: <input type="text" name="customer" required/> </div>
+					<div  class="txtent"><p>Part:<input type="text" name="part" required/> </div>
+					<div  class="txtent"><p>Heat:<input type="text" name="heat" required/> </div>
+					<div  class="txtent"><p>Cust Order #:<input type="text" name="order" /> </div>
+					<div  class="txtent"><p># of parts:<input type="text" name="parts" /> </div>
+					<div  class="txtent"><p>Spec No:<input type="text" name="spec" /></div>
+					<div  class="txtent"><p>Class:<input type="text" name="class" /> </div>
 				</div>
 				<br>
 				<div>
 				<p>I find the above part(s) to be withing the specifications and class as stated.</p>
-				<div > Signed: <input type="text" name="signed" /><br> </div>
-				<div > Date:&nbsp;&nbsp;&nbsp;  <input type="text" name="date" /><br> </div>
+				<div > Signed: <input type="text" name="signed" /></p> </div>
+				<div > Date:&nbsp;&nbsp;&nbsp;  <input type="date" name="date" /></p> </div>
 				</div>
-			</header>
-			<form enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
 				<input type="hidden" name="report" value="cert" />
 				<nav>
 					<p>
@@ -94,6 +128,7 @@
 				
 				<br>
 				<input type="submit" class="submit" value="Submit" id="submitbtn"/>
+                <input class="submit" value="Print" id="prtbtn" onclick="javascript:print()" />
 
 			</form>
 			<footer>

@@ -25,23 +25,23 @@
 			<header>
 				<h1>Micro Data</h1>
 			</header>
-			<form enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
 			<input type="hidden" name="Table" value="microdata" />
 			<h2>Heat Info</h2>
 			<div class="dataent">
-				<div  class="txtent"> Date:  <input type="text" name="Date" /><br> </div>
-				<div  class="txtent"> Heat: <input type="text" name="heat" /><br> </div>
-				<div  class="txtent"> Tap: <input type="text" name="tap" /><br> </div>
+				<div  class="txtent"><p> Date:  <input type="date" name="Date" required /></p> </div>
+				<div  class="txtent"><p> Heat: <input type="number" name="heat" required /></p> </div>
+				<div  class="txtent"><p> Tap: <input type="number" name="tap" required /></p> </div>
 			</div>
 			<h2>Other</h2>
 			<div class="dataent">
-				<div  class="txtent"> Duct: <input type="text" name="Duct" /><br> </div>
-				<div  class="txtent"> Gr Type: <input type="text" name="grtype" /><br> </div>
-				<div  class="txtent"> C Size: <input type="text" name="c_size" /><br> </div>
-				<div  class="txtent"> Ferrite: <input type="text" name="ferrite" /><br> </div>
-				<div  class="txtent"> Pearlite: <input type="text" name="pearlite" /><br> </div>
-				<div  class="txtent"> Carbide: <input type="text" name="carbide" /><br> </div>
-				<div  class="txtent"> D Count: <input type="text" name="d_count" /><br> </div>
+				<div  class="txtent"><p> Duct: <input type="text" name="Duct" /></p> </div>
+				<div  class="txtent"><p> Gr Type: <input type="text" name="grtype" /></p> </div>
+				<div  class="txtent"><p> C Size: <input type="text" name="c_size" /></p> </div>
+				<div  class="txtent"><p> Ferrite: <input type="text" name="ferrite" /></p> </div>
+				<div  class="txtent"><p> Pearlite: <input type="text" name="pearlite" /></p> </div>
+				<div  class="txtent"><p> Carbide: <input type="text" name="carbide" /></p> </div>
+				<div  class="txtent"><p> D Count: <input type="text" name="d_count" /></p> </div>
 			</div>
 				
 			<br>

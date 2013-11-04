@@ -25,36 +25,37 @@
 			<header>
 				<h1>Tap Data Entry</h1>
 			</header>
-			<form enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<h2>Heat Info</h2>
+			<form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
 			<input type="hidden" name="Table" value="TapData" />
 			<div class="dataent">
-				<div  class="txtent"> Date:  <input type="text" name="Date" /><br> </div>
-				<div  class="txtent"> Heat #:  <input type="text" name="Heat" /><br> </div>
-				<div  class="txtent"> Tap #: <input type="text" name="Tap" /><br> </div>
+				<div  class="txtent"><p> Date:  <input type="date" name="Date" required /></p> </div>
+				<div  class="txtent"><p> Heat #:  <input type="number" name="heat" required /></p> </div>
+				<div  class="txtent"><p> Tap #: <input type="number" name="tap" required /></p> </div>
 			</div>
 			<h2>Other</h2>
 			<div class="dataent">
-				<div  class="txtent"> Material: <input type="text" name="MATERIAL" /><br> </div>
-				<div  class="txtent"> Furn #: <input type="text" name="Furn_No" /><br> </div>
-				<div  class="txtent"> Time: <input type="text" name="Time" /><br> </div>
-				<div  class="txtent"> Amt: <input type="text" name="Amt" /><br> </div>
-				<div  class="txtent"> Cmg Wire: <input type="text" name="Cmg_Wire" /><br> </div>
-				<div  class="txtent"> FESI: <input type="text" name="FESI" /><br> </div>
-				<div  class="txtent"> Pour Back: <input type="text" name="Pour_Back" /><br> </div>
-				<div  class="txtent"> Pigged: <input type="text" name="Pigged" /><br> </div>
-				<div  class="txtent"> Inoc: <input type="text" name="INOC63" /><br> </div>
-				<div  class="txtent"> CU: <input type="text" name="CU" /><br> </div>
-				<div  class="txtent"> MN: <input type="text" name="MN" /><br> </div>
-				<div  class="txtent"> CR: <input type="text" name="CR" /><br> </div>
-				<div  class="txtent"> NI: <input type="text" name="NI" /><br> </div>
-				<div  class="txtent"> Phos: <input type="text" name="Phos" /><br> </div>
-				<div  class="txtent"> i Pyrite: <input type="text" name="i_Pyrite" /><br> </div>
-				<div  class="txtent"> B Temp: <input type="text" name="B_Temp" /><br> </div>
-				<div  class="txtent"> E Temp: <input type="text" name="E_Temp" /><br> </div>
-				<div  class="txtent"> M Time: <input type="text" name="M_PTime" /><br> </div>
-				<div  class="txtent"> L Time: <input type="text" name="L_PTime" /><br> </div>
-				<div  class="txtent"> Notes: <input type="text" name="Notes" /><br> </div>
-				<div  class="txtent"> MO: <input type="text" name="MO" /><br> </div>
+				<div  class="txtent"><p> Material: <input type="text" name="MATERIAL" /></p> </div>
+				<div  class="txtent"><p> Furn #: <input type="text" name="Furn_No" /></p> </div>
+				<div  class="txtent"><p> Time: <input type="text" name="Time" /></p> </div>
+				<div  class="txtent"><p> Amt: <input type="text" name="Amt" /></p> </div>
+				<div  class="txtent"><p> Cmg Wire: <input type="text" name="Cmg_Wire" /></p> </div>
+				<div  class="txtent"><p> FESI: <input type="text" name="FESI" /></p> </div>
+				<div  class="txtent"><p> Pour Back: <input type="text" name="Pour_Back" /></p> </div>
+				<div  class="txtent"><p> Pigged: <input type="text" name="Pigged" /></p> </div>
+				<div  class="txtent"><p> Inoc: <input type="text" name="INOC63" /></p> </div>
+				<div  class="txtent"><p> CU: <input type="text" name="CU" /></p> </div>
+				<div  class="txtent"><p> MN: <input type="text" name="MN" /></p> </div>
+				<div  class="txtent"><p> CR: <input type="text" name="CR" /></p> </div>
+				<div  class="txtent"><p> NI: <input type="text" name="NI" /></p> </div>
+				<div  class="txtent"><p> Phos: <input type="text" name="Phos" /></p> </div>
+				<div  class="txtent"><p> i Pyrite: <input type="text" name="i_Pyrite" /></p> </div>
+				<div  class="txtent"><p> B Temp: <input type="text" name="B_Temp" /></p> </div>
+				<div  class="txtent"><p> E Temp: <input type="text" name="E_Temp" /></p> </div>
+				<div  class="txtent"><p> M Time: <input type="text" name="M_PTime" /></p> </div>
+				<div  class="txtent"><p> L Time: <input type="text" name="L_PTime" /></p> </div>
+				<div  class="txtent"><p> Notes: <input type="text" name="Notes" /></p> </div>
+				<div  class="txtent"><p> MO: <input type="text" name="MO" /></p> </div>
 			</div>
 				
 			<br>

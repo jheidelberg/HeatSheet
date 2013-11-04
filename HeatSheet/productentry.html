@@ -25,20 +25,20 @@
 			<header>
 				<h1>Product Entry</h1>
 			</header>
-			<form enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
 			<input type="hidden" name="Table" value="Product" />
 			<h2>Heat Info</h2>
 			<div class="dataent">
-				<div  class="txtent"> Date:  <input type="text" name="Date" /><br> </div>
-				<div  class="txtent"> Heat #:  <input type="text" name="Heat" /><br> </div>
+				<div  class="txtent"><p> Date:  <input type="date" name="Date" required /></p> </div>
+				<div  class="txtent"><p> Heat #:  <input type="number" name="heat" required /></p> </div>
 			</div>
 			<h2>Chem</h2>
 			<div class="dataent">
 
-				<div  class="txtent"> Customer:  <input type="text" name="Customer" /><br> </div>
-				<div  class="txtent"> Part:  <input type="text" name="part_no" /><br> </div>
-				<div  class="txtent"> Made:  <input type="text" name="Made" /><br> </div>
-				<div  class="txtent"> Notes:  <input type="text" name="Notes" /><br> </div>
+				<div  class="txtent"><p> Customer:  <input type="text" name="Customer" /></p> </div>
+				<div  class="txtent"><p> Part:  <input type="text" name="part_no" /></p> </div>
+				<div  class="txtent"><p> Made:  <input type="text" name="Made" /></p> </div>
+				<div  class="txtent"><p> Notes:  <input type="text" name="Notes" /></p> </div>
 				</div>
 			<br>
 			<input type="submit" class="submit" value="Submit"/>

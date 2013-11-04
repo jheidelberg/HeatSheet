@@ -25,20 +25,21 @@
 			<header>
 				<h1>Contract Review</h1>
 			</header>
-			<form enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
 			<input type="hidden" name="Table" value="contractreview" />
 			<h2>Heat Info</h2>
 			<div class="dataent">
-				<div  class="txtent"> Date:  <input type="text" name="Date" /><br> </div>
+				<div  class="txtent"><br><p> Date:  <input type="date" name="Date" required /></p> </div>
 			</div>
 			<h2>Other</h2>
 			<div class="dataent">
-				<div  class="txtent"> Customer: <input type="text" name="customer" /><br> </div>
-				<div  class="txtent"> Part: <input type="text" name="part_number" /><br> </div>
-				<div  class="txtent"> PO: <input type="text" name="po_number" /><br> </div>
-				<div  class="txtent"> Acceptable: <input type="text" name="acceptable" /><br> </div>
-				<div  class="txtent"> Review By: <input type="text" name="review_by" /><br> </div>
-				<div  class="txtent"> Notes: <input type="text" name="notes" /><br> </div>
+				<div  class="txtent"><p> Customer: <input type="text" name="customer" /></p> </div>
+				<div  class="txtent"><p> Part: <input type="text" name="part_number" /></p> </div>
+				<div  class="txtent"><p> PO: <input type="text" name="po_number" /></p> </div>
+
+				<div  class="txtent"><p> Acceptable: <input type="text" name="acceptable" /></p> </div>
+				<div  class="txtent"><p> Review By: <input type="text" name="review_by" /></p> </div>
+				<div  class="txtent"><p> Notes: <input type="text" name="notes" /></p> </div>
 			</div>
 				
 			<br>

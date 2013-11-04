@@ -1,40 +1,132 @@
-body {
+@media all {
+ 
+    .topln {
+        height: 2px;
+        color: #AAAAAA;
+        width: 75%;
+        border: none;
+        background-color: #AAAAAA;
+    }
 
-}
-.topln{
-	height: 2px;
-	color: #AAAAAA;
-	width: 75%;
-	border: none;
-	background-color: #AAAAAA;
+    header {
+        text-align: center;
+    }
+
+    .heading {
+        text-align: center;
+        margin: 15px;
+        text-decoration: underline;
+        font-weight: bold;
+        font-size: larger;
+    }
+
+
+    #htproc {
+        margin: 15px;
+    }
+    .rptlbl {
+    width: 200px;
+    height: 22px;
+    }
+    label {
+        float: right;
+        width: 50px;
+        margin-left: 25px;
+        height: 15px;
+    }
 }
 
-header {
-	text-align: center;
+/**************************************
+    End of All Media, now Print options
+***************************************/
+@media print {
+
+    /* Hide the date picker items when printing the cert.*/
+    input[type="date"]::-webkit-inner-spin-button, input[type="datetime"]::-webkit-inner-spin-button, input[type="datetime-local"]::-webkit-inner-spin-button, input[type="month"]::-webkit-inner-spin-button, input[type="time"]::-webkit-inner-spin-button, input[type="week"]::-webkit-inner-spin-button, input::-webkit-calendar-picker-indicator, input::-webkit-clear-button   {
+        visibility: hidden;
+}
+
+    #Chemistry, #Physical, #Microstructure {
+        -webkit-column-count: 4; /* Safari and Chrome */
+        -moz-column-count: 4; /* Firefox */
+        column-count: 4;
+        -webkit-column-width: auto; /* Safari and Chrome */
+        -moz-column-width: auto; /* Firefox */
+        column-width: auto;
+        column-rule-style: solid;
+        column-rule-color: #4cff00;
+        text-align: center;
+        width: 100%;
+        max-height: 45px;
+        overflow: hidden;
+    }
+
+
+	.dataent{
+	/*	column-count:3;
+	/*	-moz-column-count:3; /* Firefox */
+	/*	-webkit-column-count:3; /* Safari and Chrome */
 	
+		-moz-column-width:300px; /* Firefox */
+		-webkit-column-width:300px; /* Safari and Chrome */
+		column-width:300px;
+        grid-column-align: stretch;
+        margin: 14px;
+        height: auto;
+        padding: 15px;
+        width: 100%;
+        float: left;
+	}
+
+    input {
+    border-style: none;
+    border-bottom-style: solid;
+    border-bottom-color: #000;
+    width: 90px;
+}    
+    .txtent {
+    float: left;
+    width: 200px;
+}
+    .rptlbl {
+    width: 100px;
+    height: 22px;
+    float: left;
+}
+    label {
+        border-bottom-color: #AAAAAA;
+        border-bottom-style: solid;
+}
+    p {
+    line-break: strict;
+}
 }
 
-.heading {
-	text-align: center;
-	margin: 15px;
-	text-decoration: underline;
-	font-weight: bold;
-	font-size: larger;
-	
+/**************************************
+    End of Print, now Screen options
+***************************************/
+@media screen {
+    .rptlbl {
+    width: 200px;
+    height: 22px;
+}
+    label {
+        border-bottom-color: #AAAAAA;
+        border-bottom-style: solid;
 }
 
-#Chemistry, #Physical, #Microstructure {
-	column-count:4;
-	-moz-column-count:4; /* Firefox */
-	-webkit-column-count:4; /* Safari and Chrome */
-
-	column-width:120px;
-	-moz-column-width:120px; /* Firefox */
-	-webkit-column-width:120px; /* Safari and Chrome */
-	
-	text-align: center;
+    input {
+        border-style: solid;
 }
 
-#htproc {
-	margin: 15px;
+    #Chemistry, #Physical, #Microstructure {
+        -webkit-column-count: 4; /* Safari and Chrome */
+        -moz-column-count: 4; /* Firefox */
+        column-count: 4;
+        -webkit-column-width: 120px; /* Safari and Chrome */
+        -moz-column-width: 120px; /* Firefox */
+        column-width: 120px;
+        text-align: center;
+    }
+
 }
