@@ -1,11 +1,16 @@
 @media all {
 
     .topln {
-        height: 2px;
+        height: 0px;
         color: #AAAAAA;
-        width: 75%;
+        width: 65%;
         border: none;
         background-color: #AAAAAA;
+        border-style: solid;
+        border-width: 2px 0 0;
+        clear: both;
+        margin-top: 55px;
+        
     }
 
     header {
@@ -14,7 +19,7 @@
 
     .heading {
         text-align: center;
-        margin: 15px;
+        margin: 5px;
         text-decoration: underline;
         font-weight: bold;
         font-size: larger;
@@ -83,6 +88,7 @@
 		column-width:300px;
         grid-column-align: stretch;*/
         margin: 14px;
+        margin-bottom: 15px;
         height: auto;
         padding: 15px;
         width: 100%;
@@ -104,10 +110,9 @@
         border-bottom-style: solid;
         float: right;
 }
-    p {
-    line-break: strict;
-}
-}
+
+    
+} /* End of print area.*/
 
 /**************************************
     End of Print, now Screen options
@@ -123,8 +128,5 @@
         border-bottom-style: solid;
 }
 
-    input {
-        border-style: solid;
-}
 
 }

@@ -29,40 +29,13 @@
 		<div>
 
 			<header>
-            <div class="toolbarGlobal">
-                <nav>
-                <ul>
-                    <li><a href="#">Data Entry</a>
-                        <ul>
-				            <li><a href="tapdataent.html" >Tap Data</a></li>
-				            <li><a href="chemdataent.html" >Chem Data</a></li>
-				            <li><a href="castdata.html">Cast Data</a></li>
-				            <li><a href="chgdata.html" >Chg Data Data</a></li>
-				            <li><a href="furnacedata.html" >Furnace Data</a></li>
-				            <li><a href="productentry.html" >Product Entry</a></li>
-				            <li><a href="contractreview.html" >Contract Review</a></li>
-				            <li><a href="scrap.html" >Scrap Entry</a></li>
-				            <li><a href="returns.html" >Returns Entry</a></li>
-				            <li><a href="repair.html" >Repair</a></li>
-				            <li><a href="tbdata.html" >TB Entry</a></li>
-				            <li><a href="microdata.html" >Micro Data Entry</a></li>
-				            <li><a href="foentry.html" >F.O. Entry</a></li>
-                        </ul>
-                    </li>
-				<li><a href="certprint.html" title="Print Certs" >Cert Print</a></li>
-				<li><a href="foprint.html" title="F.O. Print" >F.O. Print</a></li>
-			
-                </ul>
-            </nav>
-            </div>
-                <h1>Cast Data Entry</h1>
+            <!--#include virtual="./linkpg.shtml"-->
+                <h1>CERTIFIED ANALYSIS</h1>
+			</header>
 				<div>
 					<hr class="topln">
-					CERTIFIED ANALYSIS
 				</div>
-			</header>
 			<form id="Input" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
-
 
 				<div class="dataent">
 					<div  class="txtent"><p>Customer: <input type="text" name="customer" required/> </div>
@@ -75,13 +48,18 @@
 				</div>
 
                     <div class="ctr">
-                    				<br>
-				    <p>I find the above part(s) to be withing the specifications and class as stated.</p>
-				    <div > Signed: <input type="text" name="signed" /></p> </div>
-				    <div > Date:&nbsp;&nbsp;&nbsp;  <input type="date" name="date" /></p> </div>
-
-				<input type="hidden" name="report" value="cert" />
+                    	<br>
+				        <p>I find the above part(s) to be withing the specifications and class as stated.</p>
+				        <div > Signed: <input type="text" name="signed" /> </div>
+				        <div > Date:&nbsp;&nbsp;&nbsp;  <input type="date" name="date" /> </div>
                     </div>
+
+				<input type="hidden" name="report" value="cert" style="position: absolute; top: 0px;" />
+                <div id="btndiv">
+			        <input type="submit" class="submit" value="Submit" id="submitbtn"/>
+                    <input class="submit" value="Print" id="prtbtn" onclick="javascript:print()" />
+                </div>
+
                 <hr class="topln">
 				<div class="heading">
                     <br>Chemistry<br>
@@ -127,13 +105,10 @@
 				<div id="htproc">
 					<div class="rptlbl" > Heat Treat Procedure: <label id="HeatTreat"> </label> </div>
 				</div>	
-				
-				<br>
-				<input type="submit" class="submit" value="Submit" id="submitbtn"/>
-                <input class="submit" value="Print" id="prtbtn" onclick="javascript:print()" />
 
 			</form>
 			<footer>
+                &copy;  <a href="/contact.html" class="contactent">john.heidelberg</a>
 			</footer>
 		</div>
 		<!--
