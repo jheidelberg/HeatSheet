@@ -35,24 +35,28 @@ function Route (request, response) {
 		switch (request.method) {
 			// if this is a POST response, then we should be reciving data that needs
 			// to be parsed and worked with.
-			case 'POST' :
-				request.on('data', function(chunk){
-					fullBody += chunk.toString();
-					});
-				
-				request.on("end", function(){
-					switch (request.url) {
-						case '/DataEnt/FormHandler' :
-							dataent.dataent(request, response, fullBody);
-							break;
-						default:
-							response.writeHead(200, "OK", {'Content-Type': 'text/html'});
-							response.write(request.url);
-							break;
-							
-					}
-				});
-				break;
+		    case 'POST':
+		        request.on('data', function (chunk) {
+		            fullBody += chunk.toString();
+		        });
+
+		        request.on("end", function () {
+		            switch (request.url) {
+		                case '/DataEnt/FormHandler':
+		                    dataent.dataent(request, response, fullBody);
+		                    break;
+		                case '/Report/FormHandler':
+		                    var rpt = require('./HeatSheet/CodeBehind/report');
+		                    rpt.rpt(request, response, fullBody);
+		                    break;
+		                default:
+		                    response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+		                    response.write(request.url);
+		                    break;
+
+		            }
+		        });
+		        break;
 				
 			// If this is a get request, there should be a file we are serving up.
 case 'GET':

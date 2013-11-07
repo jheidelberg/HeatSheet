@@ -15,7 +15,7 @@ Select
     , tb.elong
     , cstd.aht_bhn ahtbri
     , yield    
---    , Nodules    
+/*    , Nodules    */
     , "c_Size"
     , "d_Count"
     , Pearlite    
@@ -30,7 +30,7 @@ from
 	Inner Join TapData td on td.Heat = cd.Heat and td.Tap = cd.Tap
     Left Join CastData cstd on cstd.heat = cd.heat and cstd.tap = cd.tap
 Where
-    cd.Heat = ''
-    and cd.tap = ''
+    cd.Heat = '%HEAT%'
+    and cd.tap = '%TAP%'
     
 ;

@@ -30,17 +30,21 @@
 
 			<header>
             <!--#include virtual="./linkpg.shtml"-->
+                <script type="text/javascript">
+                    /* rplce */
+                </script>
                 <h1>CERTIFIED ANALYSIS</h1>
 			</header>
 				<div>
 					<hr class="topln">
 				</div>
 			<form id="Input" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
-
+                <input type="hidden" id="Table" />
 				<div class="dataent">
 					<div  class="txtent"><p>Customer: <input type="text" name="customer" required/> </div>
 					<div  class="txtent"><p>Part:<input type="text" name="part" required/> </div>
 					<div  class="txtent"><p>Heat:<input type="text" name="heat" required/> </div>
+					<div  class="txtent"><p>Tap:<input type="text" name="tap" required/> </div>
 					<div  class="txtent"><p>Cust Order #:<input type="text" name="order" /> </div>
 					<div  class="txtent"><p># of parts:<input type="text" name="parts" /> </div>
 					<div  class="txtent"><p>Spec No:<input type="text" name="spec" /></div>
