@@ -51,16 +51,47 @@ function rpt(request, response, fullBody) {
 
 
     db.serialize(function () {
-        db.each("Select cd.* from ChemData cd", function (err, row) {
+        db.all(qry, function (err, rows) {
             if (err) {
                 response.write("Error: " + err);
                 response.end;
                 return;
             }
-            ResponseText += row[0] + row.info;
+            if (rows.length < 0) {
+                response.write("Error.  Nothin comming.");
+                response.end;
+            } else {
+                for (var i = 0; i < rows.length; i++ ) {
+                    ResponseText += "<br>Item #: " + i + '<br>'
+					+ '<br>Carbon :'  + rows[i].carbon
+                    + '<br>Silicon :'  + rows[i].silicon
+                    + '<br>Chromium :'  + rows[i].chromium
+                    + '<br>Manganese :'  + rows[i].manganese
+                    + '<br>copper :'  + rows[i].copper
+                    + '<br>aluminum :'  + rows[i].aluminum
+                    + '<br>phosphorus :'  + rows[i].phosphorus
+                    + '<br>nickel :'  + rows[i].nickel
+                    + '<br>magnesium :'  + rows[i].magnesium
+                    + '<br>sulfur :'  + rows[i].sulfur
+                    + '<br>moly :'  + rows[i].moly
+                    + '<br>Tensile :'  + rows[i].tensile
+                    + '<br>ac_bhn :'  + rows[i].asbr
+                    + '<br>elong :'  + rows[i].elong
+                    + '<br>aht_bhn :'  + rows[i].ahtbri
+                    + '<br>yield     :'  + rows[i].yield    
+                    + '<br>c_Size :'  + rows[i].c_size
+                    + '<br>d_Count :'  + rows[i].d_count
+                    + '<br>Pearlite    :'  + rows[i].pearlite    
+                    + '<br>Carbide     :'  + rows[i].carbide    
+                    + '<br>Ferrite     :'  + rows[i].ferrite    
+                    + '<br>HtMethod :'  + rows[i].htmethod
+;
+                }
+
+                    response.write("I'm finished here...<br>" + ResponseText);
+                response.end();
+            }
         });
-        response.write("I'm finished here...<br>" + ResponseText);
-        response.end();
     });
 
 } // end rpt function
