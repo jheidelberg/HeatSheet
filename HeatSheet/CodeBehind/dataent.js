@@ -31,47 +31,51 @@ function DataEnt(request, response, fullBody) {
 	qryent += insertstmt.substring(1) + " ) values (" + valstmt.substring(1) + " ) ";
 
 	fs.exists('HeatSheet.sql3', function (exists) {
-		var db = new sqlite3.Database('HeatSheet.sql3');
+	    var db = new sqlite3.Database('HeatSheet.sql3');
 
-		if (!exists) {
-			console.log('Creating database. This may take a while...');
-			fs.readFile('./HeatSheet/CodeBehind/HeatSheetdb.sql', 'utf8', function (err, data) {
-				if (err) {
-					console.log(err);
-					ResponseText = "Problem finding the DB Creation File. " + err;
-					return;
-				}
-				console.log("Read the file..");
-				db.exec(data, function (err) {
-					if (err) {
-					    console.log(err);
-					    ResponseText = "Problem creating the DB. " + err;
-					    return;
-					}
-					console.log('Created the DB.');
-				});
-			});
+	    if (!exists) {
+	        console.log('Creating database. This may take a while...');
+	        fs.readFile('./HeatSheet/CodeBehind/HeatSheetdb.sql', 'utf8', function (err, data) {
+	            if (err) {
+	                console.log(err);
+	                ResponseText = "Problem finding the DB Creation File. " + err;
+	                return;
+	            }
+	            console.log("Read the file..");
+	            db.exec(data, function (err) {
+	                if (err) {
+	                    console.log(err);
+	                    ResponseText = "Problem creating the DB. " + err;
+	                    return;
+	                }
+	                console.log('Created the DB.');
+	            });
+	        });
 
-		}
-        
-		db.exec(qryent, function (err) {
-			if (err) {
-				ResponseText = "Problem executiong the qry: " + err;
-				return;
-			}
-			// response.write("Thank you for entering this info.");
+	    }
 
-
-			// output the decoded data to the HTTP response          
-			ResponseText = fs.readFileSync('./HeatSheet/response.html');
+	    db.exec(qryent, function (err) {
+	        if (err) {
+	            ResponseText = "Problem executiong the qry: " + err;
+	            response.write(ResponseText);
+	            response.end;
+	            return;
+	        }
+	        // response.write("Thank you for entering this info.");
 
 
-                            
-			//response.write(('The final resutls: <br>' + ResponseText)); //utils.inspect
-			//response.write('</pre></body></html>');
+	        // output the decoded data to the HTTP response          
 
-			response.end();
-		});
+	        ResponseText = fs.readFileSync('./HeatSheet/response.html');
+	        ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+
+
+	        response.write((ResponseText)); //utils.inspect
+	        //response.write('</pre></body></html>');
+
+	        response.end();
+	        return;
+	    });
 
 
 	});
