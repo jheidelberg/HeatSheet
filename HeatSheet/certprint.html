@@ -27,7 +27,7 @@
 
 	<body>
 		<div>
-
+            <textarea id="test" > </textarea>
 			<header>
             <!--#include virtual="./linkpg.shtml"-->
                 <script type="text/javascript">
@@ -39,6 +39,37 @@
 					<hr class="topln">
 				</div>
 			<form id="Input" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
+        <script type="text/javascript">
+            function submt() {
+
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                }
+                else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    if (xmlhttp) { ; } else { alert("NOT ok."); };
+                }
+                xmlhttp.onreadystatechange = function () {
+
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        document.getElementById("test").innerHTML = xmlhttp.responseText;
+
+                    }
+                    else {
+                        document.getElementById("test").innerHTML = "Error";
+                    }
+                }
+                var h = document.getElementsByName("heat")[0].value;
+                
+                var DataToSend = "heat=" + h + "&tap=" + document.getElementsByName("tap")[0].value;
+                xmlhttp.open("POST", "/Report/FormHandler", true);
+                xmlhttp.setRequestHeader("Content-Type", "multipart/form-data");
+                xmlhttp.send(DataToSend);
+            }
+
+        </script>
                 <input type="hidden" id="Table" />
 				<div class="dataent">
 					<div  class="txtent"><p>Customer: <input type="text" name="customer" required/> </div>
@@ -54,14 +85,15 @@
                     <div class="ctr">
                     	<br>
 				        <p>I find the above part(s) to be withing the specifications and class as stated.</p>
-				        <div > Signed: <input type="text" name="signed" /> </div>
+				        <div > Signed: <input type="text" name="signed" id="signed" /> </div>
 				        <div > Date:&nbsp;&nbsp;&nbsp;  <input type="date" name="date" /> </div>
                     </div>
 
 				<input type="hidden" name="report" value="cert" style="position: absolute; top: 0px;" />
                 <div id="btndiv">
 			        <input type="submit" class="submit" value="Submit" id="submitbtn"/>
-                    <input class="submit" value="Print" id="prtbtn" onclick="javascript:print()" />
+                    <input class="submit" value="Print" id="prtbtn" onclick="javascript:print();" />
+                    <input class="submit" value="Submit2" id="tst" onclick="submt();" />
                 </div>
 
                 <hr class="topln">
