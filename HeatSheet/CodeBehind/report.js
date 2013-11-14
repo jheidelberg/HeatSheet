@@ -26,7 +26,8 @@ function rpt(request, response, fullBody) {
 	} //end var x in array
 
     // request ended -> do something with the data
-    response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+    //response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+    response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
     var ResponseText = ""; // = querystring.parse(fullBody);
 	var db = new sqlite3.Database('HeatSheet.sql3');
 	var qry = fs.readFileSync('./HeatSheet/CodeBehind/CertQry.sql');
@@ -48,7 +49,7 @@ function rpt(request, response, fullBody) {
 //An array of all result sets is available as the .all property on each result set:
 //
 //assert(q.all[1].length == 1);
-
+    var MyJSONObj = new Array();
 
     db.serialize(function () {
         db.all(qry, function (err, rows) {
@@ -61,34 +62,35 @@ function rpt(request, response, fullBody) {
                 response.write("Error.  Nothin comming.");
                 response.end;
             } else {
-                for (var i = 0; i < rows.length; i++ ) {
-                    ResponseText += "<br>Item #: " + i + '<br>'
-					+ '<br>Carbon :'  + rows[i].carbon
-                    + '<br>Silicon :'  + rows[i].silicon
-                    + '<br>Chromium :'  + rows[i].chromium
-                    + '<br>Manganese :'  + rows[i].manganese
-                    + '<br>copper :'  + rows[i].copper
-                    + '<br>aluminum :'  + rows[i].aluminum
-                    + '<br>phosphorus :'  + rows[i].phosphorus
-                    + '<br>nickel :'  + rows[i].nickel
-                    + '<br>magnesium :'  + rows[i].magnesium
-                    + '<br>sulfur :'  + rows[i].sulfur
-                    + '<br>moly :'  + rows[i].moly
-                    + '<br>Tensile :'  + rows[i].tensile
-                    + '<br>ac_bhn :'  + rows[i].asbr
-                    + '<br>elong :'  + rows[i].elong
-                    + '<br>aht_bhn :'  + rows[i].ahtbri
-                    + '<br>yield     :'  + rows[i].yield    
-                    + '<br>c_Size :'  + rows[i].c_size
-                    + '<br>d_Count :'  + rows[i].d_count
-                    + '<br>Pearlite    :'  + rows[i].pearlite    
-                    + '<br>Carbide     :'  + rows[i].carbide    
-                    + '<br>Ferrite     :'  + rows[i].ferrite    
-                    + '<br>HtMethod :'  + rows[i].htmethod
-;
-                }
 
-                    response.write("I'm finished here...<br>" + ResponseText);
+                for (var i = 0; i < rows.length; i++) {
+                    var Obj = {
+                        'Carbon': rows[i].carbon
+		                , 'Silicon': rows[i].silicon
+		                , 'Chromium': rows[i].chromium
+		                , 'Manganese': rows[i].manganese
+		                , 'copper': rows[i].copper
+		                , 'aluminum': rows[i].aluminum
+		                , 'phosphorus': rows[i].phosphorus
+		                , 'nickel': rows[i].nickel
+		                , 'magnesium': rows[i].magnesium
+		                , 'sulfur': rows[i].sulfur
+		                , 'moly': rows[i].moly
+		                , 'Tensile': rows[i].tensile
+		                , 'ac_bhn': rows[i].asbr
+		                , 'elong': rows[i].elong
+		                , 'aht_bhn': rows[i].ahtbri
+		                , 'yield': rows[i].yield
+		                , 'c_Size': rows[i].c_size
+		                , 'd_Count': rows[i].d_count
+		                , 'Pearlite': rows[i].pearlite
+		                , 'Carbide': rows[i].carbide
+		                , 'Ferrite': rows[i].ferrite
+		                , 'HtMethod': rows[i].htmethod
+                    };
+                    MyJSONObj[i] = Obj;
+                }
+                response.write(JSON.stringify( MyJSONObj));
                 response.end();
             }
         });

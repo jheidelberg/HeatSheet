@@ -59,54 +59,57 @@ function Route (request, response) {
 		        break;
 				
 			// If this is a get request, there should be a file we are serving up.
-case 'GET':
-    //console.log(request.method + " to " + request.url);
-    path.exists(filePath, function (exists) {
+            case 'GET':
+                //console.log(request.method + " to " + request.url);
+                path.exists(filePath, function (exists) {
 
-        if (exists) {
-            fs.readFile(filePath, function (error, content) {
-                if (error) {
-                    response.writeHead(500);
-                    console.log("Error: " + filePath);
-                    response.end();
+                if (exists) {
+                    fs.readFile(filePath, function (error, content) {
+                        if (error) {
+                            response.writeHead(500);
+                            console.log("Error: " + filePath);
+                            response.end();
+                        }
+                        else {
+
+                            response.writeHead(200, { 'Content-Type': contentType });
+                            content = content.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+                            response.end(content, 'utf-8');
+                        }
+                    });
                 }
                 else {
+                    console.log("404 - No Exist: " + request.url);
+                    fs.readFile('./HeatSheet/404.html', function (error, content) {
+                        if (error) {
+                            response.writeHead(500);
+                            console.log("Error: " + filePath);
+                            response.end();
+                        }
+                        else {
 
-                    response.writeHead(200, { 'Content-Type': contentType });
-                    content = content.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
-                    response.end(content, 'utf-8');
+                            response.writeHead(404, "OK", { 'Content-Type': 'text/html' });
+                            content = content.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+                            response.end(content, 'utf-8');
+                        }
+                        response.end();
+                    });
                 }
+
             });
-        }
-        else {
-            console.log("404 - No Exist");
-            fs.readFile('./HeatSheet/404.html', function (error, content) {
-                if (error) {
-                    response.writeHead(500);
-                    console.log("Error: " + filePath);
-                    response.end();
-                }
-                else {
 
-                    response.writeHead(404, "OK", { 'Content-Type': 'text/html' });
-                    content = content.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
-                    response.end(content, 'utf-8');
-                }
-                response.end();
-            });
-        }
+            break;
 
-    });
-
-    break;	
-			default: 
-				//console.log(request.method + " to " + request.url);
-				response.writeHead(500);
-				response.end();
-				break;
+        default:
+            console.log(request.method + " to " + request.url);
+            response.writeHead(500);
+            
+            response.wirte("Hello?  Anybody out there?");
+            response.end();
+            break;
 			
 
-	//var lookup = path.basename(decodeURI(request.url)) || '/HeatSheet/index.html',f='content/' + lookup
+	        //var lookup = path.basename(decodeURI(request.url)) || '/HeatSheet/index.html',f='content/' + lookup
 	
 
 	}
