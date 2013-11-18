@@ -31,8 +31,6 @@ from
 	left Join TapData td on td.Heat = cd.Heat and td.Tap = cd.Tap
     Left Join CastData cstd on cstd.heat = cd.heat and cstd.tap = cd.tap
 Where
-    cd.Heat = '%HEAT%'
-    /*and cd.tap = '%TAP%'*/
-	and Cstd.Part_no like '%PART%'
-    
+    cstd.Part_No like 'r3457(mac)r' and cd.HEAT = 9591
+    /*and cd.tap = '@TAP'*/ --
 ;

@@ -31,9 +31,12 @@ function rpt(request, response, fullBody) {
     var ResponseText = ""; // = querystring.parse(fullBody);
 	var db = new sqlite3.Database('HeatSheet.sql3');
 	var qry = fs.readFileSync('./HeatSheet/CodeBehind/CertQry.sql');
-	qry = qry.toString().replace('%HEAT%', ary["heat"]);
-	qry = qry.toString().replace('%TAP%', ary["tap"]);
-	qry = qry.toString().replace('%PART%', ary["part"]);
+
+	//qry = qry.toString().replace('@HEAT', ary["heat"]);
+	//qry = qry.toString().replace('@TAP', ary["tap"]);
+	//qry = qry.toString().replace('@PART', ary["part"]);
+
+    
 
     // two ways of running the sql: db.serialize that runs inline and 
     //  will block execution while it is running, or regular and will 
@@ -53,6 +56,10 @@ function rpt(request, response, fullBody) {
     var MyJSONObj = new Array();
 
     db.serialize(function () {
+        
+        qry = qry.toString().replace('@HEAT', ary["heat"]);
+        qry = qry.toString().replace('@TAP', ary["tap"]);
+        qry = qry.toString().replace('@PART', ary["part"]);
         db.all(qry, function (err, rows) {
             if (err) {
                 response.write("Error: " + err);
@@ -88,12 +95,11 @@ function rpt(request, response, fullBody) {
 		                , 'Carbide': rows[i].Carbide
 		                , 'Ferrite': rows[i].Ferrite
 		                , 'HeatTreat': rows[i].HeatTreat
+                        , 'test' : qry
                     };
                     MyJSONObj[i] = Obj;
                 }
                 response.write(JSON.stringify( MyJSONObj));
-                //response.write('{"frank":"1","Sis":"2"}');
-                //response.write(qry);
                 response.end();
             }
         });
