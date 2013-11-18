@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -21,7 +21,20 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
         <script src="js/vendor/jquery.validation.js"></script>
         <script>
+            $('#Input').ajaxForm();
+            $('#Input').submit(function () {
+                // submit the form 
+                //$(this).ajaxSubmit();
+                submt();
+                // return false to prevent normal browser submit and page navigation 
+                return false;
+            });
             $("#Input").valadate();
+            $(".selector").validate({
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit();
+                }
+            });
         </script>
 	</head>
 
@@ -38,9 +51,11 @@
 				<div>
 					<hr class="topln">
 				</div>
-			<form id="Input" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
+			<form id="Input" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post" onsubmit="submt(); return false;">
         <script type="text/javascript">
             function submt() {
+                //var validator2 = $("#Input").validate();
+                //if (validator2.form()) { alert("It's good!") } else { alert("It's bad!") };
 
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -52,25 +67,25 @@
                     if (xmlhttp) { ; } else { alert("NOT ok."); };
                 }
                 xmlhttp.onreadystatechange = function () {
+                    document.getElementById("signed").innerHTML += xmlhttp.readyState;
 
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        //document.getElementById("test").innerHTML += xmlhttp.responseText;
+                        document.getElementById("test").innerHTML += xmlhttp.responseText;
                         
-                        document.getElementById("Chromium").innerHTML += xmlhttp.readyState;
-                        var t = JSON.eval(xmlhttp.responseText);
+                        
+                        var t = JSON.parse(xmlhttp.responseText);
+                        
+                        for (var i = 0; i < t.length; i++) {
+                            for (var x in t[i]) {
+                                document.getElementById("test").innerHTML += "<br>" + x + ": " + t[i][x];
+                                document.getElementById(x).innerHTML = t[i][x] + ' ';
+                            }
 
+                        }
 
-                        ///// ERROR HERE!!!
-
-
-                        document.getElementById("test").innerHTML += t[carbon];
-                        document.getElementById("Carbon").innerHTML = t[0].carbon;
-                        var si = document.getElementById("Silicon");
-                        si.innerHTML = '???';
                     }
                     else {
                         //document.getElementById("test").innerHTML = "Error: State: " + xmlhttp.readyState + '<br> Status: ' + xmlhttp.status;
-                        document.getElementById("Chromium").innerHTML += xmlhttp.readyState;
                     }
                 }
                 var h = document.getElementsByName("heat")[0].value;
@@ -105,7 +120,6 @@
                 <div id="btndiv">
 			        <input type="submit" class="submit" value="Submit" id="submitbtn"/>
                     <input class="submit" value="Print" id="prtbtn" onclick="javascript:print();" />
-                    <input class="submit" value="Submit2" id="tst" onclick="submt();" />
                 </div>
 
                 <hr class="topln">
@@ -142,8 +156,8 @@
                 </div>
 				<div id="Microstructure">
 					<div class="rptlbl" > Percent Nodules: <label id="Nodules"> </label> </div>
-					<div class="rptlbl" > Size: <label id="Size"> </label>               </div>
-					<div class="rptlbl" > Count: <label id="Count"> </label>             </div>
+					<div class="rptlbl" > Size: <label id="cSize"> </label>               </div>
+					<div class="rptlbl" > Count: <label id="dCount"> </label>             </div>
 					<div class="rptlbl" > Pearlite: <label id="Pearlite"> </label>       </div>
 					<div class="rptlbl" > Carbide: <label id="Carbide"> </label>         </div>
 					<div class="rptlbl" > Ferrite: <label id="Ferrite"> </label>         </div>

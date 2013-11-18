@@ -65,32 +65,34 @@ function rpt(request, response, fullBody) {
 
                 for (var i = 0; i < rows.length; i++) {
                     var Obj = {
-                        'Carbon': rows[i].carbon
-		                , 'Silicon': rows[i].silicon
-		                , 'Chromium': rows[i].chromium
-		                , 'Manganese': rows[i].manganese
-		                , 'copper': rows[i].copper
-		                , 'aluminum': rows[i].aluminum
-		                , 'phosphorus': rows[i].phosphorus
-		                , 'nickel': rows[i].nickel
-		                , 'magnesium': rows[i].magnesium
-		                , 'sulfur': rows[i].sulfur
-		                , 'moly': rows[i].moly
-		                , 'Tensile': rows[i].tensile
-		                , 'ac_bhn': rows[i].asbr
-		                , 'elong': rows[i].elong
-		                , 'aht_bhn': rows[i].ahtbri
-		                , 'yield': rows[i].yield
-		                , 'c_Size': rows[i].c_size
-		                , 'd_Count': rows[i].d_count
-		                , 'Pearlite': rows[i].pearlite
-		                , 'Carbide': rows[i].carbide
-		                , 'Ferrite': rows[i].ferrite
-		                , 'HtMethod': rows[i].htmethod
+                        'Carbon': rows[i].Carbon
+		                , 'Silicon': rows[i].Silicon
+		                , 'Chromium': rows[i].Chromium
+		                , 'Manganese': rows[i].Manganese
+		                , 'Copper': rows[i].Copper
+		                , 'Aluminum': rows[i].Aluminum
+		                , 'Phosphorus': rows[i].Phosphorus
+		                , 'Nickel': rows[i].Nickel
+		                , 'Magnesium': rows[i].Magnesium
+		                , 'Sulfur': rows[i].Sulfur
+		                , 'Moly': rows[i].Moly
+		                , 'Tensile': rows[i].Tensile
+		                , 'AsBr': rows[i].AsBr
+		                , 'Elongation': rows[i].Elongation
+		                , 'AHTBri': rows[i].AHTBri
+		                , 'Yield': rows[i].Yield
+		                , 'cSize': rows[i].cSize
+		                , 'dCount': rows[i].dCount
+		                , 'Pearlite': rows[i].Pearlite
+		                , 'Carbide': rows[i].Carbide
+		                , 'Ferrite': rows[i].Ferrite
+		                , 'HeatTreat': rows[i].HeatTreat
                     };
                     MyJSONObj[i] = Obj;
                 }
                 response.write(JSON.stringify( MyJSONObj));
+                //response.write('{"frank":"1","Sis":"2"}');
+                //response.write(qry);
                 response.end();
             }
         });

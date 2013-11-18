@@ -1,28 +1,28 @@
 Select
     cd.HEAT
-    , C    carbon
-    , Si    silicon
-    , td.Cr    chromium
-    , td.Mn    manganese
-    , td.Cu    copper
-    , cd.Al    aluminum
-    , td.Phos    phosphorus
-    , cd.Ni    nickel
-    , cd.Mg    magnesium
-    , cd.Si    sulfur
-    , cd.Mo    moly
-    , tb.Tensile tensile
-    , tb.ac_bhn asbr
-    , tb.elong elong
-    , cstd.aht_bhn ahtbri
-    , yield    yield
+    , C    Carbon
+    , Si    Silicon
+    , td.Cr    Chromium
+    , td.Mn    Manganese
+    , td.Cu    Copper
+    , cd.Al    Aluminum
+    , td.Phos    Phosphorus
+    , cd.Ni    Nickel
+    , cd.Mg    Magnesium
+    , cd.Si    Sulfur
+    , cd.Mo    Moly
+    , tb.Tensile Tensile
+    , tb.ac_bhn AsBr
+    , tb.elong Elongation
+    , cstd.aht_bhn AHTBri
+    , yield    Yield
 /*    , Nodules    */
-    , "c_Size" c_size
-    , "d_Count" d_count
-    , Pearlite pearlite
-    , Carbide carbide
-    , Ferrite ferrite
-    , ht_Method htmethod
+    , "c_Size" cSize
+    , "d_Count" dCount
+    , Pearlite Pearlite
+    , Carbide Carbide
+    , Ferrite Ferrite
+    , ht_Method HeatTreat
 
 from
     ChemData cd
