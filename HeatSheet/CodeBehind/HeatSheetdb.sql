@@ -84,7 +84,8 @@ MO integer,
 I_PYRITE integer,
 POUR_BACK integer,
 MACH_CHIPS integer,
-NOTE,M
+NOTE text,
+M integer
 );
 
 CREATE TABLE "Product" (

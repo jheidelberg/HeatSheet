@@ -1,5 +1,6 @@
 *.class
 *.pyc
 *.pyo
+HeatSheet.sql3
 
 /iisnode

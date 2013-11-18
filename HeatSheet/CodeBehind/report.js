@@ -31,8 +31,9 @@ function rpt(request, response, fullBody) {
     var ResponseText = ""; // = querystring.parse(fullBody);
 	var db = new sqlite3.Database('HeatSheet.sql3');
 	var qry = fs.readFileSync('./HeatSheet/CodeBehind/CertQry.sql');
-    qry = qry.toString().replace('%HEAT%',ary["heat"]);
-    qry = qry.toString().replace('%TAP%',ary["tap"]);
+	qry = qry.toString().replace('%HEAT%', ary["heat"]);
+	qry = qry.toString().replace('%TAP%', ary["tap"]);
+	qry = qry.toString().replace('%PART%', ary["part"]);
 
     // two ways of running the sql: db.serialize that runs inline and 
     //  will block execution while it is running, or regular and will 

@@ -32,6 +32,7 @@ from
     Left Join CastData cstd on cstd.heat = cd.heat and cstd.tap = cd.tap
 Where
     cd.Heat = '%HEAT%'
-    and cd.tap = '%TAP%'
+    /*and cd.tap = '%TAP%'*/
+	and Cstd.Part_no like '%PART%'
     
 ;
