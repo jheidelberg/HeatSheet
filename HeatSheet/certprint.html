@@ -41,9 +41,6 @@
 
             <script type="text/javascript">
                 function submt() {
-                    
-                    //var validator2 = $("#Input").validate();
-                    //if (validator2.form()) { alert("It's good!") } else { alert("It's bad!") };
 
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -52,7 +49,7 @@
                     else {
                         // code for IE6, IE5
                         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                        if (xmlhttp) {; } else { alert("NOT ok."); };
+                        if (xmlhttp) { ; } else { alert("NOT ok."); };
                     }
                     xmlhttp.onreadystatechange = function () {
                         document.getElementById("signed").innerHTML += xmlhttp.readyState;
@@ -64,7 +61,7 @@
 
                             var t = JSON.parse(xmlhttp.responseText);
                             var itm;
-                            
+
                             for (var i = 0; i < t.length; i++) {
                                 for (var x in t[i]) {
                                     document.getElementById("test").innerHTML += "|" + x + ": " + t[i][x];
@@ -79,19 +76,60 @@
                             //document.getElementById("test").innerHTML = "Error: State: " + xmlhttp.readyState + '<br> Status: ' + xmlhttp.status;
                         }
                     }
-                    var h = document.getElementsByName("heat")[0].value;
 
-                    var DataToSend = "heat=" + h + "&tap=" + document.getElementsByName("tap")[0].value;
-                    xmlhttp.open("POST", "/Report/FormHandler", true);
-                    xmlhttp.setRequestHeader("Content-Type", "multipart/form-data");
-                    xmlhttp.send(DataToSend);
+                    //var h = document.getElementsByName("heat")[0].value;
+
+                    //var DataToSend = "heat=" + h + "&tap=" + document.getElementsByName("tap")[0].value;
+                    //xmlhttp.open("POST", "/Report/FormHandler", true);
+                    //xmlhttp.setRequestHeader("Content-Type", "multipart/form-data");
+                    //xmlhttp.send(DataToSend);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Report/FormHandler",
+                        data: $("#Input").serialize(),
+                        dataType: "json",
+
+                        success: function (msg) {
+                            
+                            $("#formResponse").removeClass('error');
+                            $("#formResponse").removeClass('success');
+                            $("#formResponse").addClass(msg.status);
+                            $("#formResponse").html(msg.message);
+                            $("#formResponse").html("Is anyone listening? " + msg[0].message);
+
+                            var d = new Date;
+                            document.getElementById("test").innerHTML = d.toString() + ' ' + msg.toString();
+
+
+                            var t = msg;
+                            var itm;
+                            
+                            for (var i = 0; i < t.length; i++) {
+                                for (var x in t[i]) {
+                                    document.getElementById("test").innerHTML += "|" + x + ": " + t[i][x];
+                                    itm = document.getElementById(x);
+                                    if (itm) { itm.innerHTML = t[i][x] + ' '; }
+                                }
+
+                            }
+
+                        },
+                        error: function () {
+                            $("#formResponse").removeClass('success');
+                            $("#formResponse").addClass('error');
+                            $("#formResponse").html("There was an error submitting the form. Please try again.");
+                        }
+                    });
+
+
                     return false;
                 }
 
             </script>
-
 			<form id="Input" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post" onsubmit="submt(); return false;">
  
+            <div id="formResponse"></div>
                 <input type="hidden" id="Table" />
 				<div class="dataent">
 					<div  class="txtent"><p>Customer: <input type="text" name="customer" required/> </div>

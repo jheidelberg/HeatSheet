@@ -56,18 +56,22 @@ function rpt(request, response, fullBody) {
     var MyJSONObj = new Array();
 
     db.serialize(function () {
-        
+
         qry = qry.toString().replace('@HEAT', ary["heat"]);
         qry = qry.toString().replace('@TAP', ary["tap"]);
         qry = qry.toString().replace('@PART', ary["part"]);
+
+
         db.all(qry, function (err, rows) {
             if (err) {
-                response.write("Error: " + err);
+                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message':'none' };
+                response.write(JSON.stringify(MyJSONObj));
                 response.end;
                 return;
             }
             if (rows.length < 0) {
-                response.write("Error.  Nothin comming.");
+                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message':'none' };
+                response.write(JSON.stringify(MyJSONObj));
                 response.end;
             } else {
 
@@ -95,11 +99,14 @@ function rpt(request, response, fullBody) {
 		                , 'Carbide': rows[i].Carbide
 		                , 'Ferrite': rows[i].Ferrite
 		                , 'HeatTreat': rows[i].HeatTreat
-                        , 'test' : qry
+                        , 'test': qry
+                        , 'status': 'success'
+                        , 'message':'none'
                     };
                     MyJSONObj[i] = Obj;
                 }
-                response.write(JSON.stringify( MyJSONObj));
+                if (MyJSONObj.length == 0) { MyJSONObj[0] = { 'test': qry, 'status': 'error', 'message':'none' }; };
+                response.write(JSON.stringify(MyJSONObj));
                 response.end();
             }
         });

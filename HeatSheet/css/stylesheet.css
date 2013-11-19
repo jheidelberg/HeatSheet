@@ -1,4 +1,20 @@
 @media all {
+    .success{  
+  
+    border: 2px solid #009400;  
+    background: #B3FFB3;  
+    color: #555;  
+    font-weight: bold;  
+  
+}  
+  
+.error{  
+  
+    border: 2px solid #DE001A;  
+    background: #FFA8B3;  
+    color: #000;  
+    font-weight: bold;  
+}  
     .ctr {
         width: 400px;
         margin: 0 auto;

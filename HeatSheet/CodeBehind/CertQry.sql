@@ -2,9 +2,9 @@ Select
     cd.HEAT
     , C    Carbon
     , Si    Silicon
-    , td.Cr    Chromium
-    , td.Mn    Manganese
-    , td.Cu    Copper
+    , cd.Cr    Chromium
+    , cd.Mn    Manganese
+    , cd.Cu    Copper
     , cd.Al    Aluminum
     , td.Phos    Phosphorus
     , cd.Ni    Nickel
@@ -31,6 +31,4 @@ from
 	left Join TapData td on td.Heat = cd.Heat and td.Tap = cd.Tap
     Left Join CastData cstd on cstd.heat = cd.heat and cstd.tap = cd.tap
 Where
-    cstd.Part_No like 'r3457(mac)r' and cd.HEAT = 9591
-    /*and cd.tap = '@TAP'*/ --
-;
+    cstd.Part_No like '@PART' and cd.HEAT = '@HEAT'
