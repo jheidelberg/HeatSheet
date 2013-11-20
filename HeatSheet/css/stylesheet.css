@@ -175,6 +175,22 @@ body {
     End of menu formatting
 **********************************************/
     
+#RecNo {
+    width: 250px;
+    right: 25px;
+    top:  0px;
+    position: absolute;
+    z-index: 99;
+}
+
+#RecNo label {
+    float: left;
+    width: 100px;
+    margin-left: 25px;
+    height: 15px;
+    border: none;
+}
+
 window {
     height: 100%;
     width: 100%;
@@ -296,7 +312,7 @@ input {
     margin: 2px;
 }
     
-  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse {
+  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse, .hideme {
   	visibility: hidden;
       height: 0px;
       margin: 0px;

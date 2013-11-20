@@ -58,9 +58,7 @@ function rpt(request, response, fullBody) {
     db.serialize(function () {
 
         qry = qry.toString().replace('@HEAT', ary["heat"]);
-        qry = qry.toString().replace('@TAP', ary["tap"]);
         qry = qry.toString().replace('@PART', ary["part"]);
-
 
         db.all(qry, function (err, rows) {
             if (err) {
@@ -78,12 +76,13 @@ function rpt(request, response, fullBody) {
 
                 for (var i = 0; i < rows.length; i++) {
                     for (var x in rows[i]) {
-                        MyJSONObj[0] = rows[i];
+                        MyJSONObj[i] = rows[i];
                     }
                 }
                 if (MyJSONObj.length == 0) { MyJSONObj[0] = { 'test': qry, 'status': 'error', 'message': 'none' }; };
                 response.write(JSON.stringify(MyJSONObj));
                 response.end();
+                
             }
         });
     });
