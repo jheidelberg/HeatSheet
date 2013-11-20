@@ -54,35 +54,44 @@ function rpt(request, response, fullBody) {
 //
 //assert(q.all[1].length == 1);
     var MyJSONObj = new Array();
-
+    function Sanitize(str){
+        if (str) { str = str.replace("'", "''"); }else{str='';};
+        return str;
+    }
     db.serialize(function () {
 
-        qry = qry.toString().replace('@HEAT', ary["heat"]);
-        qry = qry.toString().replace('@PART', ary["part"]);
+        qry = qry.toString().replace('@HEAT', Sanitize(ary["heat"]));
+        qry = qry.toString().replace('@PART', Sanitize(ary["part"]));
 
         db.all(qry, function (err, rows) {
             if (err) {
-                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'none' };
+                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'Error: ' + err };
                 response.write(JSON.stringify(MyJSONObj));
                 response.end;
                 return;
             }
-            if (rows.length < 0) {
-                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'none' };
+            if (rows) {
+                if (rows.length == 0) {
+                    MyJSONObj = [{ 'test': 'none', 'status': 'error', 'message': 'no records found.', 'part': 'Unknown' }];
+                    response.write(JSON.stringify(MyJSONObj));
+                    response.end();
+                } else {
+                    for (var i = 0; i < rows.length; i++) {
+                        for (var x in rows[i]) {
+                            MyJSONObj[i] = rows[i];
+                        }
+                    }
+                    if (MyJSONObj.length == 0) { MyJSONObj[0] = { 'test': qry, 'status': 'error', 'message': 'none', 'part': 'Unknown' }; };
+                    response.write(JSON.stringify(MyJSONObj));
+                    response.end();
+                    return;
+                }
+            }
+            else {
+                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'no records found.' };
                 response.write(JSON.stringify(MyJSONObj));
                 response.end;
                 return;
-            } else {
-
-                for (var i = 0; i < rows.length; i++) {
-                    for (var x in rows[i]) {
-                        MyJSONObj[i] = rows[i];
-                    }
-                }
-                if (MyJSONObj.length == 0) { MyJSONObj[0] = { 'test': qry, 'status': 'error', 'message': 'none' }; };
-                response.write(JSON.stringify(MyJSONObj));
-                response.end();
-                
             }
         });
     });

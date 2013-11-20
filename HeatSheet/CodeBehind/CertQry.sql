@@ -43,6 +43,6 @@ from
     Left Join CastData cstd on cstd.heat = cd.heat and cstd.tap = cd.tap
     Left Join Product p on p.part_no = cstd.Part_no and p.heat=cd.heat
 Where
-    cstd.Part_No like '@PART' and cd.HEAT = '@HEAT'
+    cd.HEAT = '@HEAT' and cstd.Part_No like '@PART'
 Order By
    cd.tap

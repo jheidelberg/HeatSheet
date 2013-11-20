@@ -29,7 +29,7 @@
 
 	<body>
 		<div>
-            <textarea id="test" > </textarea>
+            <!-- textarea id="test" > </textarea>-->
 			<header>
             <!--#include virtual="./linkpg.shtml"-->
                 <script type="text/javascript">
@@ -51,52 +51,6 @@
             <script type="text/javascript">
                 var rslts = new Array();
                 function submt() {
-
-                    /*  Removed as this is now handeled by jQry instead...
-
-                    if (window.XMLHttpRequest) {
-                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                    }
-                    else {
-                    // code for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                    if (xmlhttp) { ; } else { alert("NOT ok."); };
-                    }
-                    xmlhttp.onreadystatechange = function () {
-                    document.getElementById("signed").innerHTML += xmlhttp.readyState;
-
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    var d = new Date;
-                    document.getElementById("test").innerHTML = d.toString() + ' ' + xmlhttp.responseText;
-
-
-                    var t = JSON.parse(xmlhttp.responseText);
-                    var itm;
-
-                    for (var i = 0; i < t.length; i++) {
-                    for (var x in t[i]) {
-                    document.getElementById("test").innerHTML += "|" + x + ": " + t[i][x];
-                    itm = document.getElementById(x);
-                    if (itm) { itm.innerHTML = t[i][x] + ' '; }
-                    }
-
-                    }
-
-                    }
-                    else {
-                    //document.getElementById("test").innerHTML = "Error: State: " + xmlhttp.readyState + '<br> Status: ' + xmlhttp.status;
-                    }
-                    }
-
-                    var h = document.getElementsByName("heat")[0].value;
-
-                    var DataToSend = "heat=" + h + "&tap=" + document.getElementsByName("tap")[0].value;
-                    xmlhttp.open("POST", "/Report/FormHandler", true);
-                    xmlhttp.setRequestHeader("Content-Type", "multipart/form-data");
-                    xmlhttp.send(DataToSend);
-
-                    */
                     $.ajax({
                         type: "POST",
                         url: "/Report/FormHandler",
@@ -111,9 +65,6 @@
                             $("#formResponse").html(msg[0].message);
 
                             var d = new Date;
-                            //document.getElementById("test").innerHTML =  msg.toString();
-
-
                             var itm;
                             rslts = msg;
 
@@ -127,7 +78,6 @@
                             }
 
                             for (var x in rslts[0]) {
-                                //document.getElementById("test").innerHTML += "|" + x + ": " + t[i][x];
                                 itm = document.getElementById(x);
                                 if (itm) { itm.innerHTML = rslts[0][x] + ' '; itm.value = rslts[0][x]; }
                             }
@@ -149,7 +99,6 @@
                     var id = document.getElementById("rcdLst").selectedIndex.toString();
                     
                     for (var x in rslts[id]) {
-                        //document.getElementById("test").innerHTML += "|" + x + ": " + t[i][x];
                         itm = document.getElementById(x);
                         if (itm) { itm.innerHTML = rslts[id][x] + ' '; itm.value = rslts[id][x]; }
                     }
@@ -215,7 +164,7 @@
                     <br>Microstructure<br>
                 </div>
 				<div id="Microstructure">
-					<div class="rptlbl" > Percent Nodules: <label id="Nodules"> </label> </div>
+					<div class="rptlbl" > % Nodules: <label id="Nodules"> </label> </div>
 					<div class="rptlbl" > Size: <label id="cSize"> </label>               </div>
 					<div class="rptlbl" > Count: <label id="dCount"> </label>             </div>
 					<div class="rptlbl" > Pearlite: <label id="Pearlite"> </label>       </div>
@@ -225,7 +174,7 @@
 				</div>
                 <hr class="topln">
 				<div id="htproc">
-					<div class="rptlbl" > Heat Treat Procedure: <label id="HeatTreat"> </label> </div>
+					<div class="rptlbl" > Heat Treat Procedure: <label id="HeatTreat" class="wideLbl"> </label> </div>
 				</div>	
 
 			</form>

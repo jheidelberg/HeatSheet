@@ -33,16 +33,20 @@
         margin: 15px;
     }
     .rptlbl {
-    width: 200px;
-    height: 22px;
-    }
-    label {
+    width: 175px;
+    float: left;
+}
+    .rptlbl label {
         float: right;
         width: 50px;
         margin-left: 25px;
         height: 15px;
-    }
-
+        border-bottom-color: #AAAAAA;
+        border-bottom-style: solid;
+}
+.wideLbl {
+    width: 175px;
+}
 
     #Chemistry, #Physical, #Microstructure {
         text-align: center;
@@ -100,16 +104,7 @@
     border-bottom-style: solid;
     border-bottom-color: #000;
 }    
-    .rptlbl {
-    width: 200px;
-    height: 22px;
-    float: left;
-}
-    label {
-        border-bottom-color: #AAAAAA;
-        border-bottom-style: solid;
-        float: right;
-}
+
 
     
 } /* End of print area.*/
@@ -118,15 +113,8 @@
     End of Print, now Screen options
 ***************************************/
 @media screen {
-    .rptlbl {
-    width: 200px;
-    height: 22px;
-    float: left;
-}
-    label {
-        border-bottom-color: #AAAAAA;
-        border-bottom-style: solid;
-}
+
+
 
 
 }
