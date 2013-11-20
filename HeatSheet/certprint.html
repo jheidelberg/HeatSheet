@@ -42,6 +42,8 @@
             <script type="text/javascript">
                 function submt() {
 
+                    /*  Removed as this is now handeled by jQry instead...
+
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
                         xmlhttp = new XMLHttpRequest();
@@ -77,13 +79,14 @@
                         }
                     }
 
-                    //var h = document.getElementsByName("heat")[0].value;
+                    var h = document.getElementsByName("heat")[0].value;
 
-                    //var DataToSend = "heat=" + h + "&tap=" + document.getElementsByName("tap")[0].value;
-                    //xmlhttp.open("POST", "/Report/FormHandler", true);
-                    //xmlhttp.setRequestHeader("Content-Type", "multipart/form-data");
-                    //xmlhttp.send(DataToSend);
+                    var DataToSend = "heat=" + h + "&tap=" + document.getElementsByName("tap")[0].value;
+                    xmlhttp.open("POST", "/Report/FormHandler", true);
+                    xmlhttp.setRequestHeader("Content-Type", "multipart/form-data");
+                    xmlhttp.send(DataToSend);
 
+                    */
                     $.ajax({
                         type: "POST",
                         url: "/Report/FormHandler",
@@ -95,8 +98,7 @@
                             $("#formResponse").removeClass('error');
                             $("#formResponse").removeClass('success');
                             $("#formResponse").addClass(msg.status);
-                            $("#formResponse").html(msg.message);
-                            $("#formResponse").html("Is anyone listening? " + msg[0].message);
+                            $("#formResponse").html(msg[0].message);
 
                             var d = new Date;
                             document.getElementById("test").innerHTML = d.toString() + ' ' + msg.toString();
@@ -132,14 +134,14 @@
             <div id="formResponse"></div>
                 <input type="hidden" id="Table" />
 				<div class="dataent">
-					<div  class="txtent"><p>Customer: <input type="text" name="customer" required/> </div>
-					<div  class="txtent"><p>Part:<input type="text" name="part" required/> </div>
+					<div  class="txtent"><p>Customer: <input type="text" name="customer" /> </div>
+					<div  class="txtent"><p>Part:<input type="text" name="part" id="part" required/> </div>
 					<div  class="txtent"><p>Heat:<input type="text" name="heat" required/> </div>
-					<div  class="txtent"><p>Tap:<input type="text" name="tap" required/> </div>
-					<div  class="txtent"><p>Cust Order #:<input type="text" name="order" /> </div>
-					<div  class="txtent"><p># of parts:<input type="text" name="parts" /> </div>
-					<div  class="txtent"><p>Spec No:<input type="text" name="spec" /></div>
-					<div  class="txtent"><p>Class:<input type="text" name="class" /> </div>
+					<div  class="txtent"><p>Tap:<input type="text" name="tap" id="tap" /> </div>
+					<div  class="txtent"><p>Cust Order #:<input type="text" name="order" id="order" /> </div>
+					<div  class="txtent"><p># of parts:<input type="text" name="parts" id="parts" /> </div>
+					<div  class="txtent"><p>Spec No:<input type="text" name="spec" id="spec" /></div>
+					<div  class="txtent"><p>Class:<input type="text" name="class" id="class" /> </div>
 				</div>
 
                     <div class="ctr">

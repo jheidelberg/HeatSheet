@@ -64,48 +64,24 @@ function rpt(request, response, fullBody) {
 
         db.all(qry, function (err, rows) {
             if (err) {
-                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message':'none' };
+                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'none' };
                 response.write(JSON.stringify(MyJSONObj));
                 response.end;
                 return;
             }
             if (rows.length < 0) {
-                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message':'none' };
+                MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'none' };
                 response.write(JSON.stringify(MyJSONObj));
                 response.end;
+                return;
             } else {
 
                 for (var i = 0; i < rows.length; i++) {
-                    var Obj = {
-                        'Carbon': rows[i].Carbon
-		                , 'Silicon': rows[i].Silicon
-		                , 'Chromium': rows[i].Chromium
-		                , 'Manganese': rows[i].Manganese
-		                , 'Copper': rows[i].Copper
-		                , 'Aluminum': rows[i].Aluminum
-		                , 'Phosphorus': rows[i].Phosphorus
-		                , 'Nickel': rows[i].Nickel
-		                , 'Magnesium': rows[i].Magnesium
-		                , 'Sulfur': rows[i].Sulfur
-		                , 'Moly': rows[i].Moly
-		                , 'Tensile': rows[i].Tensile
-		                , 'AsBr': rows[i].AsBr
-		                , 'Elongation': rows[i].Elongation
-		                , 'AHTBri': rows[i].AHTBri
-		                , 'Yield': rows[i].Yield
-		                , 'cSize': rows[i].cSize
-		                , 'dCount': rows[i].dCount
-		                , 'Pearlite': rows[i].Pearlite
-		                , 'Carbide': rows[i].Carbide
-		                , 'Ferrite': rows[i].Ferrite
-		                , 'HeatTreat': rows[i].HeatTreat
-                        , 'test': qry
-                        , 'status': 'success'
-                        , 'message':'none'
-                    };
-                    MyJSONObj[i] = Obj;
+                    for (var x in rows[i]) {
+                        MyJSONObj[0] = rows[i];
+                    }
                 }
-                if (MyJSONObj.length == 0) { MyJSONObj[0] = { 'test': qry, 'status': 'error', 'message':'none' }; };
+                if (MyJSONObj.length == 0) { MyJSONObj[0] = { 'test': qry, 'status': 'error', 'message': 'none' }; };
                 response.write(JSON.stringify(MyJSONObj));
                 response.end();
             }

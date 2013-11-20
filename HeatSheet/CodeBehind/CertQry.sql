@@ -6,29 +6,38 @@ Select
     , cd.Mn    Manganese
     , cd.Cu    Copper
     , cd.Al    Aluminum
-    , td.Phos    Phosphorus
+/*    , td.Phos    Phosphorus*/
+    , cd.ph    Phosphorus
     , cd.Ni    Nickel
     , cd.Mg    Magnesium
-    , cd.Si    Sulfur
+/*    , cd.Si    Sulfur*/
+    , cd.S    Sulfur
     , cd.Mo    Moly
     , tb.Tensile Tensile
-    , tb.ac_bhn AsBr
+    , cstd.ac_bhn AsBr
     , tb.elong Elongation
     , cstd.aht_bhn AHTBri
     , yield    Yield
-/*    , Nodules    */
+    , Duct Nodules    
     , "c_Size" cSize
     , "d_Count" dCount
     , Pearlite Pearlite
     , Carbide Carbide
     , Ferrite Ferrite
     , ht_Method HeatTreat
-
+    , p.made parts
+    , '' spec
+    , customer
+    , material class
+    , '' test
+    , 'success' status
+    , date() message
 from
     ChemData cd
     left Join TBData tb on tb.Heat = cd.Heat and tb.Tap = cd.Tap
     left Join MicroData md on md.Heat = cd.Heat and md.Tap = cd.Tap
 	left Join TapData td on td.Heat = cd.Heat and td.Tap = cd.Tap
     Left Join CastData cstd on cstd.heat = cd.heat and cstd.tap = cd.tap
+    Left Join Product p on p.part_no = cstd.Part_no
 Where
     cstd.Part_No like '@PART' and cd.HEAT = '@HEAT'

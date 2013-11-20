@@ -296,7 +296,7 @@ input {
     margin: 2px;
 }
     
-  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv {
+  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse {
   	visibility: hidden;
       height: 0px;
       margin: 0px;
