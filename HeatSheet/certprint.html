@@ -77,10 +77,13 @@
                                 document.getElementById("rcdLst").appendChild(opt);
                             }
 
-                            for (var x in rslts[0]) {
-                                itm = document.getElementById(x);
-                                if (itm) { itm.innerHTML = rslts[0][x] + ' '; itm.value = rslts[0][x]; }
-                            }
+                            /*for (var x in rslts[0]) {
+                            itm = document.getElementById(x);
+                            if (rslts[0][x] == null) {rslts[0][x] = '-'; };
+                            if (itm) { itm.innerHTML = rslts[0][x] + ' '; itm.value = rslts[0][x]; };
+
+                            }*/
+                            ChangeRecord();
                         },
                         error: function () {
                             $("#formResponse").removeClass('success');
@@ -97,10 +100,14 @@
                 function ChangeRecord() {
 
                     var id = document.getElementById("rcdLst").selectedIndex.toString();
-                    
+
                     for (var x in rslts[id]) {
                         itm = document.getElementById(x);
-                        if (itm) { itm.innerHTML = rslts[id][x] + ' '; itm.value = rslts[id][x]; }
+                        if (rslts[id][x] == null) { rslts[id][x] = '-'; };
+                        if (rslts[id][x] == 'null') { rslts[id][x] = '-'; };
+                        if (rslts[id][x] == '') { rslts[id][x] = '-'; };
+                        if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; }
+
                     }
                 }
             </script>

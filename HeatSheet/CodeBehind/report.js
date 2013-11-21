@@ -11,6 +11,7 @@ function rpt(request, response, fullBody) {
     
 	var ary = new Array();
 	ary = querystring.parse(fullBody);
+    /*
 	for (var x in ary) {
 		//decodedBody += x + " x: " + ary[x] + "<br>";
 		switch (x){
@@ -24,20 +25,15 @@ function rpt(request, response, fullBody) {
 		} // end switch
 						
 	} //end var x in array
+    */
 
     // request ended -> do something with the data
-    //response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+    
     response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
     var ResponseText = ""; // = querystring.parse(fullBody);
 	var db = new sqlite3.Database('HeatSheet.sql3');
 	var qry = fs.readFileSync('./HeatSheet/CodeBehind/CertQry.sql');
-
-	//qry = qry.toString().replace('@HEAT', ary["heat"]);
-	//qry = qry.toString().replace('@TAP', ary["tap"]);
-	//qry = qry.toString().replace('@PART', ary["part"]);
-
     
-
     // two ways of running the sql: db.serialize that runs inline and 
     //  will block execution while it is running, or regular and will 
     //  require a callback that runs the following exec.
@@ -72,7 +68,7 @@ function rpt(request, response, fullBody) {
             }
             if (rows) {
                 if (rows.length == 0) {
-                    MyJSONObj = [{ 'test': 'none', 'status': 'error', 'message': 'no records found.', 'part': 'Unknown' }];
+                    MyJSONObj = [{ 'test': 'none', 'status': 'error', 'message': 'no records found.', 'part': 'Unknown'}];
                     response.write(JSON.stringify(MyJSONObj));
                     response.end();
                 } else {
@@ -81,7 +77,7 @@ function rpt(request, response, fullBody) {
                             MyJSONObj[i] = rows[i];
                         }
                     }
-                    if (MyJSONObj.length == 0) { MyJSONObj[0] = { 'test': qry, 'status': 'error', 'message': 'none', 'part': 'Unknown' }; };
+                    if (MyJSONObj.length == 0) { MyJSONObj[0] = { 'test': '', 'status': 'error', 'message': 'none', 'part': 'Unknown' }; };
                     response.write(JSON.stringify(MyJSONObj));
                     response.end();
                     return;
@@ -89,7 +85,7 @@ function rpt(request, response, fullBody) {
             }
             else {
                 MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'no records found.' };
-                response.write(JSON.stringify(MyJSONObj));
+                response.write(JSON.stringify(MyJSONObj).replace('null', '-'));
                 response.end;
                 return;
             }

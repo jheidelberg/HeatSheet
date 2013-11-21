@@ -179,7 +179,7 @@ body {
     width: 250px;
     right: 25px;
     top:  20px;
-    position: absolute;
+    position: fixed;
     z-index: 99;
 }
 
