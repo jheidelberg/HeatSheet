@@ -33,19 +33,26 @@
         margin: 15px;
     }
     .rptlbl {
-    width: 175px;
+    width: 200px;
     float: left;
+    text-align: right;
 }
     .rptlbl label {
         float: right;
-        width: 50px;
+        width: 75px;
         margin-left: 25px;
         height: 15px;
         border-bottom-color: #AAAAAA;
         border-bottom-style: solid;
+        text-align: center;
 }
-.wideLbl {
-    width: 175px;
+    .wideLbl {
+        width: 400px;
+        text-align: left;
+}
+    .wideLbl label {
+        width: 250px;
+        text-align: left;
 }
 
     #Chemistry, #Physical, #Microstructure {
