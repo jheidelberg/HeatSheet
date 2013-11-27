@@ -11,7 +11,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="john.heidelberg">
 
-		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico">
@@ -55,14 +55,16 @@
                         type: "POST",
                         url: "/Report/FormHandler",
                         data: $("#Input").serialize(),
+                        timeout: 4500,
                         dataType: "json",
 
                         success: function (msg) {
-
+                            
                             $("#formResponse").removeClass('error');
                             $("#formResponse").removeClass('success');
-                            $("#formResponse").addClass(msg.status);
+                            $("#formResponse").addClass(msg[0].status);
                             $("#formResponse").html(msg[0].message);
+                            document.getElementById("formResponse").setAttribute("class", msg[0].status);
 
                             var d = new Date;
                             var itm;
@@ -85,10 +87,10 @@
                             }*/
                             ChangeRecord();
                         },
-                        error: function () {
+                        error: function (xhr, textStatus, errorThrown) {
                             $("#formResponse").removeClass('success');
                             $("#formResponse").addClass('error');
-                            $("#formResponse").html("There was an error submitting the form. Please try again.");
+                            $("#formResponse").html("There was an error submitting the form. Please try again.<br><br>Error: " + textStatus);
                         }
                     });
 
@@ -113,11 +115,11 @@
             </script>
 			<form id="Input" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post" onsubmit="submt(); return false;">
             <div id="formResponse"></div>
-                <input type="hidden" id="Table" />
+                <input type="hidden" name="table" id="table" value="certprint" />
 				<div class="dataent">
 					<div  class="txtent"><p>Customer: <input type="text" name="customer" id="customer"/> </div>
 					<div  class="txtent"><p>Part:<input type="text" name="part" id="part" required/> </div>
-					<div  class="txtent"><p>Heat:<input type="text" name="heat" required/> </div>
+					<div  class="txtent"><p>Heat:<input type="number" name="heat" required/> </div>
 					<div  class="txtent"><p>Tap:<input type="text" name="tap" id="tap" /> </div>
 					<div  class="txtent"><p>Cust Order #:<input type="text" name="order" id="order" /> </div>
 					<div  class="txtent"><p># of parts:<input type="text" name="parts" id="parts" /> </div>

@@ -1,4 +1,8 @@
 @media all {
+    .lnklbl {
+        color:#2888f1;
+        text-decoration:underline;
+    }
     .HideAll {
         z-index:1;
         top:0px;
@@ -37,12 +41,16 @@
 
     }
     .success{  
-  
+  /*
     border: 2px solid #009400;  
     background: #B3FFB3;  
     color: #555;  
     font-weight: bold;  
-  
+  */
+  visibility: hidden;
+  position: fixed;
+  top: 0px;
+  right: 0px;
 }  
 .ta {
     margin: 5px;
@@ -58,9 +66,10 @@ h2 {
 .error{  
   
     border: 2px solid #DE001A;  
-    background: #FFA8B3;  
-    color: #000;  
+    background: #FF0000;  
+    color: black;  
     font-weight: bold;  
+    
 }  
     .ctr {
         width: 400px;
