@@ -45,7 +45,7 @@ function rpt(request, response, fullBody) {
                 if (err) {
                     MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'Error: ' + err };
                     response.write(JSON.stringify(MyJSONObj));
-                    response.end;
+                    response.end();
                     return;
                 }
                 if (rows) {
@@ -68,7 +68,7 @@ function rpt(request, response, fullBody) {
                 else {
                     MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'no records found.' };
                     response.write(JSON.stringify(MyJSONObj).replace('null', '-'));
-                    response.end;
+                    response.end();
                     return;
                 }
             });
