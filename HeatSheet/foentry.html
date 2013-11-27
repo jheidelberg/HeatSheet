@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>tapdataent</title>
+		<meta name="description" content="">
+		<meta name="author" content="john.heidelberg">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="/css/cert.css">
+        <script type="text/javascript">
+            function openfo() {
+                alert("Hello!");
+            }
+
+            function DisableForm(myForm,cond){ 
+                var Frm = document.getElementById(myForm);
+
+                var node_list = Frm.getElementsByTagName('input');
+                for (var i = 0; i < node_list.length; i++) { 
+                    var node = node_list[i]; 
+                    if (node.getAttribute('type') == 'checkbox' || node.getAttribute('type') == 'submit') {
+                        node.disabled = cond;                        
+                    }
+                    else { node.readOnly = cond; }
+                }
+
+                var node_list = Frm.getElementsByTagName('textarea');
+                for (var i = 0; i < node_list.length; i++) {
+                    node_list[i].disabled = cond;
+                }
+                //fo_number.disabled = !cond;
+            };
+
+
+
+            function newfo() {
+                DisableForm("InputFrm", false);
+            }
+
+            function openfo() {
+                DisableForm("InputFrm", true);
+                document.getElementById("grayarea").removeAttribute("class", "hidemeall");
+                document.getElementById("folist").removeAttribute("class", "hidemeall");
+                document.getElementById("grayarea").setAttribute("class", "HideAll");
+            }
+            function hidegrayarea() {
+                document.getElementById("grayarea").removeAttribute("class", "HideAll");
+                document.getElementById("folist").setAttribute("class", "hidemeall");
+                document.getElementById("grayarea").setAttribute("class", "hideme");
+            }
+        </script>
+
+	</head>
+
+	<body>
+		<div>
+			<header>
+  <!--#include virtual="./linkpg.shtml"-->
+				<h2><br />Jensen International</h2>
+                <h2>Jencast Foundry Division</h2>
+                <h2>Pattern/Tooling Work Order</h2>
+			</header>
+            <div class="hidemeall" id="grayarea" onclick='hidegrayarea();'>
+            </div>
+            <div id="folist" class="hidemeall">
+                This will be my list here.
+            </div>
+            <div class="foNumber">
+                <p> FO number    : <input type="number" disabled name="fo_number" id="fo_number" />
+                    <label id="openbtn" onclick="javascript:openfo();"> Open </label> |
+                    <label id="openbtn" onclick="javascript: DisableForm('InputFrm', false);"> Edit </label> |
+                    <label id="newbtn" onclick="javascript:newfo();"> New </label></p>
+            </div>
+
+			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<input type="hidden" name="fos" value="TEMPLATE" />
+
+
+			<div class="dataent">
+				<div  class="txtent"><p> customer : <input type="text" name="customer" id="customer" /></p> </div>
+				<div  class="txtent"><p> part  : <input type="text" name="part_no"  id="part_no" /></p> </div>
+				<div  class="txtent"><p> description  : <input type="text" name="description"  id="description" /></p> </div>
+				<div  class="txtent"><p> pattern  : <input type="text" name="pattern"  id="pattern" /></p> </div>
+				<div  class="txtent"><p> Anual Usage : <input type="number" name="anuse" id="anuse" /></p> </div>
+				<div  class="txtent"><p> Material : <input type="text" name="material" id="material" /></p> </div>
+                </div>
+
+                <div class="ta">
+				            <p> work to be done</p> <textarea rows="2" cols="60" name="descr_work"   id="descr_work" ></textarea>
+			            </div>
+                <div class="dataent">
+				            <div  class="txtent"><p> due date : <input type="date" name="due_date" id="due_date" /></p> </div>
+				            <div  class="txtent"><p> visual   : <input type="text" name="visual"   id="visual" /></p> </div>
+                <div  class="txtent"><p> Cust Gen :  <input type="checkbox" name="cust_gen" id="cust_gen" /></p> </div>
+     			            <div  class="txtent"><p> reason <input name="reason"   id="reason" /></p></div>
+				            <div  class="txtent"><p> date  : <input type="date" name="fo_date"  id="fo_date" /></p> </div>
+			            </div>
+
+                <div class="ta">
+				            <p> Disposition  </p><textarea rows="2" cols="60" name="disposition"  id="disposition" ></textarea>
+			            </div>
+                <div class="dataent">
+				            <div  class="txtent"><p> Charge #1  : <input type="text" name="chg_who"  id="chg_who" /></p> </div>
+				            <div  class="txtent"><p> Charge #2 : <input type="text" name="chg_who2" id="chg_who2" /></p> </div>
+                </div>
+ 
+
+  
+                <div class="dataent">
+				            <div  class="txtent hidemePrt"><p> disposition2  : <input type="text" name="disposition2"  id="disposition2" /></p> </div>
+				            <div  class="txtent"><p> Completion Date  : <input type="date" name="finish_date"  id="finish_date" /></p> </div>
+                </div>
+                <div class="ta">
+				            <p> Eplain work done</p><textarea rows="2" cols="60"  name="work_done"    id="work_done"></textarea>
+			            </div>
+  				
+			            <br>
+                <div id="btndiv">
+	            <input type="submit" class="submit" value="Submit" id="submitbtn"/>
+                <input class="submit" value="Print" id="prtbtn" onclick="javascript:print();" />
+                </div>
+			</form>
+			<footer>
+				<p>
+					&copy;  <a href="/contact.html" class="contactent">john.heidelberg</a>
+				</p>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -1,5 +1,9 @@
 @media all {
-
+    .foNumber{
+    position: absolute;
+    top: 25px;
+    left: 25px;
+}
     .topln {
         height: 0px;
         color: #AAAAAA;
@@ -68,8 +72,20 @@
 @media print {
 
     /* Hide the date picker items when printing the cert.*/
-    input[type="date"]::-webkit-inner-spin-button, input[type="datetime"]::-webkit-inner-spin-button, input[type="datetime-local"]::-webkit-inner-spin-button, input[type="month"]::-webkit-inner-spin-button, input[type="time"]::-webkit-inner-spin-button, input[type="week"]::-webkit-inner-spin-button, input::-webkit-calendar-picker-indicator, input::-webkit-clear-button   {
+    input[type="date"]::-webkit-inner-spin-button, input[type="datetime"]::-webkit-inner-spin-button, input[type="datetime-local"]::-webkit-inner-spin-button, input[type="month"]::-webkit-inner-spin-button, input[type="time"]::-webkit-inner-spin-button, input[type="week"]::-webkit-inner-spin-button, input::-webkit-calendar-picker-indicator, input::-webkit-clear-button, input::-webkit-inner-spin-button, .hidemePrt   {
         visibility: hidden;
+        width: 1px;
+        height: 1px;
+        position: absolute;
+        z-index: -1;
+}
+
+.foNumber {
+    top: 80px;
+}
+
+input::-webkit-datetime-edit-fields-wrapper, input::-webkit-datetime-edit {
+    
 }
 
     #Chemistry, #Physical, #Microstructure {
