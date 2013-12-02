@@ -18,19 +18,18 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
 		<link rel="stylesheet" type="text/css" href="/css/cert.css">
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
+        <script src="js/vendor/jquery.validation.js"></script>
         <script type="text/javascript">
-            function openfo() {
-                alert("Hello!");
-            }
-
-            function DisableForm(myForm,cond){ 
+            var rslts;
+            function DisableForm(myForm, cond) {
                 var Frm = document.getElementById(myForm);
 
                 var node_list = Frm.getElementsByTagName('input');
-                for (var i = 0; i < node_list.length; i++) { 
-                    var node = node_list[i]; 
+                for (var i = 0; i < node_list.length; i++) {
+                    var node = node_list[i];
                     if (node.getAttribute('type') == 'checkbox' || node.getAttribute('type') == 'submit') {
-                        node.disabled = cond;                        
+                        node.disabled = cond;
                     }
                     else { node.readOnly = cond; }
                 }
@@ -54,6 +53,51 @@
                 document.getElementById("grayarea").removeAttribute("class", "hidemeall");
                 document.getElementById("folist").removeAttribute("class", "hidemeall");
                 document.getElementById("grayarea").setAttribute("class", "HideAll");
+                getList();
+
+            }
+            function loadfo(fonumber) {
+                alert(fonumber);
+                hidegrayarea();
+                $.ajax({
+                    type: "POST",
+                    url: "/Report/FormHandler",
+                    data: '{"fonumber":"' + fonumber + '","table":"getfo"}',
+                    dataType: "json",
+
+                    success: function (msg) {
+
+                        $("#formResponse").removeClass('error');
+                        $("#formResponse").removeClass('success');
+                        $("#formResponse").addClass(msg.status);
+                        $("#formResponse").html(msg[0].message);
+
+                        var d = new Date;
+                        var itm;
+                        rslts = msg;
+
+                        document.getElementById("rcdLst").innerHTML = "";
+
+                        var id = 0;
+
+                        for (var x in rslts[id]) {
+                            itm = document.getElementById(x);
+                            if (rslts[id][x] == null) { rslts[id][x] = ''; };
+                            if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
+                            if (rslts[id][x] == '') { rslts[id][x] = ''; };
+                            if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; }
+                        }
+                    },
+                    error: function () {
+                        $("#formResponse").removeClass('success');
+                        $("#formResponse").addClass('error');
+                        $("#formResponse").html("There was an error submitting the form. Please try again.");
+                    }
+                });
+
+
+                return false;
+
             }
             function hidegrayarea() {
                 document.getElementById("grayarea").removeAttribute("class", "HideAll");
@@ -107,31 +151,31 @@
                 $.ajax({
                     type: "POST",
                     url: "/Report/FormHandler",
-                    data: "",
+                    data: { "table": "folist", "offset": "0" },
                     dataType: "json",
 
                     success: function (msg) {
 
                         $("#formResponse").removeClass('error');
                         $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass(msg.status);
+                        $("#formResponse").addClass(msg[0].status);
                         $("#formResponse").html(msg[0].message);
 
                         var d = new Date;
-                        var itm;
                         rslts = msg;
+                        var Struct = "";
+                        for (var i = 0; i < msg.length; i++) {
+                            Struct += "<div onclick='loadfo(" + msg[i]["FO_NUMBER"] + ");'>" +
+                                       "<section>" + msg[i]["FO_NUMBER"] + "</section>" +
+                                       "<section>" + msg[i]["FO_DATE"] + "</section>" +
+                                       "<section>" + msg[i]["PART_NO"] + "</section>" +
+                                       "<section>" + msg[i]["DESCRIPTION"] + "</section>" +
+                                       "<section>" + msg[i]["CUSTOMER"] + "</section>" +
+                                       "</div>";
 
-                        document.getElementById("rcdLst").innerHTML = "";
-
-                        var id = 0;
-
-                        for (var x in rslts[id]) {
-                            itm = document.getElementById(x);
-                            if (rslts[id][x] == null) { rslts[id][x] = ''; };
-                            if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
-                            if (rslts[id][x] == '') { rslts[id][x] = ''; };
-                            if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; }
                         }
+                        document.getElementById("lst").innerHTML = Struct;
+
                     },
                     error: function () {
                         $("#formResponse").removeClass('success');
@@ -157,7 +201,14 @@
             <div class="hidemeall" id="grayarea" onclick='hidegrayarea();'>
             </div>
             <div id="folist" class="hidemeall">
-                This will be my list here.
+                <div id="box">
+                    <div id="hdr">
+                        <section>fo#</section><section>Date</section><section>Part</section><section>Description</section><section>Customer</section>
+                    </div>
+                    <div id="lst">
+                    </div>
+                    
+                </div>
             </div>
 
 			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">

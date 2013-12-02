@@ -12,7 +12,7 @@ function rpt(request, response, fullBody) {
     
 	var ary = new Array();
 	ary = querystring.parse(fullBody);
-    var ResponseText = ""; // = querystring.parse(fullBody);
+    var ResponseText = ""; 
 	response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
             
 	switch(ary["table"])
@@ -23,8 +23,19 @@ function rpt(request, response, fullBody) {
 	        qry = qry.toString().replace('@PART', Sanitize(ary["part"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
+	    case "folist":
+	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/folist.sql');
+	        qry = qry.toString().replace('@OFFSET', Sanitize(ary["offset"]));
+	        RunIt(request, response, fullBody, qry);
+	        break;
+	    case "getfo":
+	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/getfo.sql');
+	        qry = qry.toString().replace('@fonumber', Sanitize(ary["fonumber"]));
+	        RunIt(request, response, fullBody, qry);
+	        break;
+
 	    default:
-	        response.write('[{"test":"","status":"error","message":"Invalid request."}]');
+	        response.write('[{"test":"","status":"error","message":"Invalid request:  ' + ary["table"] + '"}]');
 	        response.end();
             break;
 	}
