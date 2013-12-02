@@ -30,6 +30,7 @@
         width: 50% ;
         min-width: 450px;
         min-height: 400px;
+        max-height: 95%;
         left:25%;
         right:25%;
         margin-left: auto ;
@@ -54,7 +55,7 @@
     overflow: hidden;
     vertical-align: bottom;
     }
-    #hdr section {
+    #hdr div {
     min-width: 75px;
     width: 20%;
     margin: 0px;
@@ -63,17 +64,27 @@
     }
     #lst {
     width: 100%;
-    height: fill-available;
-    min-height: 339px;
+    height: 339px;
     background-color: rgb(200, 200, 200);
     overflow: scroll;
 }
-    #lst section {
-    min-width: 75px;
-    width: 20%;
+    .lstcls {
+    width: 100%;
+    background-color: LightCoral;
+    float: none;
+    margin: 0px;  
+    border: 1px solid black;
+    height: 20px;
+}
+    #lst div div {
     margin: 0px;
     float: left;
+    height: 15px;
+    min-width: 75px;
+    width: 20%;
+    overflow: hidden;
     }
+
     
     .success{  
   /*
@@ -90,6 +101,7 @@
 .ta {
     margin: 5px;
     width: 99%;
+    padding-left: 50px;
 }  
 .ta p {
     margin: 5px;
@@ -147,19 +159,19 @@ h2 {
 
     .txtent input{
 		float: right;
-        height: 11px;
         margin: 2px;
-        margin-left: 25px;
-        padding: 2px;
-        padding-left: 15px;
-        alignment-adjust: baseline;
-        width: 100px;
+        margin-left: 2px;
+        padding: 0px;
+        padding-left: 5px;
+        alignment-adjust: text-after-edge;
+        width: fill-available;
+        height: 20px;
 }
     .txtent p {
     margin: 2px;
     padding: 2px;
     height: 11px;
-    text-align: right;
+    text-align: left;
 }
 
 body {
@@ -398,12 +410,11 @@ input {
 \*****************************************************************************/
 
 @media print {
-    
     headder {
     margin: 2px;
 }
     
-  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse, .hideme {
+  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse, .hideme, .lnklbl {
   	visibility: hidden;
       height: 0px;
       margin: 0px;
