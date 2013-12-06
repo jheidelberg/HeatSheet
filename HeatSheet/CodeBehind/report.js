@@ -13,27 +13,68 @@ function rpt(request, response, fullBody) {
 	var ary = new Array();
 	ary = querystring.parse(fullBody);
     var ResponseText = ""; 
-	response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
             
 	switch(ary["table"])
 	{
 	    case "certprint":
+	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/CertQry.sql');
 	        qry = qry.toString().replace('@HEAT', Sanitize(ary["heat"]));
 	        qry = qry.toString().replace('@PART', Sanitize(ary["part"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
 	    case "folist":
+	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/folist.sql');
 	        qry = qry.toString().replace('@OFFSET', Sanitize(ary["offset"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
 	    case "getfo":
+	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/getfo.sql');
 	        qry = qry.toString().replace('@fonumber', Sanitize(ary["fonumber"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
+	    case "fos":
+	        response.writeHead(200, "OK", {'Content-Type': 'text/html'});
+	        if (ary["fo_number"] == 0) {
+	            //new fo, add the info
+	            var dataent = require("./dataent");
+	            dataent.dataent(request, response, fullBody);
+	            return;
+	        } else {
+	            // update exsisting fo.
+	            var qry = "";
 
+	            for (var x in ary) {
+	                //decodedBody += x + " x: " + ary[x] + "<br>";
+	                switch (x) {
+	                    case "table":
+	                        break;
+	                    case "fo_number":
+	                        WhereStmt = "Where fo_Number = '" + ary[x] + "'";
+	                        break;
+	                    default:
+	                        qry += ", " + x + " = '" + Sanitize(ary[x]) + "'";
+	                        break;
+	                }
+
+	            }
+	            ResponseText = fs.readFileSync('./HeatSheet/response.html');
+	            ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+	            db.all("Update fos set " + qry.substring(1) + WhereStmt, function (err, rows) {
+	                if (err) {
+	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was <b>NOT</b> acepted.  Please go back and check your entries.  Thank you.');
+	                }
+	                else {
+	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your update was acepted.  Thank you.');
+	                }
+	                response.write((ResponseText));
+	                response.end();
+	            });
+
+	        }
+	        break;
 	    default:
 	        response.write('[{"test":"","status":"error","message":"Invalid request:  ' + ary["table"] + '"}]');
 	        response.end();
@@ -45,6 +86,11 @@ function rpt(request, response, fullBody) {
     
     function Sanitize(str){
         if (str) { str = str.replace("'", "''").replace('"','""'); }else{str='';};
+        if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
+        if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
+        if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
+        if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
+
         return str;
     }
 
@@ -54,7 +100,7 @@ function rpt(request, response, fullBody) {
 
             db.all(qry, function (err, rows) {
                 if (err) {
-                    MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'Error: ' + err };
+                    MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'Error: ' + err + ' <br> ' + qry };
                     response.write(JSON.stringify(MyJSONObj));
                     response.end();
                     return;

@@ -20,6 +20,11 @@ function DataEnt(request, response, fullBody) {
 			case "Table" :
 				qryent = "insert into " + ary[x] + " ( ";
 				break;
+			case "table" :
+				qryent = "insert into " + ary[x] + " ( ";
+				break;
+            case "fo_number":
+                break;
 			default :
 				insertstmt += ", " + x;
 				valstmt += ",'" + ary[x] + "'";
@@ -58,7 +63,7 @@ function DataEnt(request, response, fullBody) {
 	        if (err) {
 	            ResponseText = "Problem executiong the qry: " + err;
 	            response.write(ResponseText);
-	            response.end;
+	            response.end();
 	            return;
 	        }
 	        // response.write("Thank you for entering this info.");
@@ -69,10 +74,8 @@ function DataEnt(request, response, fullBody) {
 	        ResponseText = fs.readFileSync('./HeatSheet/response.html');
 	        ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
 
-
-	        response.write((ResponseText)); //utils.inspect
-	        //response.write('</pre></body></html>');
-
+            ResponseText = ResponseText.replace('<!-- Response Hdr -->','<br>Your entry was acepted.  Thank you.')
+	        response.write((ResponseText));
 	        response.end();
 	        return;
 	    });

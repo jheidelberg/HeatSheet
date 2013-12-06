@@ -18,5 +18,6 @@ select
     , finish_date   finish_date
     , reason        reason
     , disposition2  disposition2
+    , 'fos'         "table"
 from fos
 where FO_Number = '@fonumber'

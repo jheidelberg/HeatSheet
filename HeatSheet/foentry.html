@@ -22,7 +22,7 @@
         <script src="js/vendor/jquery.validation.js"></script>
         <script type="text/javascript">
             var rslts;
-            function DisableForm(myForm, cond) {
+            function DisableForm(myForm, cond, reset) {
                 var Frm = document.getElementById(myForm);
 
                 var node_list = Frm.getElementsByTagName('input');
@@ -32,30 +32,41 @@
                         node.disabled = cond;
                     }
                     else { node.readOnly = cond; }
+                    if (reset & node.getAttribute('type') != 'submit' & node.id != 'prtbtn' & node.name != 'table') { node.innerHTML = ''; node.value = ''; };
+                    
                 }
 
                 var node_list = Frm.getElementsByTagName('textarea');
                 for (var i = 0; i < node_list.length; i++) {
+                    if (reset) { node_list[i].innerHTML = '';node_list[i].value = '';};
                     node_list[i].disabled = cond;
                 }
-                //fo_number.disabled = !cond;
+                document.getElementById("fo_number").readOnly = true;
+                if (reset) { document.getElementById("fo_number").innerHTML = 0; document.getElementById("fo_number").value = 0; };
+
             };
 
 
 
             function newfo() {
                 document.getElementById("fo_number").value = 0;
-                DisableForm("InputFrm", false);
+                DisableForm("InputFrm", false, true);
+
             }
 
             function openfo() {
-                DisableForm("InputFrm", true);
+                DisableForm("InputFrm", true, false);
                 document.getElementById("grayarea").removeAttribute("class", "hidemeall");
                 document.getElementById("folist").removeAttribute("class", "hidemeall");
                 document.getElementById("grayarea").setAttribute("class", "HideAll");
                 getList();
 
             }
+
+            function editfo() {
+                if (document.getElementById("fo_number").value) { DisableForm('InputFrm', false, false); } else { newfo(); };
+            }
+
             function loadfo(fonumber) {
                 hidegrayarea();
                 $.ajax({
@@ -82,7 +93,7 @@
                             if (rslts[id][x] == null) { rslts[id][x] = ''; };
                             if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
                             if (rslts[id][x] == '') { rslts[id][x] = ''; };
-                            if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x];  };
+                            if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; };
                         };
                     },
                     error: function () {
@@ -166,14 +177,14 @@
                 </div>
             </div>
 
-			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
-			<input type="hidden" name="fos" value="TEMPLATE" />
+			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
+			<input type="hidden" name="table" value="fos" />
 
                 <div class="foNumber">
                     <p>
-                        FO number    : <input type="number" disabled name="fo_number" id="fo_number" />                        
-                        <label id="openbtn" class="lnklbl" onclick="javascript:openfo();"> Open</label> 
-                        <label id="openbtn" class="lnklbl" onclick="javascript: DisableForm('InputFrm', false);"> Edit</label>
+                        FO number    : <input type="number" name="fo_number" id="fo_number" readonly="true" />    &nbsp;&nbsp; 
+                        <label id="openbtn" class="lnklbl" onclick="javascript:openfo();">Open</label> &nbsp;&nbsp;
+                        <label id="openbtn" class="lnklbl" onclick="javascript: editfo();">Edit</label>&nbsp;&nbsp;
                         <label id="newbtn" class="lnklbl" onclick="javascript:newfo();"> New </label>
                     </p>
                 </div>
@@ -203,7 +214,7 @@
 			            </div>
                 <div class="dataent">
 				            <div  class="txtent"><p> Charge #1  : <input type="text" name="chg_who"  id="chg_who" /></p> </div>
-				            <div  class="txtent"><p> Charge #2 : <input type="text" name="chg_who2" id="chg_who2" /></p> </div>
+				            <div  class="txtent"><p> Charge #2 : <input type="text" name="chg_who_2" id="chg_who_2" /></p> </div>
                 </div>
  
 
@@ -219,7 +230,7 @@
 			            <br>
                 <div id="btndiv">
 	            <input type="submit" class="submit" value="Submit" id="submitbtn"/>
-                <input class="submit" value="Print" id="prtbtn" onclick="javascript:print();" />
+                <input class="submit" value="Print" id="prtbtn" onclick="javascript:print();"/>
                 </div>
 			</form>
 			<footer>
