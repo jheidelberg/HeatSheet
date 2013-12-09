@@ -1,4 +1,4 @@
-Updated 11/08/2013
+Updated 12/06/2013
 
 The following items need to be done:
 
@@ -6,9 +6,6 @@ Server side sanitiztion of user input.
 
 Grid/Table view of data & links to edit/delete data
 
-AJAX/JSON calls for reports
-
-return info as key/value pairs for report function so that it can be made more genaric for future expandibility.
-
 Create reportibility/trending on/of data.
 
+Remove ability to return server side documents

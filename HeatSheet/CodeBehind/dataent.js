@@ -1,11 +1,15 @@
-var sqlite3 = require('/Program Files/nodejs/node_modules/sqlite3/sqlite3'); 
+//added as the path on the server (2003, won't work with iis node) has to have the proper loading for the sqlite3 and that isn't the same as this...
+path = require("path");
+if (path.exists('sqlite3')) {var sqlite3 = require('sqlite3');};
+if (path.exists('c:\Program Files\nodejs\node_modules\sqlite3\sqlite3.js')) {var sqlite3 = require('c:\Program Files\nodejs\node_modules\sqlite3\sqlite3');};
+if (path.exists('c:\Program Files (x86)\nodejs\node_modules\sqlite3\sqlite3.js')) {var sqlite3 = require('c:\Program Files (x86)\nodejs\node_modules\sqlite3\sqlite3');};
+
 var fs = require("fs");
 var querystring = require('querystring');
 var utils = require('util');
 
 function DataEnt(request, response, fullBody) {
 	// request ended -> do something with the data
-	response.writeHead(200, "OK", {'Content-Type': 'text/html'});
 					
 	// parse the received body data
 	var ResponseText = ""; // = querystring.parse(fullBody);
@@ -62,6 +66,7 @@ function DataEnt(request, response, fullBody) {
 	    db.exec(qryent, function (err) {
 	        if (err) {
 	            ResponseText = "Problem executiong the qry: " + err;
+	            response.writeHead(200, "OK", {'Content-Type': 'text/html'});
 	            response.write(ResponseText);
 	            response.end();
 	            return;
@@ -75,7 +80,9 @@ function DataEnt(request, response, fullBody) {
 	        ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
 
             ResponseText = ResponseText.replace('<!-- Response Hdr -->','<br>Your entry was acepted.  Thank you.')
-	        response.write((ResponseText));
+	        
+	        response.writeHead(200, "OK", {'Content-Type': 'text/html'});
+            response.write((ResponseText));
 	        response.end();
 	        return;
 	    });

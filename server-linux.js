@@ -12,7 +12,7 @@
 var router = require("./router");
 
 var cluster = require('cluster');
-var PORT = process.env.PORT;// || +process.env.PORT;
+var PORT = 9250; //process.env.PORT;// || +process.env.PORT;
 
 
 if (cluster.isMaster) {
