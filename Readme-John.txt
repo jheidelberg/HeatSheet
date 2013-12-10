@@ -12,6 +12,19 @@ Also, some Node & SQLite3 install probs solved by:
 www.bitbonsai.com/nodejs-npm-and-sqlite3/
 
 
+Update (12-10-2013) from installing on FP01:
+
+Notes on getting things running on FP01:
+
+    I installed Microsoft Visual C++ Express 2010, Python 3.3, Python 3.3 Extentions, GetGnewWin32, Node.js and Sqlite3.
+    FP01 is a Microsoft Windows 2003 Server.
+    I tried to download and install the VS c++ from the web site and install that way, but it didn't work.  Downloaded 
+    and created  CD and it worked that way.
+    
+    Although I'd prefer to run this via IISNode, IISNode requires Server 2008 or better.  My servers are all 2003 at this
+    time.  Hence, to run this on the servers the MS utility ServeAny.exe can be used to run this.
+
+
 /*****************************************************************\
 
 Exert from http://delog.wordpress.com/2012/10/26/node-js-and-sqlite3/

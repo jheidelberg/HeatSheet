@@ -1,8 +1,6 @@
 //added as the path on the server (2003, won't work with iis node) has to have the proper loading for the sqlite3 and that isn't the same as this...
 path = require("path");
-if (path.exists('sqlite3')) {var sqlite3 = require('sqlite3');};
-if (path.exists('c:\Program Files\nodejs\node_modules\sqlite3\sqlite3.js')) {var sqlite3 = require('c:\Program Files\nodejs\node_modules\sqlite3\sqlite3');};
-if (path.exists('c:\Program Files (x86)\nodejs\node_modules\sqlite3\sqlite3.js')) {var sqlite3 = require('c:\Program Files (x86)\nodejs\node_modules\sqlite3\sqlite3');};
+var sqlite3 = require('node_modules/sqlite3/sqlite3');
 
 var fs = require("fs");
 var querystring = require('querystring');

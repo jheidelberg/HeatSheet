@@ -1,11 +1,13 @@
-var sqlite3 = require('/Program Files/nodejs/node_modules/sqlite3/sqlite3'); 
+path = require("path");
+var sqlite3 = require('node_modules/sqlite3/sqlite3');
+var db = new sqlite3.Database('HeatSheet.sql3');
 var fs = require("fs");
 var querystring = require('querystring');
 var utils = require('util');
 var SelStmt = "Select * ";
 var FromStmt = "From ";
 var WhereStmt = "Where ";
-var db = new sqlite3.Database('HeatSheet.sql3');
+
 
 function rpt(request, response, fullBody) {
 
