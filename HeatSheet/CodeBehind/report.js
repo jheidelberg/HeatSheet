@@ -40,7 +40,35 @@ function rpt(request, response, fullBody) {
 	        qry = qry.toString().replace('@PATTERN', Sanitize(ary["pattern"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
-	    case "getfo":
+	    case "prodsearch":
+	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/prodqry.sql');
+	        qry = qry.toString().replace('@OFFSET', 0); //Sanitize(ary["offset"]));
+	        qry = qry.toString().replace('@CUSTOMER', Sanitize(ary["customer"]));
+	        qry = qry.toString().replace('@PART', Sanitize(ary["part"]));
+	        qry = qry.toString().replace('@HEAT', Sanitize(ary["heat"]));
+	        RunIt(request, response, fullBody, qry);
+	        break;
+	    case "getProduct":
+	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/getprod.sql');
+	        qry = qry.toString().replace('@ROWID', Sanitize(ary["rowid"]));
+	        RunIt(request, response, fullBody, qry);
+	        break;
+	    case "GenSearch":
+            response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GenericQry.sql');
+	        qry = qry.toString().replace('@Table', Sanitize(ary["table"]));
+	        RunIt(request, response, fullBody, qry);
+	        break;
+	    case "getGen":
+            response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GetGeneric.sql');
+	        qry = qry.toString().replace('@ROWID', Sanitize(ary["rowid"]));
+	        qry = qry.toString().replace('@TABLE', Sanitize(ary["table"]));
+	        RunIt(request, response, fullBody, qry);
+	        break;
+        case "getfo":
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/getfo.sql');
 	        qry = qry.toString().replace('@fonumber', Sanitize(ary["fonumber"]));
@@ -111,7 +139,7 @@ function rpt(request, response, fullBody) {
 
             db.all(qry, function (err, rows) {
                 if (err) {
-                    MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'Error: ' + err + ' <br> ' + qry };
+                    MyJSONObj[0] = { 'test': err, 'status': 'error', 'message': 'Error: ' + err + ' <br> '};
                     response.write(JSON.stringify(MyJSONObj));
                     response.end();
                     return;

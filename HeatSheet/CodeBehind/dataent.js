@@ -7,13 +7,12 @@ var querystring = require('querystring');
 var utils = require('util');
 
 function DataEnt(request, response, fullBody) {
-	// request ended -> do something with the data
-					
-	// parse the received body data
-	var ResponseText = ""; // = querystring.parse(fullBody);
+	var ResponseText = "";
 	var qryent = "";
 	var insertstmt = "";
 	var valstmt = "";
+	var updtstmt = "";
+	var wherestmt = '';
 	var ary = new Array();
 	ary = querystring.parse(fullBody);
 	for (var x in ary) {
@@ -27,15 +26,24 @@ function DataEnt(request, response, fullBody) {
 				break;
             case "fo_number":
                 break;
-			default :
-				insertstmt += ", " + x;
-				valstmt += ",'" + ary[x] + "'";
-				break;
+            case "rowid":
+                if (ary[x]!=0){wherestmt = "where rowid = " + ary[x];}                
+                break;
+            default:
+                insertstmt += ", [" + x + "]";
+                valstmt += ",'" + ary[x] + "'";
+                updtstmt += ",[" + x + "] = '" + ary[x] + "'";
+                break;
 		}
 						
 	}
-					
+
 	qryent += insertstmt.substring(1) + " ) values (" + valstmt.substring(1) + " ) ";
+    
+    //if the query is an update, then the record ID will not be empty or 0
+    //hence the where statement will not be blank.
+    
+    if(wherestmt!=''){qryent = 'Update ' + ary['table'] + ' set ' + updtstmt.substr(1) + ' ' + wherestmt};
 
 	fs.exists('HeatSheet.sql3', function (exists) {
 	    var db = new sqlite3.Database('HeatSheet.sql3');
@@ -63,7 +71,7 @@ function DataEnt(request, response, fullBody) {
 
 	    db.exec(qryent, function (err) {
 	        if (err) {
-	            ResponseText = "Problem executiong the qry: " + err;
+	            ResponseText = "Problem executiong the qry: " + err + '    <br>    ' + qryent;
 	            response.writeHead(200, "OK", {'Content-Type': 'text/html'});
 	            response.write(ResponseText);
 	            response.end();
