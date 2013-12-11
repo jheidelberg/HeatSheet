@@ -22,23 +22,27 @@
         <script src="js/vendor/jquery.validation.js"></script>
         <script type="text/javascript">
             var rslts;
-            function DisableForm(myForm, cond, reset) {
+            function DisableForm(myForm, cond, reset)
+            {
                 var Frm = document.getElementById(myForm);
 
                 var node_list = Frm.getElementsByTagName('input');
-                for (var i = 0; i < node_list.length; i++) {
+                for (var i = 0; i < node_list.length; i++)
+                {
                     var node = node_list[i];
-                    if (node.getAttribute('type') == 'checkbox' || node.getAttribute('type') == 'submit') {
+                    if (node.getAttribute('type') == 'checkbox' || node.getAttribute('type') == 'submit')
+                    {
                         node.disabled = cond;
                     }
                     else { node.readOnly = cond; }
                     if (reset & node.getAttribute('type') != 'submit' & node.id != 'prtbtn' & node.name != 'table') { node.innerHTML = ''; node.value = ''; };
-                    
+
                 }
 
                 var node_list = Frm.getElementsByTagName('textarea');
-                for (var i = 0; i < node_list.length; i++) {
-                    if (reset) { node_list[i].innerHTML = '';node_list[i].value = '';};
+                for (var i = 0; i < node_list.length; i++)
+                {
+                    if (reset) { node_list[i].innerHTML = ''; node_list[i].value = ''; };
                     node_list[i].disabled = cond;
                 }
                 document.getElementById("fo_number").readOnly = true;
@@ -48,26 +52,30 @@
 
 
 
-            function newfo() {
+            function newfo()
+            {
                 document.getElementById("fo_number").value = 0;
                 DisableForm("InputFrm", false, true);
 
             }
 
-            function openfo() {
+            function openfo()
+            {
                 DisableForm("InputFrm", true, false);
                 document.getElementById("grayarea").removeAttribute("class", "hidemeall");
                 document.getElementById("folist").removeAttribute("class", "hidemeall");
                 document.getElementById("grayarea").setAttribute("class", "HideAll");
-                getList();
+                getList(false);
 
             }
 
-            function editfo() {
+            function editfo()
+            {
                 if (document.getElementById("fo_number").value) { DisableForm('InputFrm', false, false); } else { newfo(); };
             }
 
-            function loadfo(fonumber) {
+            function loadfo(fonumber)
+            {
                 hidegrayarea();
                 $.ajax({
                     type: "POST",
@@ -75,7 +83,8 @@
                     data: { "fonumber": fonumber, "table": "getfo" },
                     dataType: "json",
 
-                    success: function (msg) {
+                    success: function (msg)
+                    {
 
                         $("#formResponse").removeClass('error');
                         $("#formResponse").removeClass('success');
@@ -88,7 +97,8 @@
 
                         var id = 0;
 
-                        for (var x in rslts[id]) {
+                        for (var x in rslts[id])
+                        {
                             itm = document.getElementById(x);
                             if (rslts[id][x] == null) { rslts[id][x] = ''; };
                             if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
@@ -96,7 +106,8 @@
                             if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; };
                         };
                     },
-                    error: function () {
+                    error: function ()
+                    {
                         $("#formResponse").removeClass('success');
                         $("#formResponse").addClass('error');
                         $("#formResponse").html("There was an error submitting the form. Please try again.");
@@ -107,21 +118,34 @@
                 return false;
 
             }
-            function hidegrayarea() {
+            function hidegrayarea()
+            {
                 document.getElementById("grayarea").removeAttribute("class", "HideAll");
                 document.getElementById("folist").setAttribute("class", "hidemeall");
                 document.getElementById("grayarea").setAttribute("class", "hideme");
             }
 
-            function getList() {
+            function getList(srch)
+            {
+                var dta = { "table": "folist", "offset": "0" };
+                if (srch == true)
+                {
+                    dta = {
+                        "table": "fosearch"
+                        , "part": document.getElementById("part").value
+                        , "customer": document.getElementById("customer").value
+                        , "pattern": document.getElementById("pattern").value
+                    };
+                };
                 $.ajax({
                     type: "POST",
                     url: "/Report/FormHandler",
-                    data: { "table": "folist", "offset": "0" },
+                    data: dta,
                     dataType: "json",
 
-                    success: function (msg) {
-
+                    success: function (msg)
+                    {
+                        document.getElementById("lst").innerHTML = "";
                         $("#formResponse").removeClass('error');
                         $("#formResponse").removeClass('success');
                         $("#formResponse").addClass(msg[0].status);
@@ -130,7 +154,8 @@
                         var d = new Date;
                         rslts = msg;
                         var Struct = "";
-                        for (var i = 0; i < msg.length; i++) {
+                        for (var i = 0; i < msg.length; i++)
+                        {
                             Struct += "<div class='lstcls' onclick='loadfo(" + msg[i]["FO_NUMBER"] + ");'>" +
                                        "<div>" + msg[i]["FO_NUMBER"] + "</div>" +
                                        "<div>" + msg[i]["FO_DATE"] + "</div>" +
@@ -143,12 +168,14 @@
                         document.getElementById("lst").innerHTML = Struct;
 
                     },
-                    error: function () {
+                    error: function (msg)
+                    {
                         $("#formResponse").removeClass('success');
                         $("#formResponse").addClass('error');
-                        $("#formResponse").html("There was an error submitting the form. Please try again.");
+                        $("#formResponse").html("There was an error submitting the form. Please try again." + msg[0]);
                     }
                 });
+                return false;
             }
 
         </script>
@@ -168,6 +195,12 @@
             </div>
             <div id="folist" class="hidemeall">
                 <div id="box">
+                    <!--form id="FOSearch" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post" onsubmit="getList();"-->
+                    <div id="searchbox">
+                        <input type="hidden" name="table" value="fosearch">
+                        <input type="text" id="customer" name="customer" placeholder="Customer"><input type="text" id="part" name="part" placeholder="Part"><input type="text" id="pattern" name="pattern" placeholder="Pattern"><button onclick="getList(true);">Search</button>
+                    </div>
+                    <!--/form-->
                     <div id="hdr">
                         <div>fo#</div><div>Date</div><div>Part</div><div>Description</div><div>Customer</div>
                     </div>

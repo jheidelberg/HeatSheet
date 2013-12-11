@@ -31,6 +31,15 @@ function rpt(request, response, fullBody) {
 	        qry = qry.toString().replace('@OFFSET', Sanitize(ary["offset"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
+	    case "fosearch":
+	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/fosearch.sql');
+	        qry = qry.toString().replace('@OFFSET', 0); //Sanitize(ary["offset"]));
+	        qry = qry.toString().replace('@CUSTOMER', Sanitize(ary["customer"]));
+	        qry = qry.toString().replace('@PART', Sanitize(ary["part"]));
+	        qry = qry.toString().replace('@PATTERN', Sanitize(ary["pattern"]));
+	        RunIt(request, response, fullBody, qry);
+	        break;
 	    case "getfo":
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/getfo.sql');
