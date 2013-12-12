@@ -1,4 +1,4 @@
 select rowid,*
-from @table
+from @TABLE
 order by rowid DESC
 limit 0,100

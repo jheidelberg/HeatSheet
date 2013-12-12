@@ -18,9 +18,10 @@ function DataEnt(request, response, fullBody) {
 	for (var x in ary) {
 		//decodedBody += x + " x: " + ary[x] + "<br>";
 		switch (x){
-			case "Table" :
-				qryent = "insert into " + ary[x] + " ( ";
-				break;
+		    case "Table":
+		        qryent = "insert into " + ary[x] + " ( ";
+		        throw Error();
+		        break;
 			case "table" :
 				qryent = "insert into " + ary[x] + " ( ";
 				break;

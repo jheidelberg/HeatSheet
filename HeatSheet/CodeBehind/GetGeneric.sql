@@ -1,3 +1,3 @@
 select rowid,*
-from @table
+from @TABLE
 where rowid = '@ROWID'

@@ -58,14 +58,14 @@ function rpt(request, response, fullBody) {
 	    case "GenSearch":
             response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GenericQry.sql');
-	        qry = qry.toString().replace('@Table', Sanitize(ary["table"]));
+	        qry = qry.toString().replace('@TABLE', Sanitize(ary["Seltable"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
 	    case "getGen":
             response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GetGeneric.sql');
 	        qry = qry.toString().replace('@ROWID', Sanitize(ary["rowid"]));
-	        qry = qry.toString().replace('@TABLE', Sanitize(ary["table"]));
+	        qry = qry.toString().replace('@TABLE', Sanitize(ary["Seltable"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
         case "getfo":
