@@ -128,8 +128,13 @@
                     dta = {
                         "table": "GenSearch"
                         , "Seltable": document.getElementById("table").value
-                        , "customer": document.getElementById("customer").value
-                        , "pattern": document.getElementById("pattern").value
+                        , "Opt1": document.getElementById("Opt1").name
+                        , "Opt2": document.getElementById("Opt2").name
+                        //, "Opt3": document.getElementById("Opt3").name
+                        , "Par1": document.getElementById("Opt1").value
+                        , "Par2": document.getElementById("Opt2").value
+                        //, "Par3": document.getElementById("Opt3").value
+    
                     };
                 };
                 $.ajax({
@@ -237,12 +242,12 @@
             <div id="ObjList" class="hidemeall">
                 <div id="box">
                     
-                    <!--div id="searchbox">
-                       <input type="text" id="customer" name="customer" placeholder="Customer">
-                        <input type="text" id="part" name="part" placeholder="Part">
-                        <input type="text" id="heat" name="heat" placeholder="heat">
+                    <div id="searchbox">
+                        <input type="text" id="Opt1" name="Heat" placeholder="Heat">
+                        <input type="text" id="Opt2" name="Tap" placeholder="Tap">
+                        <!--input type="text" id="Opt3" name="Material" placeholder="Material"-->
                         <button onclick="getList(true);">Search</button>
-                    </div-->
+                    </div>
                     
                     <div id="hdr">
                         <div>Record#</div><div>Date</div><div>Heat</div><div>Tap</div>

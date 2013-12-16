@@ -59,7 +59,53 @@ function rpt(request, response, fullBody) {
             response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GenericQry.sql');
 	        qry = qry.toString().replace('@TABLE', Sanitize(ary["Seltable"]));
+            if(ary["Opt1"])
+            {
+	            qry = qry.toString().replace('@OPT1', Sanitize(ary["Opt1"]));
+                qry = qry.toString().replace('@PAR1', Sanitize(ary["Par1"]));
+            } else
+            { 
+                qry = qry.toString().replace('@OPT1', 1);
+                qry = qry.toString().replace('@PAR1', 1);
+            }
+            if(ary["Opt2"])
+            {
+	            qry = qry.toString().replace('@OPT2', Sanitize(ary["Opt2"]));
+                qry = qry.toString().replace('@PAR2', Sanitize(ary["Par2"]));
+            } else
+            { 
+                qry = qry.toString().replace('@OPT2', 2);
+                qry = qry.toString().replace('@PAR2', 2);
+            }
+            if(ary["Opt3"])
+            {
+	            qry = qry.toString().replace('@OPT3', Sanitize(ary["Opt3"]));
+                qry = qry.toString().replace('@PAR3', Sanitize(ary["Par3"]));
+            } else
+            { 
+                qry = qry.toString().replace('@OPT3', 3);
+                qry = qry.toString().replace('@PAR3', 3);
+            }
 	        RunIt(request, response, fullBody, qry);
+	        break;
+	    case "GenDel":
+            response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GenericDel.sql');
+	        qry = qry.toString().replace('@TABLE', Sanitize(ary["Seltable"]));
+	        qry = qry.toString().replace('@ROWID', Sanitize(ary["rowid"]));
+	        ResponseText = fs.readFileSync('./HeatSheet/response.html');
+	            ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+	            db.all("Update fos set " + qry.substring(1) + WhereStmt, function (err, rows) {
+	                if (err) {
+	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was <b>NOT</b> deleted.  Please go back and check your entries.  Thank you.');
+	                }
+	                else {
+	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was deleted.  Thank you.');
+	                }
+	                response.write((ResponseText));
+	                response.end();
+	            });
+
 	        break;
 	    case "getGen":
             response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
