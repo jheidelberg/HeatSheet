@@ -24,6 +24,9 @@ Notes on getting things running on FP01:
     Although I'd prefer to run this via IISNode, IISNode requires Server 2008 or better.  My servers are all 2003 at this
     time.  Hence, to run this on the servers the MS utility ServeAny.exe can be used to run this.
 
+    Because I'm running this on Server 2003, I'm runing this using the server-linux.js, not the server.js as my intenet 
+    had been.
+
 
 /*****************************************************************\
 
