@@ -7,30 +7,40 @@ var querystring = require('querystring');
 var utils = require('util');
 
 function DataEnt(request, response, fullBody) {
+    //Initilize my basic vars that I'm using to create my statments
+    //first, what I wish to send back
 	var ResponseText = "";
+    //what I'm entering
 	var qryent = "";
+    //insert statment if that is what will happen
 	var insertstmt = "";
+    //my values for the insert statment
 	var valstmt = "";
+    //updates have vars and updates together
 	var updtstmt = "";
+    //the where statment has to be evaluated seperate for the update stmt
 	var wherestmt = '';
 	var ary = new Array();
 	ary = querystring.parse(fullBody);
 	for (var x in ary) {
 		//decodedBody += x + " x: " + ary[x] + "<br>";
 		switch (x){
-		    case "Table":
-		        qryent = "insert into " + ary[x] + " ( ";
-		        throw Error();
-		        break;
 			case "table" :
+                //wwhat table am I inseting this into or updating?
 				qryent = "insert into " + ary[x] + " ( ";
 				break;
             case "fo_number":
+                //fo numbers are not used for datent, they are entered elsewhere.
                 break;
             case "rowid":
+        /*
+            if I have a rowid, that means I'm udating, not adding a new one.
+            if it is 0, then I am adding a new row.            
+        */
                 if (ary[x]!=0){wherestmt = "where rowid = " + ary[x];}                
                 break;
             default:
+                // all else is what vars I'm adding or updating to the db.
                 insertstmt += ", [" + x + "]";
                 valstmt += ",'" + ary[x] + "'";
                 updtstmt += ",[" + x + "] = '" + ary[x] + "'";
@@ -39,14 +49,21 @@ function DataEnt(request, response, fullBody) {
 						
 	}
 
+    //the qury will be left in an indeterminant state, so I need to finish it off.
 	qryent += insertstmt.substring(1) + " ) values (" + valstmt.substring(1) + " ) ";
     
-    //if the query is an update, then the record ID will not be empty or 0
-    //hence the where statement will not be blank.
+        /*
+            if the query is an update, then the record ID will not be empty or 0
+            hence the where statement will not be blank.            
+        */
     
     if(wherestmt!=''){qryent = 'Update ' + ary['table'] + ' set ' + updtstmt.substr(1) + ' ' + wherestmt};
-
-	fs.exists('HeatSheet.sql3', function (exists) {
+    
+        /*
+        this should never happen.  If it does, I have a blank db and I'm starting with
+        over 15 years of data that I'm importing.  So, this is reall only for the test side.
+        */
+    fs.exists('HeatSheet.sql3', function (exists) {
 	    var db = new sqlite3.Database('HeatSheet.sql3');
 
 	    if (!exists) {
@@ -70,6 +87,14 @@ function DataEnt(request, response, fullBody) {
 
 	    }
 
+        
+        /*
+            exec the stmnt and run the function.  Note that the function has to return and all the actual
+            running of the code is done in the returning function.  Hence, the response can NOT be After the
+            function but has to be In the function or else it will all be out of order and the response will
+            thus be empty.
+        */
+
 	    db.exec(qryent, function (err) {
 	        if (err) {
 	            ResponseText = "Problem executiong the qry: " + err + '    <br>    ' + qryent;
@@ -78,12 +103,12 @@ function DataEnt(request, response, fullBody) {
 	            response.end();
 	            return;
 	        }
-	        // response.write("Thank you for entering this info.");
-
 
 	        // output the decoded data to the HTTP response          
 
 	        ResponseText = fs.readFileSync('./HeatSheet/response.html');
+            
+            //Note the included template linkpg.shtml  this will include the dropdown menu
 	        ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
 
             ResponseText = ResponseText.replace('<!-- Response Hdr -->','<br>Your entry was acepted.  Thank you.')

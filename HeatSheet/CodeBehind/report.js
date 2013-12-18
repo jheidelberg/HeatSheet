@@ -15,7 +15,13 @@ function rpt(request, response, fullBody) {
 	var ary = new Array();
 	ary = querystring.parse(fullBody);
     var ResponseText = ""; 
-            
+
+    /*
+        find what the table was that is sent back and code acordingly.
+        since the table is used, if I need to use the table to actually get
+        a query as I added the functionality later I added a secondary SelectTable
+        option to actually contain the tablename that I need to run the selet from.
+    */
 	switch(ary["table"])
 	{
 	    case "certprint":
@@ -40,6 +46,12 @@ function rpt(request, response, fullBody) {
 	        qry = qry.toString().replace('@PATTERN', Sanitize(ary["pattern"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
+        
+        /*
+            THe product search and get product was my first search functionality that I had added
+            and later I added the generic search function.  I can go back and remove the produt
+            and take it to a generic instead.
+        */
 	    case "prodsearch":
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/prodqry.sql');
@@ -55,6 +67,12 @@ function rpt(request, response, fullBody) {
 	        qry = qry.toString().replace('@ROWID', Sanitize(ary["rowid"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
+        
+        /* 
+            For the generic search for the products I wil search to see if there is an
+            option sent to search for and if so use it and the matching paramiter. Then
+            if not I will search for 1=1 and so on.
+        */
 	    case "GenSearch":
             response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GenericQry.sql');
@@ -88,6 +106,9 @@ function rpt(request, response, fullBody) {
             }
 	        RunIt(request, response, fullBody, qry);
 	        break;
+        /*
+            For the generic delete I check for the table name and the row ID and delete accordingly.
+        */
 	    case "GenDel":
             response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GenericDel.sql');
@@ -107,6 +128,9 @@ function rpt(request, response, fullBody) {
 	            });
 
 	        break;
+        /*
+          Get the row ID and all info from a table.  
+        */
 	    case "getGen":
             response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GetGeneric.sql');
@@ -114,12 +138,23 @@ function rpt(request, response, fullBody) {
 	        qry = qry.toString().replace('@TABLE', Sanitize(ary["Seltable"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
+        /*
+          Get the FO information from a FO.  Note that the FO Number IS the RowID
+          Hence the FO table is unique in the tables in that no other talbes usees
+          the rowID
+        */
         case "getfo":
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/getfo.sql');
 	        qry = qry.toString().replace('@fonumber', Sanitize(ary["fonumber"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
+        /*
+          This is actaly a data entry for the FO, NOT a report request.  However, 
+          as this is using the reporting feature of the site and the first update
+          of the site, this was how I determenend how to run it.  And as the RowID
+          is the FO number, it doesn't quite fit with the rest of the site anyhow.  
+        */
 	    case "fos":
 	        response.writeHead(200, "OK", {'Content-Type': 'text/html'});
 	        if (ary["fo_number"] == 0) {
@@ -160,6 +195,9 @@ function rpt(request, response, fullBody) {
 
 	        }
 	        break;
+        /*
+          If there is any problems with an invalid POST request, this is the response.  
+        */
 	    default:
 	        response.write('[{"test":"","status":"error","message":"Invalid request:  ' + ary["table"] + '"}]');
 	        response.end();
@@ -169,6 +207,11 @@ function rpt(request, response, fullBody) {
 } // end rpt function
 
     
+        /*
+          This sanitise will response back with replacing single quotes with doubleed up
+          and then trim multiples down so that I don't have over-runs.  Poormans way.  It'd
+          be better to do a regex, I'm afraid I'd get myself into more trouble.  
+        */
     function Sanitize(str){
         if (str) { str = str.replace("'", "''").replace('"','""'); }else{str='';};
         if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
@@ -178,7 +221,12 @@ function rpt(request, response, fullBody) {
 
         return str;
     }
-
+    
+    /*
+        This funtion runs the statement and returns back to the client the JSON/AJAX response
+        that comes from the db.  This is rather inflexible if you want to have an update or
+        insert statement and it comes back with 0 rows though.
+    */
     function RunIt(request, response, fullBody, qry) {
         var MyJSONObj = new Array();
         db.serialize(function () {
