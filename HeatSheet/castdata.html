@@ -130,10 +130,10 @@
                         , "Seltable": document.getElementById("table").value
                         , "Opt1": document.getElementById("Opt1").name
                         , "Opt2": document.getElementById("Opt2").name
-                        //, "Opt3": document.getElementById("Opt3").name
+                        , "Opt3": document.getElementById("Opt3").name
                         , "Par1": document.getElementById("Opt1").value
                         , "Par2": document.getElementById("Opt2").value
-                        //, "Par3": document.getElementById("Opt3").value
+                        , "Par3": document.getElementById("Opt3").value
     
                     };
                 };
@@ -161,6 +161,7 @@
                                        "<div>" + msg[i]["DATE"] + "</div>" +
                                        "<div>" + msg[i]["HEAT"] + "</div>" +
                                        "<div>" + msg[i]["TAP"] + "</div>" +
+                                       "<div>" + msg[i]["Part_No"] + "</div>" +
                                        "</div>";
 
                         }
@@ -245,12 +246,12 @@
                     <div id="searchbox">
                         <input type="text" id="Opt1" name="Heat" placeholder="Heat">
                         <input type="text" id="Opt2" name="Tap" placeholder="Tap">
-                        <!--input type="text" id="Opt3" name="Material" placeholder="Material"-->
+                        <input type="text" id="Opt3" name="part_no" placeholder="Part_no">
                         <button onclick="getList(true);">Search</button>
                     </div>
                     
                     <div id="hdr">
-                        <div>Record#</div><div>Date</div><div>Heat</div><div>Tap</div>
+                        <div>Record#</div><div>Date</div><div>Heat</div><div>Tap</div><div>Part</div>
                     </div>
                     <div id="lst">
                     </div>
@@ -266,6 +267,7 @@
 					<div  class="txtent"><p> Date:  <input type="text"     name="Date" id="DATE" required required/></p> </div>
 					<div  class="txtent"><p> Heat #:  <input type="number" name="heat" id="HEAT" required required/></p> </div>
 					<div  class="txtent"><p> Tap #: <input type="number"   name="tap"  id="TAP" required required/></p> </div>
+					<div  class="txtent"><p> Product #: <input type="text"   name="part_no"  id="Part_No" required required/></p> </div>
 				</div>
 				<h2>Other</h2>
 				<div class="dataent">
