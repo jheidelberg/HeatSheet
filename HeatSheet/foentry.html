@@ -19,8 +19,37 @@
 		<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
 		<link rel="stylesheet" type="text/css" href="/css/cert.css">
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
-        <script src="js/vendor/jquery.validation.js"></script>
+        <!--script src="js/vendor/jquery.validation.js"></script-->
         <script type="text/javascript">
+            function OnLoad()
+            {
+
+                // ***this goes on the global scope
+                // get querystring as an array split on "&"
+                var querystring = location.search.replace('?', '').split('&');
+                // declare object
+                var queryObj = {};
+                // loop through each name-value pair and populate object
+                for (var i = 0; i < querystring.length; i++)
+                {
+                    // get name and value
+                    var name = querystring[i].split('=')[0];
+                    var value = querystring[i].split('=')[1];
+                    // populate object
+                    queryObj[name] = value;
+                }
+
+                // ***now you can use queryObj["<name>"] to get the value of a url
+                // ***variable
+                if (queryObj["id"])
+                {
+                    loadfo(queryObj["id"]);
+                }
+
+
+            }
+
+
             var rslts;
             function DisableForm(myForm, cond, reset)
             {
@@ -157,7 +186,7 @@
                         for (var i = 0; i < msg.length; i++)
                         {
                             var opn = '&nbsp;&nbsp;';
-                            if(msg[i]['Opened']=='O'){opn ='*'};
+                            if (msg[i]['Opened'] == 'O') { opn = '*' };
 
                             Struct += "<div class='lstcls' onclick='loadfo(" + msg[i]["FO_NUMBER"] + ");'>" +
                                        "<div>" + opn + msg[i]["FO_NUMBER"] + "</div>" +
@@ -185,7 +214,7 @@
 
 	</head>
 
-	<body>
+	<body onload="OnLoad();">
 		<div>
 			<header>
   <!--#include virtual="./linkpg.shtml"-->

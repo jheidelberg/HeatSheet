@@ -19,10 +19,74 @@
 		<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
 		<link rel="stylesheet" type="text/css" href="/css/cert.css">
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
-        <script src="js/vendor/jquery.validation.js"></script>
+        <!--script src="js/vendor/jquery.validation.js"></script-->
+        <script type="text/javascript">
+            function loadfo(foID)
+            {
+                open("foentry.html?id=" + foID,"_top");
+            }
+
+            function getList(srch)
+            {
+                var dta = { "table": "folist", "offset": "0" };
+                if (srch == true)
+                {
+                    dta = {
+                        "table": "fosearch"
+                        , "part": document.getElementById("part").value
+                        , "customer": document.getElementById("customer").value
+                        , "pattern": document.getElementById("pattern").value
+                    };
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/Report/FormHandler",
+                    data: dta,
+                    dataType: "json",
+
+                    success: function (msg)
+                    {
+                        document.getElementById("lst").innerHTML = "";
+                        $("#formResponse").removeClass('error');
+                        $("#formResponse").removeClass('success');
+                        $("#formResponse").addClass(msg[0].status);
+                        $("#formResponse").html(msg[0].message);
+
+                        var d = new Date;
+                        rslts = msg;
+                        var Struct = "";
+                        for (var i = 0; i < msg.length; i++)
+                        {
+                            var opn = '&nbsp;&nbsp;';
+                            if (msg[i]['Opened'] != 'C')
+                            {
+                                opn = '*'
+                                Struct += "<div id='fo' class='lstcls' onclick='loadfo(" + msg[i]["FO_NUMBER"] + ");'>" +
+                                           "<div>" + opn + msg[i]["FO_NUMBER"] + "</div>" +
+                                           "<div>" + msg[i]["FO_DATE"] + "</div>" +
+                                           "<div>" + msg[i]["PART_NO"] + "</div>" +
+                                           "<div>" + msg[i]["DESCRIPTION"] + "</div>" +
+                                           "<div>" + msg[i]["CUSTOMER"] + "</div>" +
+                                           "<br><section>" + msg[i]["DESCR_WORK"] + "</section>" +
+                                           "</div>";
+                            };
+                        }
+                        document.getElementById("lst").innerHTML = Struct;
+
+                    },
+                    error: function (msg)
+                    {
+                        $("#formResponse").removeClass('success');
+                        $("#formResponse").addClass('error');
+                        $("#formResponse").html("There was an error submitting the form. Please try again." + msg[0]);
+                    }
+                });
+                return false;
+            }
+</script>
 </head>
 
-	<body>
+	<body onload="getList();">
 		<div>
 			<header>
   <!--#include virtual="./linkpg.shtml"-->
@@ -37,9 +101,9 @@
                     </div>
                     
                     <div id="hdr">
-                        <div>fo#</div><div>Date</div><div>Part</div><div>Description</div><div>Customer</div>
+                        <div>fo#</div><div>Date</div><div>Part</div><div>Description</div><div>Customer</div><br><section>Info</section>
                     </div>
-                    <div id="lst">
+                    <div id="lst" style="height: 100%; overflow: hidden;">
                     </div>
                     
                 </div>

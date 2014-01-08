@@ -85,6 +85,16 @@
     overflow: hidden;
     }
 
+    #fo{
+    width: 99.7%;
+    background-color: LightCoral;
+    float: none;
+    margin: 0px;  
+    border: 1px solid black;
+    height: auto;    
+    min-height: 42px;
+}
+
     
     .success{  
   /*
@@ -200,7 +210,7 @@ body {
     Menu Formatting for the top menu.
     */
 .toolbarGlobal {
-    background:url(images/bgTopGlobal.png) repeat-X;
+    /*background:url(images/bgTopGlobal.png) repeat-X;*/
     height:35px;
     position:relative;
     font-family:verdana;
@@ -215,7 +225,7 @@ body {
 .toolbarGlobal nav > ul > li {
     list-style:none; float: left;
     padding-right:1px;
-    background:url(images/sepLi.gif) no-repeat right center;
+    /*background:url(images/sepLi.gif) no-repeat right center;*/
     height:32px; line-height:32px;
     border-top:3px solid transparent;
     position: relative; z-index:1;
@@ -415,7 +425,7 @@ input {
     margin: 2px;
 }
     
-  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse, .hideme, .lnklbl {
+  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse, .hideme, .lnklbl, #searchbox {
   	visibility: hidden;
       height: 0px;
       margin: 0px;
