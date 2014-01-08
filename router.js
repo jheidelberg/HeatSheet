@@ -14,7 +14,8 @@ var dataent = require("./HeatSheet/CodeBehind/dataent");
 
 function Route (request, response) {
 	//console.log("Starting: " + request.url + "  ReqMthd:" + request.method);
-	var filePath = './HeatSheet' + request.url;
+    
+	var filePath = './HeatSheet' + request.url.split("?")[0];
 		if (filePath == './HeatSheet/')
 			filePath = './HeatSheet/index.html';
 			var extname = path.extname(filePath);
