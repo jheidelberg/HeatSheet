@@ -219,6 +219,7 @@ body {
     height:32px; line-height:32px;
     border-top:3px solid transparent;
     position: relative; z-index:1;
+    text-align: left;
 }
 
 .toolbarGlobal nav > ul > li > a {
@@ -230,7 +231,7 @@ body {
     height:30px; line-height:30px;
 }
 .toolbarGlobal nav > ul > li:hover {
-    background-color:white;
+    background-color:rgba(50, 50, 50, 0.75);
     border-top:3px solid #00796a;
     box-shadow:5px -5px 10px 0px rgba(0,0,0,0.4);
 }
@@ -271,7 +272,7 @@ body {
 .toolbarGlobal ul {
     margin: 0px;
 }
-.toolbarGlobal nav li ul li a:hover {color:#00796a;}
+.toolbarGlobal nav li ul li a:hover {color:#00796a;background-color:rgb(200, 200, 200);}
 
 
 /**********************************************

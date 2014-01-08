@@ -1,16 +1,49 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>F.O. Print</title>
-    
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>tapdataent</title>
+		<meta name="description" content="">
+		<meta name="author" content="john.heidelberg">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="/css/cert.css">
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
+        <script src="js/vendor/jquery.validation.js"></script>
 </head>
-<body>
-    <header>
-                <!--#include virtual="./linkpg.shtml"-->
-    </header>
+
+	<body>
+		<div>
+			<header>
+  <!--#include virtual="./linkpg.shtml"-->
+				<h2><br />Jensen International</h2>
+                <h2>Jencast Foundry Division</h2>
+                <h2>Open Pattern/Tooling Work Order List</h2>
+			</header>
+                            <div id="box">
+                    
+                    <div id="searchbox">
+                       <input type="text" id="customer" name="customer" placeholder="Customer"><input type="text" id="part" name="part" placeholder="Part"><input type="text" id="pattern" name="pattern" placeholder="Pattern"><button onclick="getList(true);">Search</button>
+                    </div>
+                    
+                    <div id="hdr">
+                        <div>fo#</div><div>Date</div><div>Part</div><div>Description</div><div>Customer</div>
+                    </div>
+                    <div id="lst">
+                    </div>
+                    
+                </div>
+        </div>
+
 </body>
 </html>
