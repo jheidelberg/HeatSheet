@@ -111,7 +111,7 @@ function DataEnt(request, response, fullBody) {
             //Note the included template linkpg.shtml  this will include the dropdown menu
 	        ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
 
-            ResponseText = ResponseText.replace('<!-- Response Hdr -->','<br>Your entry was acepted.  Thank you.')
+            ResponseText = ResponseText.replace('<!-- Response Hdr -->','<br>Your entry was accepted.  Thank you.')
 	        
 	        response.writeHead(200, "OK", {'Content-Type': 'text/html'});
             response.write((ResponseText));
