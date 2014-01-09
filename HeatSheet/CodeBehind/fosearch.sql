@@ -4,7 +4,7 @@ select
     , Part_No
     , Description
     , Customer
-    , descr_work
+    , Reason
     , case when finish_date is null or finish_date = '' then 'O' else 'C' end "Opened"
     , '' test
     , 'success' status
@@ -14,7 +14,8 @@ where
     Customer like '@CUSTOMER%'
     and part_no like '@PART%'
     and pattern_no like '@PATTERN%'
+    and @OpenOnly
 order by
 	fo_number DESC
-limit '@OFFSET', 100
+limit '@OFFSET', 1000
 -- Offset, # of results

@@ -36,6 +36,7 @@
                         , "part": document.getElementById("part").value
                         , "customer": document.getElementById("customer").value
                         , "pattern": document.getElementById("pattern").value
+                        , "OpenOnly":true
                     };
                 };
                 $.ajax({
@@ -63,12 +64,15 @@
                                 opn = '*'
                                 Struct += "<div id='fo' class='lstcls' onclick='loadfo(" + msg[i]["FO_NUMBER"] + ");'>" +
                                            "<div>" + opn + msg[i]["FO_NUMBER"] + "</div>" +
-                                           "<div>" + msg[i]["FO_DATE"] + "</div>" +
-                                           "<div>" + msg[i]["PART_NO"] + "</div>" +
-                                           "<div>" + msg[i]["DESCRIPTION"] + "</div>" +
                                            "<div>" + msg[i]["CUSTOMER"] + "</div>" +
-                                           "<br><section>" + msg[i]["DESCR_WORK"] + "</section>" +
+                                           "<div>" + msg[i]["PART_NO"] + "</div>" +
+                                           "<div>" + msg[i]["REASON"] + "</div>" +
                                            "</div>";
+                                           /*
+                                           "<div>" + msg[i]["DESCRIPTION"] + "</div>" +
+                                           "<br><section>" + msg[i]["DESCR_WORK"] + "</section>" +
+                                           
+                                           */
                             };
                         }
                         document.getElementById("lst").innerHTML = Struct;
@@ -86,7 +90,7 @@
 </script>
 </head>
 
-	<body onload="getList();">
+	<body onload="getList(true);">
 		<div>
 			<header>
   <!--#include virtual="./linkpg.shtml"-->
@@ -101,7 +105,7 @@
                     </div>
                     
                     <div id="hdr">
-                        <div>fo#</div><div>Date</div><div>Part</div><div>Description</div><div>Customer</div><br><section>Info</section>
+                        <div>fo#</div><div>Customer</div><div>Part</div><div>Reason</div><!--br><section>Info</section-->
                     </div>
                     <div id="lst" style="height: 100%; overflow: hidden;">
                     </div>

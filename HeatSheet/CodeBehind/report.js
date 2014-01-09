@@ -34,12 +34,18 @@ function rpt(request, response, fullBody) {
 	    case "folist":
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/folist.sql');
+            var OpenOnly = ' 1=1 ';
+	        if (ary['OpenOnly']) {OpenOnly = " (finish_date is null or finish_date = '') ";}
+	        qry = qry.toString().replace('@OpenOnly', OpenOnly);
 	        qry = qry.toString().replace('@OFFSET', Sanitize(ary["offset"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
 	    case "fosearch":
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/fosearch.sql');
+	        var OpenOnly = ' 1=1 ';
+	        if (ary['OpenOnly']) {OpenOnly = " (finish_date is null or finish_date = '') ";}
+	        qry = qry.toString().replace('@OpenOnly', OpenOnly);
 	        qry = qry.toString().replace('@OFFSET', 0); //Sanitize(ary["offset"]));
 	        qry = qry.toString().replace('@CUSTOMER', Sanitize(ary["customer"]));
 	        qry = qry.toString().replace('@PART', Sanitize(ary["part"]));
@@ -144,8 +150,14 @@ function rpt(request, response, fullBody) {
           the rowID
         */
         case "getfo":
+        
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/getfo.sql');
+            
+	        var OpenOnly = ' 1 = 1 ';
+	        if (ary['OpenOnly']) {OpenOnly = " (finish_date is null or finish_date = '') ";}
+	        qry = qry.toString().replace('@OpenOnly', OpenOnly);
+                            
 	        qry = qry.toString().replace('@fonumber', Sanitize(ary["fonumber"]));
 	        RunIt(request, response, fullBody, qry);
 	        break;
@@ -156,19 +168,23 @@ function rpt(request, response, fullBody) {
           is the FO number, it doesn't quite fit with the rest of the site anyhow.  
         */
 	    case "fos":
-	        response.writeHead(200, "OK", {'Content-Type': 'text/html'});
-	        if (ary["fo_number"] == 0) {
+	        response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+	        if (ary["fo_number"] == 0)
+	        {
 	            //new fo, add the info
 	            var dataent = require("./dataent");
 	            dataent.dataent(request, response, fullBody);
 	            return;
-	        } else {
+	        } else
+	        {
 	            // update exsisting fo.
 	            var qry = "";
 
-	            for (var x in ary) {
+	            for (var x in ary)
+	            {
 	                //decodedBody += x + " x: " + ary[x] + "<br>";
-	                switch (x) {
+	                switch (x)
+	                {
 	                    case "table":
 	                        break;
 	                    case "fo_number":
@@ -182,11 +198,14 @@ function rpt(request, response, fullBody) {
 	            }
 	            ResponseText = fs.readFileSync('./HeatSheet/response.html');
 	            ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
-	            db.all("Update fos set " + qry.substring(1) + WhereStmt, function (err, rows) {
-	                if (err) {
+	            db.all("Update fos set " + qry.substring(1) + WhereStmt, function (err, rows)
+	            {
+	                if (err)
+	                {
 	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was <b>NOT</b> acepted.  Please go back and check your entries.  Thank you.');
 	                }
-	                else {
+	                else
+	                {
 	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your update was acepted.  Thank you.');
 	                }
 	                response.write((ResponseText));
@@ -213,12 +232,13 @@ function rpt(request, response, fullBody) {
           be better to do a regex, I'm afraid I'd get myself into more trouble.  
         */
     function Sanitize(str){
-        if (str) { str = str.replace("'", "''").replace('"','""'); }else{str='';};
+        str = str.replace("'", "''"); 
+        //if (str) { str = str.replace("'", "''").replace('"','""'); }else{str='';};
+        /*if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
         if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
         if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
         if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
-        if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
-
+        */
         return str;
     }
     

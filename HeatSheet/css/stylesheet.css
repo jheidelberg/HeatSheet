@@ -92,7 +92,7 @@
     margin: 0px;  
     border: 1px solid black;
     height: auto;    
-    min-height: 42px;
+    min-height: 20px;
 }
 
     
@@ -425,6 +425,31 @@ input {
     margin: 2px;
 }
     
+
+    #fo{
+    width: 99.7%;
+    background-color: white;
+    float: none;
+    margin: 0px;  
+    border-style: solid;
+    border-color: white;
+    height: auto;    
+    font-size: small;    
+}
+
+ #hdr {
+    width: 99.7%;
+    background-color: white;
+    float: none;
+    margin: 0px;  
+    border-style: solid;
+    border-color: white;
+    height: auto;    
+    font-size: medium;
+    font-weight: bolder;
+    text-decoration-line: underline;
+}
+
   .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse, .hideme, .lnklbl, #searchbox {
   	visibility: hidden;
       height: 0px;
