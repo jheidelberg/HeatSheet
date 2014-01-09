@@ -23,10 +23,37 @@ function Route (request, response) {
 		var contentType = 'text/html';
 		switch (extname) {
 			case '.js':
-				contentType = 'text/javascript';
+				contentType = 'application/javascript';
 				break;
 			case '.css':
 				contentType = 'text/css';
+				break;
+			case '.txt':
+				contentType = 'text/plain';
+				break;
+			case '.png':
+				contentType = 'image/png';
+				break;
+			case '.jpg':
+				contentType = 'image/jpeg';
+				break;
+			case '.svg':
+				contentType = 'image/svg+xml';
+				break;
+			case '.gif':
+				contentType = 'image/gif';
+				break;
+			case '.ico':
+				contentType = 'image/ico';
+				break;
+			case '.xml':
+				contentType = 'application/xml';
+				break;
+			case '.zip':
+				contentType = 'application/zip';
+				break;
+			case '.gzip':
+				contentType = 'application/gzip';
 				break;
 		}
 	

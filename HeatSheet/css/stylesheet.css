@@ -210,7 +210,7 @@ body {
     Menu Formatting for the top menu.
     */
 .toolbarGlobal {
-    /*background:url(images/bgTopGlobal.png) repeat-X;*/
+    /* background:url(images/bgTopGlobal.png) repeat-X; */
     height:35px;
     position:relative;
     font-family:verdana;
@@ -251,7 +251,7 @@ body {
 .toolbarGlobal nav > ul li:last-child a {border-right:none;}
 .toolbarGlobal nav > ul li.parent > a {
     position: relative;
-    background-image:url(images/setaGlobal.png);
+    /* background-image:url(images/setaGlobal.png); */
     background-repeat: no-repeat;
     background-position: 90% center; 
     padding-right:30px; z-index:1;
