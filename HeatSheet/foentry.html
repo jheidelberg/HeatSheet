@@ -162,7 +162,7 @@
                     dta = {
                         "table": "fosearch"
                         , "part": document.getElementById("part").value
-                        , "customer": document.getElementById("customer").value
+                        , "customer": document.getElementById("CUSTOMER").value
                         , "pattern": document.getElementById("pattern").value
                         , "OpenOnly": false
                     };
@@ -232,7 +232,7 @@
                 <div id="box">
                     
                     <div id="searchbox">
-                       <input type="text" id="customer" name="customer" placeholder="Customer"><input type="text" id="part" name="part" placeholder="Part"><input type="text" id="pattern" name="pattern" placeholder="Pattern"><button onclick="getList(true);">Search</button>
+                       <input type="text" id="CUSTOMER" name="CUSTOMER" placeholder="Customer"><input type="text" id="part" name="part" placeholder="Part"><input type="text" id="pattern" name="pattern" placeholder="Pattern"><button onclick="getList(true);">Search</button>
                     </div>
                     
                     <div id="hdr">
@@ -260,7 +260,7 @@
 				<div  class="txtent"><p> customer : <input type="text" name="customer" id="customer"  /></p> </div>
 				<div  class="txtent"><p> part  : <input type="text" name="part_no"  id="part_no" required /></p> </div>
 				<div  class="txtent"><p> description  : <input type="text" name="description"  id="description" required /></p> </div>
-				<div  class="txtent"><p> pattern  : <input type="text" name="pattern_no"  id="pattern" /></p> </div>
+				<div  class="txtent"><p> pattern  : <input type="text" name="pattern_no"  id="pattern_no" /></p> </div>
 				<div  class="txtent"><p> Anual Usage : <input type="number" name="anuse" id="anuse" /></p> </div>
 				<div  class="txtent"><p> Material : <input type="text" name="material" id="material" /></p> </div>
                 </div>
@@ -269,11 +269,11 @@
 				            <p> Work to be done</p> <textarea rows="2" cols="60" name="descr_work"   id="descr_work" required ></textarea>
 			            </div>
                 <div class="dataent">
-				            <div  class="txtent"><p> due date : <input type="text" name="due_date" id="due_date" required /></p> </div>
+				            <div  class="txtent"><p> due date : <input type="date" name="due_date" id="due_date"  /></p> </div>
 				            <div  class="txtent"><p> visual   : <input type="text" name="visual"   id="visual"  /></p> </div>
                 <div  class="txtent"><p> Cust Gen :  <input type="text" name="cust_gen" id="cust_gen" required /></p> </div>
      			            <div  class="txtent"><p> reason <input name="reason"   id="reason" required /></p></div>
-				            <div  class="txtent"><p> date  : <input type="text" name="fo_date"  id="fo_date" required /></p> </div>
+				            <div  class="txtent"><p> date  : <input type="date" name="fo_date"  id="fo_date" required /></p> </div>
 			            </div>
 
                 <div class="ta">
@@ -288,7 +288,7 @@
   
                 <div class="dataent">
 				            <div  class="txtent hidemePrt"><p> disposition2  : <input type="text" name="disposition2"  id="disposition2" /></p> </div>
-				            <div  class="txtent"><p> Completion Date  : <input type="text" name="finish_date"  id="finish_date" /></p> </div>
+				            <div  class="txtent"><p> Completion Date  : <input type="date" name="finish_date"  id="finish_date" /></p> </div>
                 </div>
                 <div class="ta">
 				            <p> Explain work done</p><textarea rows="2" cols="60"  name="work_done"    id="work_done"></textarea>

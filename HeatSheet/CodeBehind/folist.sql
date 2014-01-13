@@ -1,6 +1,6 @@
 select 
     FO_Number
-    , FO_Date
+    ,  FO_DATE
     , Part_No
     , Description
     , Customer
@@ -13,6 +13,6 @@ from fos
 where
     @OpenOnly
 order by
-	fo_number DESC
+	FO_Date DESC, fo_number DESC
 limit '@OFFSET', 200
 -- Offset, # of results

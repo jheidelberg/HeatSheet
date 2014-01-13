@@ -1,6 +1,6 @@
 select 
     FO_Number
-    , FO_Date
+    , FO_DATE
     , Part_No
     , Description
     , Customer
@@ -16,6 +16,6 @@ where
     and pattern_no like '@PATTERN%'
     and @OpenOnly
 order by
-	fo_number DESC
+	FO_DATE DESC , fo_number DESC
 limit '@OFFSET', 1000
 -- Offset, # of results
