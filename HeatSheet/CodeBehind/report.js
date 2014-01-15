@@ -80,36 +80,47 @@ function rpt(request, response, fullBody) {
             if not I will search for 1=1 and so on.
         */
 	    case "GenSearch":
-            response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	        var OrderBy = 'rowid';
+	        var OrderBy1 = '';
+	        var OrderBy2 = '';
+	        var OrderBy3 = '';
+	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GenericQry.sql');
 	        qry = qry.toString().replace('@TABLE', Sanitize(ary["Seltable"]));
-            if(ary["Opt1"])
-            {
+	        if (ary["Opt1"])
+	        {
 	            qry = qry.toString().replace('@OPT1', Sanitize(ary["Opt1"]));
-                qry = qry.toString().replace('@PAR1', Sanitize(ary["Par1"]));
-            } else
-            { 
-                qry = qry.toString().replace('@OPT1', 1);
-                qry = qry.toString().replace('@PAR1', 1);
-            }
-            if(ary["Opt2"])
-            {
+	            qry = qry.toString().replace('@PAR1', Sanitize(ary["Par1"]));
+	            OrderBy1 = Sanitize(ary["Opt1"]) + ',';
+
+	        } else
+	        {
+	            qry = qry.toString().replace('@OPT1', 1);
+	            qry = qry.toString().replace('@PAR1', 1);
+	        }
+	        if (ary["Opt2"])
+	        {
 	            qry = qry.toString().replace('@OPT2', Sanitize(ary["Opt2"]));
-                qry = qry.toString().replace('@PAR2', Sanitize(ary["Par2"]));
-            } else
-            { 
-                qry = qry.toString().replace('@OPT2', 2);
-                qry = qry.toString().replace('@PAR2', 2);
-            }
-            if(ary["Opt3"])
-            {
+	            qry = qry.toString().replace('@PAR2', Sanitize(ary["Par2"]));
+	            OrderBy2 = Sanitize(ary["Opt2"]) + ',';
+	        } else
+	        {
+	            qry = qry.toString().replace('@OPT2', 2);
+	            qry = qry.toString().replace('@PAR2', 2);
+	        }
+	        if (ary["Opt3"])
+	        {
 	            qry = qry.toString().replace('@OPT3', Sanitize(ary["Opt3"]));
-                qry = qry.toString().replace('@PAR3', Sanitize(ary["Par3"]));
-            } else
-            { 
-                qry = qry.toString().replace('@OPT3', 3);
-                qry = qry.toString().replace('@PAR3', 3);
-            }
+	            qry = qry.toString().replace('@PAR3', Sanitize(ary["Par3"]));
+	            OrderBy3 = Sanitize(ary["Opt3"]) + ',';
+	        } else
+	        {
+	            qry = qry.toString().replace('@OPT3', 3);
+	            qry = qry.toString().replace('@PAR3', 3);
+	        }
+	        OrderBy = OrderBy1 + OrderBy2 + OrderBy3 + OrderBy;
+	        
+	        qry = qry.toString().replace('@ORDERBY', OrderBy);
 	        RunIt(request, response, fullBody, qry);
 	        break;
         /*
