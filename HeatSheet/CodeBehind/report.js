@@ -91,7 +91,7 @@ function rpt(request, response, fullBody) {
 	        {
 	            qry = qry.toString().replace('@OPT1', Sanitize(ary["Opt1"]));
 	            qry = qry.toString().replace('@PAR1', Sanitize(ary["Par1"]));
-	            OrderBy1 = Sanitize(ary["Opt1"]) + ',';
+	            OrderBy1 = Sanitize(ary["Opt1"]) + ' DESC,';
 
 	        } else
 	        {
