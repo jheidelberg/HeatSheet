@@ -113,7 +113,7 @@ function DataEnt(request, response, fullBody) {
             }
             if (ary["table"] == 'fos')
             {
-                db.all("select max(fo_number) fo_number from fos", function (err, rows)
+                db.all("select rowid [rowid],  substr((fo_date),3,2) || rowid [fo_number]  from fos order by rowid DESC limit 1", function (err, rows)
                 {
                     // output the decoded data to the HTTP response          
 

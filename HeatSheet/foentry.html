@@ -189,7 +189,7 @@
                             var opn = '&nbsp;&nbsp;';
                             if (msg[i]['Opened'] == 'O') { opn = '*' };
 
-                            Struct += "<div class='lstcls' onclick='loadfo(" + msg[i]["FO_NUMBER"] + ");'>" +
+                            Struct += "<div class='lstcls' onclick='loadfo(" + msg[i]["ROWID"] + ");'>" +
                                        "<div>" + opn + msg[i]["FO_NUMBER"] + "</div>" +
                                        "<div>" + msg[i]["FO_DATE"] + "</div>" +
                                        "<div>" + msg[i]["PART_NO"] + "</div>" +
@@ -213,6 +213,7 @@
 
             function submitfo(PrintMe)
             {
+                
                 $.ajax({
                     type: "POST",
                     url: "/Report/FormHandler",
@@ -288,7 +289,7 @@
 
 			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post" onsubmit="submitfo(); return false;">
 			<input type="hidden" name="table" value="fos" />
-
+            <input type="hidden" name="rowid" id="rowid" value="0" />
                 <div class="foNumber">
                     <p>
                         FO number    : <input type="number" name="fo_number" id="fo_number" readonly="true" />    &nbsp;&nbsp; 

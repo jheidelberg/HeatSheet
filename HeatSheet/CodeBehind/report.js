@@ -180,7 +180,7 @@ function rpt(request, response, fullBody) {
         */
 	    case "fos":
 	        response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
-	        if (ary["fo_number"] == 0)
+	        if (ary["rowid"] == 0)
 	        {
 	            //new fo, add the info
 	            var dataent = require("./dataent");
@@ -198,8 +198,10 @@ function rpt(request, response, fullBody) {
 	                {
 	                    case "table":
 	                        break;
+	                    case "rowid":
+	                        WhereStmt = "Where rowid = '" + ary[x] + "'";
+	                        break;
 	                    case "fo_number":
-	                        WhereStmt = "Where fo_Number = '" + ary[x] + "'";
 	                        break;
 	                    default:
 	                        qry += ", " + x + " = '" + Sanitize(ary[x]) + "'";
@@ -217,7 +219,7 @@ function rpt(request, response, fullBody) {
 	                }
 	                else
 	                {
-	                    ResponseText = '[{"fo_number":' + ary['fo_number'] + '}]' ;
+	                    ResponseText = '[{"fo_number":' + ary['fo_number'] + '}, {"rowid": ' + ary['rowid'] + '}]';
 	                }
 	                response.write((ResponseText));
 	                response.end();

@@ -1,5 +1,6 @@
 select 
-    FO_Number
+    substr(fo_date,3,2) || rowid [FO_NUMBER]
+    , rowid ROWID
     ,  FO_DATE
     , Part_No
     , Description
@@ -13,6 +14,6 @@ from fos
 where
     @OpenOnly
 order by
-	FO_Date DESC, fo_number DESC
+	FO_Date DESC, [fo_number] DESC
 limit '@OFFSET', 200
 -- Offset, # of results

@@ -1,5 +1,6 @@
 select 
-    FO_Number
+    substr(fo_date,3,2) || rowid [FO_NUMBER]
+    , rowid ROWID
     , FO_DATE
     , Part_No
     , Description

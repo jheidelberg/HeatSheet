@@ -1,5 +1,6 @@
 select 
-      fo_number     fo_number
+    substr(fo_date,3,2) || rowid [FO_NUMBER]
+    , rowid ROWID
     , due_date due_date
     , customer      customer
     , part_no       part_no
@@ -20,4 +21,4 @@ select
     , disposition2  disposition2
     , 'fos'         "table"
 from fos
-where FO_Number = '@fonumber'
+where rowid = '@fonumber'
