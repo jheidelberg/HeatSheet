@@ -132,7 +132,7 @@
                             if (rslts[id][x] == null) { rslts[id][x] = ''; };
                             if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
                             if (rslts[id][x] == '') { rslts[id][x] = ''; };
-                            if (itm) { if (itm.nodeName=="TEXTAREA"){ itm.value = rslts[id][x]; itm.innerHTML = rslts[id][x]; }else{itm.value = rslts[id][x]; } };
+                            if (itm) { if (itm.nodeName == "TEXTAREA") { itm.value = rslts[id][x]; itm.innerHTML = rslts[id][x]; } else { itm.value = rslts[id][x]; } };
                         };
                     },
                     error: function ()
@@ -211,6 +211,48 @@
                 return false;
             }
 
+            function submitfo(PrintMe)
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "/Report/FormHandler",
+                    data: $("#InputFrm").serialize(),
+                    timeout: 4500,
+                    dataType: "json",
+                    success: function (msg)
+                    {
+                        var itm;
+                        rslts = msg;
+
+                        var id = 0;
+                        if (document.getElementById('fo_number').value == 0)
+                        {
+                            for (var x in rslts[id])
+                            {
+                                itm = document.getElementById(x.toLowerCase());
+                                if (rslts[id][x] == null) { rslts[id][x] = ''; };
+                                if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
+                                if (rslts[id][x] == '') { rslts[id][x] = ''; };
+                                if (itm) { if (itm.nodeName == "TEXTAREA") { itm.value = rslts[id][x]; itm.innerHTML = rslts[id][x]; } else { itm.value = rslts[id][x]; } };
+                            };
+                        }
+
+                        $("#formResponse").removeClass('error');
+                        $("#formResponse").addClass('success2');
+                        $("#formResponse").html("This was successfully submited.");
+                        window.scrollTo(0,0);
+                        if (PrintMe) { print(); }
+                    },
+                    error: function (xhr, textStatus, errorThrown)
+                    {
+                        $("#formResponse").removeClass('success');
+                        $("#formResponse").addClass('error');
+                        $("#formResponse").html("There was an error submitting the form. Please try again.<br><br>Error: " + textStatus);
+                        window.scrollTo(0,0);
+                    }
+                });
+            }
+
         </script>
 
 	</head>
@@ -244,7 +286,7 @@
                 </div>
             </div>
 
-			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post">
+			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post" onsubmit="submitfo(); return false;">
 			<input type="hidden" name="table" value="fos" />
 
                 <div class="foNumber">
@@ -269,7 +311,7 @@
 				            <p> Work to be done</p> <textarea rows="2" cols="60" name="descr_work"   id="descr_work" required ></textarea>
 			            </div>
                 <div class="dataent">
-				            <div  class="txtent"><p> due date : <input type="date" name="due_date" id="due_date" required  /></p> </div>
+				            <div  class="txtent"><p> due date : <input type="date" name="due_date" id="due_date"  /></p> </div>
 				            <div  class="txtent"><p> visual   : <input type="text" name="visual"   id="visual"  /></p> </div>
                 <div  class="txtent"><p> Cust Gen :  <input type="text" name="cust_gen" id="cust_gen" required /></p> </div>
      			            <div  class="txtent"><p> reason <input name="reason"   id="reason" required /></p></div>
@@ -297,7 +339,7 @@
 			            <br>
                 <div id="btndiv">
 	            <input type="submit" class="submit" value="Submit" id="submitbtn"/>
-                <input class="submit" value="Print" id="prtbtn" onclick="javascript:print();"/>
+                <input class="submit" value="Print" id="prtbtn" onclick="javascript:submitfo(true);"/>
                 </div>
 			</form>
 			<footer>

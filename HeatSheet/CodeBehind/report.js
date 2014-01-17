@@ -213,11 +213,11 @@ function rpt(request, response, fullBody) {
 	            {
 	                if (err)
 	                {
-	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was <b>NOT</b> acepted.  Please go back and check your entries.  Thank you.');
+	                    ResponseText = ('[{"test":"","status":"error","message":"Invalid request: Bad Information recived."}]');
 	                }
 	                else
 	                {
-	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your update was acepted.  Thank you.');
+	                    ResponseText = '[{"fo_number":' + ary['fo_number'] + '}]' ;
 	                }
 	                response.write((ResponseText));
 	                response.end();

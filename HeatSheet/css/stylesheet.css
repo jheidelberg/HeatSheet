@@ -95,7 +95,13 @@
     min-height: 20px;
 }
 
-    
+     .success2{  
+    border: 2px solid #009400;  
+    background: #B3FFB3;  
+    color: #555;  
+    font-weight: bold;  
+
+}     
     .success{  
   /*
     border: 2px solid #009400;  

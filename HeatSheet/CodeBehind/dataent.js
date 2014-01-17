@@ -63,64 +63,94 @@ function DataEnt(request, response, fullBody) {
         this should never happen.  If it does, I have a blank db and I'm starting with
         over 15 years of data that I'm importing.  So, this is reall only for the test side.
         */
-    fs.exists('HeatSheet.sql3', function (exists) {
-	    var db = new sqlite3.Database('HeatSheet.sql3');
+    fs.exists('HeatSheet.sql3', function (exists)
+    {
+        var db = new sqlite3.Database('HeatSheet.sql3');
 
-	    if (!exists) {
-	        console.log('Creating database. This may take a while...');
-	        fs.readFile('./HeatSheet/CodeBehind/HeatSheetdb.sql', 'utf8', function (err, data) {
-	            if (err) {
-	                console.log(err);
-	                ResponseText = "Problem finding the DB Creation File. " + err;
-	                return;
-	            }
-	            console.log("Read the file..");
-	            db.exec(data, function (err) {
-	                if (err) {
-	                    console.log(err);
-	                    ResponseText = "Problem creating the DB. " + err;
-	                    return;
-	                }
-	                console.log('Created the DB.');
-	            });
-	        });
+        if (!exists)
+        {
+            console.log('Creating database. This may take a while...');
+            fs.readFile('./HeatSheet/CodeBehind/HeatSheetdb.sql', 'utf8', function (err, data)
+            {
+                if (err)
+                {
+                    console.log(err);
+                    ResponseText = "Problem finding the DB Creation File. " + err;
+                    return;
+                }
+                console.log("Read the file..");
+                db.exec(data, function (err)
+                {
+                    if (err)
+                    {
+                        console.log(err);
+                        ResponseText = "Problem creating the DB. " + err;
+                        return;
+                    }
+                    console.log('Created the DB.');
+                });
+            });
 
-	    }
+        }
 
-        
+
         /*
-            exec the stmnt and run the function.  Note that the function has to return and all the actual
-            running of the code is done in the returning function.  Hence, the response can NOT be After the
-            function but has to be In the function or else it will all be out of order and the response will
-            thus be empty.
+        exec the stmnt and run the function.  Note that the function has to return and all the actual
+        running of the code is done in the returning function.  Hence, the response can NOT be After the
+        function but has to be In the function or else it will all be out of order and the response will
+        thus be empty.
         */
 
-	    db.exec(qryent, function (err) {
-	        if (err) {
-	            ResponseText = "Problem executiong the qry: " + err + '    <br>    ' + qryent;
-	            response.writeHead(200, "OK", {'Content-Type': 'text/html'});
-	            response.write(ResponseText);
-	            response.end();
-	            return;
-	        }
+        db.exec(qryent, function (err)
+        {
+            if (err)
+            {
+                ResponseText = "Problem executiong the qry: " + err + '    <br>    ' + qryent;
+                response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+                response.write(ResponseText);
+                response.end();
+                return;
+            }
+            if (ary["table"] == 'fos')
+            {
+                db.all("select max(fo_number) fo_number from fos", function (err, rows)
+                {
+                    // output the decoded data to the HTTP response          
 
-	        // output the decoded data to the HTTP response          
+                    ResponseText = fs.readFileSync('./HeatSheet/response.html');
 
-	        ResponseText = fs.readFileSync('./HeatSheet/response.html');
-            
-            //Note the included template linkpg.shtml  this will include the dropdown menu
-	        ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+                    //Note the included template linkpg.shtml  this will include the dropdown menu
+                    ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
 
-            ResponseText = ResponseText.replace('<!-- Response Hdr -->','<br>Your entry was accepted.  Thank you.')
-	        
-	        response.writeHead(200, "OK", {'Content-Type': 'text/html'});
-            response.write((ResponseText));
-	        response.end();
-	        return;
-	    });
+                    ResponseText = JSON.stringify(rows);
+
+                    response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+                    response.write((ResponseText));
+                    response.end();
+                    return;
+                })
+            }
+            else
+            {
+                // output the decoded data to the HTTP response          
+
+                ResponseText = fs.readFileSync('./HeatSheet/response.html');
+
+                //Note the included template linkpg.shtml  this will include the dropdown menu
+                ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+
+                ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was accepted.  Thank you.')
+
+                response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+                response.write((ResponseText));
+                response.end();
+                return;
+
+            }
+        });
 
 
-	});
+    });
 					
 }
 
