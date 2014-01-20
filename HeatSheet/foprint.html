@@ -23,8 +23,48 @@
         <script type="text/javascript">
             function loadfo(foID)
             {
-                open("foentry.html?id=" + foID,"_top");
+                open("foentry.html?id=" + foID, "_top");
             }
+
+            function closefo(foID, rowid, finalize)
+            {
+                var FinDate = new Date().toJSON().substr(0, 10);
+                if (finalize)
+                {
+                    FinDate = document.getElementById("closeDate").value;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Report/FormHandler",
+                        data: $("#CloseDiv").serialize(),
+                        timeout: 4500,
+                        dataType: "json",
+                        success: function (msg)
+                        {
+                            var cl = "#closediv" + document.getElementById("rowid").value ;
+                            $(cl).removeClass('fo');
+                            $(cl).removeClass('lstcls');
+                            $(cl).addClass('hidemeall');
+                            hidegrayarea();
+                        },
+                        error: function (xhr, textStatus, errorThrown)
+                        {
+                            $("#formResponse").removeClass('success');
+                            $("#formResponse").addClass('error');
+                            $("#formResponse").html("There was an error getting the info. Please try again.<br><br>Error: " + textStatus + '   -   ' + errorThrown);
+                            window.scrollTo(0, 0);
+                        }
+                    });
+
+                } else
+                {
+                    document.getElementById("closeDate").value = FinDate;
+                    document.getElementById("fo_number").value = foID;
+                    document.getElementById("rowid").value = rowid;
+                    var dta = { 'table': 'fos', 'rowid': foID, 'finish_date': FinDate };
+                    showgrayarea();
+                } //end else finilize
+            } //end closefo
 
             function getList(srch)
             {
@@ -36,7 +76,7 @@
                         , "part": document.getElementById("part").value
                         , "customer": document.getElementById("customer").value
                         , "pattern": document.getElementById("pattern").value
-                        , "OpenOnly":true
+                        , "OpenOnly": true
                     };
                 };
                 $.ajax({
@@ -62,17 +102,19 @@
                             if (msg[i]['Opened'] != 'C')
                             {
                                 opn = '*'
-                                Struct += "<div id='fo' class='lstcls' onclick='loadfo(" + msg[i]["ROWID"] + ");'>" +
-                                           "<div>" + opn + msg[i]["FO_NUMBER"] + "</div>" +
+                                Struct += "<div id='closediv" + msg[i]["ROWID"] + "' class='lstcls fo' >" +
+                                           "<div class = 'lnk' onclick='loadfo(" + msg[i]["ROWID"] + ")';>" +
+                                           opn + msg[i]["FO_NUMBER"] + "</div>" +
                                            "<div>" + msg[i]["CUSTOMER"] + "</div>" +
                                            "<div>" + msg[i]["PART_NO"] + "</div>" +
                                            "<div>" + msg[i]["REASON"] + "</div>" +
+                                           "<div class = 'lnk HidePrint' onclick='closefo(" + msg[i]["FO_NUMBER"] + "," + msg[i]["ROWID"] + ");'>C</div>" +
                                            "</div>";
-                                           /*
-                                           "<div>" + msg[i]["DESCRIPTION"] + "</div>" +
-                                           "<br><section>" + msg[i]["DESCR_WORK"] + "</section>" +
-                                           
-                                           */
+                                /*
+                                "<div>" + msg[i]["DESCRIPTION"] + "</div>" +
+                                "<br><section>" + msg[i]["DESCR_WORK"] + "</section>" +
+
+                                */
                             };
                         }
                         document.getElementById("lst").innerHTML = Struct;
@@ -87,6 +129,22 @@
                 });
                 return false;
             }
+
+            function hidegrayarea()
+            {
+                document.getElementById("grayarea").removeAttribute("class", "HideAll");
+                document.getElementById("CloseDiv").setAttribute("class", "hidemeall");
+                document.getElementById("grayarea").setAttribute("class", "hideme");
+
+                //document.getElementById("fo_number").value = 0;
+                //document.getElementById("rowid").value = 0;
+            }
+            function showgrayarea()
+            {
+                document.getElementById("grayarea").removeAttribute("class", "hidemeall");
+                document.getElementById("CloseDiv").removeAttribute("class", "hidemeall");
+                document.getElementById("grayarea").setAttribute("class", "HideAll");
+            }
 </script>
 </head>
 
@@ -98,14 +156,33 @@
                 <h2>Jencast Foundry Division</h2>
                 <h2>Open Pattern/Tooling Work Order List</h2>
 			</header>
-                            <div id="box">
+            
+            <div class="hidemeall" id="grayarea">
+            </div>
+            
+            <div id="formResponse"></div>
+            
+            <form id="CloseDiv" class="hidemeall">
+                <div id="ctr">
+                    <input type="date" name="finish_date" id="closeDate">
+                    <input id="fo_number" name="fo_number" type="number" readonly="true">
+                    <input id="rowid" name="rowid" type="hidden">
+                    <input type="hidden" name="table" value="fos" />
+                </div>
+                <div id="ctr">
+                    <input class="submit" value="Ok" id="okbtn" onclick="closefo(0,0,true);return false;"/>
+                    <input class="submit" value="Cancel" id="cancelbtn" onclick="hidegrayarea();"/>
+                </div>
+            </form>
+
+            <div id="box">
                     
                     <div id="searchbox">
                        <input type="text" id="customer" name="customer" placeholder="Customer"><input type="text" id="part" name="part" placeholder="Part"><input type="text" id="pattern" name="pattern" placeholder="Pattern"><button onclick="getList(true);">Search</button>
                     </div>
                     
                     <div id="hdr">
-                        <div>fo#</div><div>Customer</div><div>Part</div><div>Reason</div><!--br><section>Info</section-->
+                        <div>fo#</div><div>Customer</div><div>Part</div><div>Reason</div><div>Quick Close</div><!--br><section>Info</section-->
                     </div>
                     <div id="lst" style="height: 100%; overflow: hidden;">
                     </div>

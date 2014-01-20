@@ -179,7 +179,7 @@ function rpt(request, response, fullBody) {
           is the FO number, it doesn't quite fit with the rest of the site anyhow.  
         */
 	    case "fos":
-	        response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+	        //response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
 	        if (ary["rowid"] == 0)
 	        {
 	            //new fo, add the info
@@ -221,6 +221,7 @@ function rpt(request, response, fullBody) {
 	                {
 	                    ResponseText = '[{"fo_number":' + ary['fo_number'] + '}, {"rowid": ' + ary['rowid'] + '}]';
 	                }
+                    response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	                response.write((ResponseText));
 	                response.end();
 	            });

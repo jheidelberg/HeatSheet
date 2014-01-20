@@ -1,7 +1,13 @@
 @media all {
     .lnklbl {
-        color:#2888f1;
+        cursor:pointer;
+        color:#0026ff;
         text-decoration:underline;
+    }
+    .lnk {
+        cursor:pointer;
+        color: #0026ff;
+        text-decoration: underline;
     }
     .HideAll {
         z-index:1;
@@ -25,7 +31,14 @@
       top: 0px;
       left: 0px;
     }
-    #folist, #ObjList {
+    #CloseDiv{
+    text-align: center;
+}
+    #CloseDiv div{
+    margin-top: 75px;
+    margin-bottom: 135px;
+}
+    #folist, #ObjList, #CloseDiv {
         position:fixed;
         width: 50% ;
         min-width: 450px;
@@ -85,7 +98,7 @@
     overflow: hidden;
     }
 
-    #fo{
+    .fo{
     width: 99.7%;
     background-color: LightCoral;
     float: none;
@@ -95,6 +108,7 @@
     min-height: 20px;
 }
 
+    
      .success2{  
     border: 2px solid #009400;  
     background: #B3FFB3;  
@@ -344,6 +358,7 @@ footer p {
  * For the states of items, use the item then : and the statename (i.e. a:visited) 
  */
 .submit{
+    cursor:pointer;
 	color: rgb(200, 200, 200);
 	font-size: 20px;
 	padding: 8px;
@@ -432,7 +447,7 @@ input {
 }
     
 
-    #fo{
+    .fo{
     width: 99.7%;
     background-color: white;
     float: none;
@@ -456,7 +471,7 @@ input {
     text-decoration-line: underline;
 }
 
-  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse, .hideme, .lnklbl, #searchbox {
+  .submit, footer, .lnks, .toolbarGlobal, ul, nav, #prtbtn, .btndiv, #test, #formResponse, .hideme, .lnklbl, #searchbox, .HidePrint {
   	visibility: hidden;
       height: 0px;
       margin: 0px;
