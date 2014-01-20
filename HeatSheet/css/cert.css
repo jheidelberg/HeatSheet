@@ -80,6 +80,14 @@
         z-index: -1;
 }
 
+    .rptlbl label {
+        border-bottom-color: #000;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        height: 20px;
+        font-size: medium;
+}
+
 .foNumber {
     top: 120px;
 }
