@@ -47,7 +47,18 @@
                 }
 
 
-            }
+            } // end function onload
+
+            //resize the textarea if it is bigger then what is available.
+            function sz(t) { 
+                a = t.value.split('\n'); 
+                b=0; 
+                for (x=0;x < a.length; x++) { 
+                 if (a[x].length >= t.cols) b+= Math.floor(a[x].length/t.cols); 
+                 } 
+                b+= a.length; 
+                if (b > t.rows) t.rows = b; 
+            } 
 
 
             var rslts;
@@ -132,7 +143,7 @@
                             if (rslts[id][x] == null) { rslts[id][x] = ''; };
                             if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
                             if (rslts[id][x] == '') { rslts[id][x] = ''; };
-                            if (itm) { if (itm.nodeName == "TEXTAREA") { itm.value = rslts[id][x]; itm.innerHTML = rslts[id][x]; } else { itm.value = rslts[id][x]; } };
+                            if (itm) { if (itm.nodeName == "TEXTAREA") { itm.value = rslts[id][x]; itm.innerHTML = rslts[id][x]; sz(itm); } else { itm.value = rslts[id][x]; } };
                         };
                     },
                     error: function ()
@@ -242,7 +253,12 @@
                         $("#formResponse").addClass('success2');
                         $("#formResponse").html("This was successfully submited.");
                         window.scrollTo(0,0);
-                        if (PrintMe) { print(); }
+                        if (PrintMe) { 
+                            sz(document.getElementById('descr_work')); 
+                            sz(document.getElementById('disposition')); 
+                            sz(document.getElementById('work_done')); 
+                            print(); 
+                        }
                     },
                     error: function (xhr, textStatus, errorThrown)
                     {
@@ -329,7 +345,7 @@
  
 
   
-                <div class="dataent">
+                <div class="dataent hidemePrt">
 				            <div  class="txtent hidemePrt"><p> disposition2  : <input type="text" name="disposition2"  id="disposition2" /></p> </div>
 				            <div  class="txtent"><p> Completion Date  : <input type="date" name="finish_date"  id="finish_date" /></p> </div>
                 </div>
