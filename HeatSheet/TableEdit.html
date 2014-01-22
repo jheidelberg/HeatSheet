@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table Edit</title>
+    <script src="js/modernizr.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/infragistics.loader.js"></script>
+    <script src="CodeBehind/TableEdit.js"></script>
+	<meta name="description" content="Jensen and Jencast HeatSheet Data Entry">
+	<meta name="author" content="john.heidelberg">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+</head>
+<body onload="getList(true);">
+    
+     <div id="box">
+                    <div id="formResponse"></div>
+         <input type="button" value="Update" onclick="getList(true);">
+                    <!--div id="searchbox">
+                        <input type="text" id="Opt1" name="Heat" placeholder="Heat">
+                        <input type="text" id="Opt2" name="Tap" placeholder="Tap">
+                        <input type="text" id="Opt3" name="Material" placeholder="Material">
+                        <button onclick="getList(true);">Search</button>
+                    </div-->
+                </div>
+    <input type="text" name="table" id="table" value="CastData" />
+    <select name="table">
+        <option value="castdata" selected>Cast Data</option>
+        <option value="chemdata">Chem Data</option>
+        <option value="chgdata">Chg Data</option>
+        <option value="contractreview">Contract Review</option>
+    </select>
+    <input type="hidden" id="rowid" name="rowid" value="0" />
+    <table id="grid"></table>
+
+</body>
+</html>

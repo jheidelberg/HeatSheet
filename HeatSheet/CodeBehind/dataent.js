@@ -37,13 +37,13 @@ function DataEnt(request, response, fullBody) {
             if I have a rowid, that means I'm udating, not adding a new one.
             if it is 0, then I am adding a new row.            
         */
-                if (ary[x]!=0){wherestmt = "where rowid = " + ary[x];}                
+                if (ary[x]!=0){wherestmt = "where rowid = " + Sanitize(ary[x]);}
                 break;
             default:
                 // all else is what vars I'm adding or updating to the db.
-                insertstmt += ", [" + x + "]";
-                valstmt += ",'" + ary[x] + "'";
-                updtstmt += ",[" + x + "] = '" + ary[x] + "'";
+                insertstmt += ", [" + Sanitize(x) + "]";
+                valstmt += ",'" + Sanitize(ary[x]) + "'";
+                updtstmt += ",[" + Sanitize(x) + "] = '" + Sanitize(ary[x]) + "'";
                 break;
 		}
 						
@@ -154,4 +154,14 @@ function DataEnt(request, response, fullBody) {
 					
 }
 
+    function Sanitize(str){
+        str = str.replace("'", "''"); 
+        //if (str) { str = str.replace("'", "''").replace('"','""'); }else{str='';};
+        /*if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
+        if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
+        if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
+        if (str) { str = str.replace("''''", "''").replace('""""','""'); }else{str='';};
+        */
+        return str;
+    }
 exports.dataent = DataEnt;
