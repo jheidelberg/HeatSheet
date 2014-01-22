@@ -204,6 +204,10 @@ h2 {
     text-align: left;
 }
 
+    textarea {
+        width: 85%;
+    }
+
 body {
     height: 99%;
     width: 99%;
