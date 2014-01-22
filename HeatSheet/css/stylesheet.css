@@ -450,6 +450,9 @@ input {
     margin: 2px;
 }
     
+textarea {
+    background-color: white;
+}
 
     .fo{
     width: 99.7%;
