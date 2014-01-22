@@ -18,9 +18,15 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
 		<link rel="stylesheet" type="text/css" href="/css/cert.css">
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
+        <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>-->
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="/js/jquery.autosize.js"></script>
         <!--script src="js/vendor/jquery.validation.js"></script-->
         <script type="text/javascript">
+            $(function ()
+            {
+                $('textarea').autosize({ append: "\n" });
+            });
             function OnLoad()
             {
 
@@ -50,15 +56,22 @@
             } // end function onload
 
             //resize the textarea if it is bigger then what is available.
-            function sz(t) { 
+            function sz(t)
+            {
+                $('#' + t.id).autosize();
+                $('#' + t.id).trigger('autosize.resize');
+                
+                /*
                 a = t.value.split('\n'); 
                 b=0; 
                 for (x=0;x < a.length; x++) { 
-                 if (a[x].length >= t.cols) b+= Math.floor(a[x].length/t.cols); 
-                 } 
+                if (a[x].length >= t.cols) b+= Math.floor(a[x].length/t.cols); 
+                } 
                 b+= a.length; 
                 if (b > t.rows) t.rows = b; 
-            } 
+                */
+
+            }
 
 
             var rslts;
@@ -145,6 +158,7 @@
                             if (rslts[id][x] == '') { rslts[id][x] = ''; };
                             if (itm) { if (itm.nodeName == "TEXTAREA") { itm.value = rslts[id][x]; itm.innerHTML = rslts[id][x]; sz(itm); } else { itm.value = rslts[id][x]; } };
                         };
+
                     },
                     error: function ()
                     {
@@ -224,7 +238,7 @@
 
             function submitfo(PrintMe)
             {
-                
+
                 $.ajax({
                     type: "POST",
                     url: "/Report/FormHandler",
@@ -252,12 +266,13 @@
                         $("#formResponse").removeClass('error');
                         $("#formResponse").addClass('success2');
                         $("#formResponse").html("This was successfully submited.");
-                        window.scrollTo(0,0);
-                        if (PrintMe) { 
-                            sz(document.getElementById('descr_work')); 
-                            sz(document.getElementById('disposition')); 
-                            sz(document.getElementById('work_done')); 
-                            print(); 
+                        window.scrollTo(0, 0);
+                        if (PrintMe)
+                        {
+                            sz(document.getElementById('descr_work'));
+                            sz(document.getElementById('disposition'));
+                            sz(document.getElementById('work_done'));
+                            print();
                         }
                     },
                     error: function (xhr, textStatus, errorThrown)
@@ -265,7 +280,7 @@
                         $("#formResponse").removeClass('success');
                         $("#formResponse").addClass('error');
                         $("#formResponse").html("There was an error submitting the form. Please try again.<br><br>Error: " + textStatus);
-                        window.scrollTo(0,0);
+                        window.scrollTo(0, 0);
                     }
                 });
             }
@@ -325,7 +340,7 @@
                 </div>
 
                 <div class="ta">
-				            <p> Work to be done</p> <textarea rows="2" cols="60" name="descr_work"   id="descr_work" required ></textarea>
+				            <p> Work to be done</p> <textarea rows="2" name="descr_work"   id="descr_work" required ></textarea>
 			            </div>
                 <div class="dataent">
 				            <div  class="txtent"><p> due date : <input type="date" name="due_date" id="due_date"  /></p> </div>
@@ -336,7 +351,7 @@
 			            </div>
 
                 <div class="ta">
-				            <p> Disposition  </p><textarea rows="2" cols="60" name="disposition"  id="disposition" ></textarea>
+				            <p> Disposition  </p><textarea rows="2" name="disposition"  id="disposition" ></textarea>
 			            </div>
                 <div class="dataent">
 				            <div  class="txtent"><p> Charge #1  : <input type="text" name="chg_who"  id="chg_who" /></p> </div>
@@ -350,7 +365,7 @@
 				            <div  class="txtent"><p> Completion Date  : <input type="date" name="finish_date"  id="finish_date" /></p> </div>
                 </div>
                 <div class="ta">
-				            <p> Explain work done</p><textarea rows="2" cols="60"  name="work_done"    id="work_done"></textarea>
+				            <p> Explain work done</p><textarea rows="2"  name="work_done"    id="work_done"></textarea>
 			            </div>
   				
 			            <br>
