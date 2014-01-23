@@ -76,7 +76,7 @@
                         , "part": document.getElementById("part").value
                         , "customer": document.getElementById("customer").value
                         , "pattern": document.getElementById("pattern").value
-                        , "OpenOnly": true
+                        , "OpenOnly": document.getElementById("openOnlyCbx").checked
                     };
                 };
                 $.ajax({
@@ -99,23 +99,25 @@
                         for (var i = 0; i < msg.length; i++)
                         {
                             var opn = '&nbsp;&nbsp;';
+                            var cls = "";
                             if (msg[i]['Opened'] != 'C')
                             {
-                                opn = '*'
+                                opn = '*';
+                                cls = "<div class = 'lnk HidePrint' onclick='closefo(" + msg[i]["FO_NUMBER"] + "," + msg[i]["ROWID"] + ");'>C</div>";
+                            };
                                 Struct += "<div id='closediv" + msg[i]["ROWID"] + "' class='lstcls fo' >" +
                                            "<div class = 'lnk' onclick='loadfo(" + msg[i]["ROWID"] + ")';>" +
                                            opn + msg[i]["FO_NUMBER"] + "</div>" +
                                            "<div>" + msg[i]["CUSTOMER"] + "</div>" +
                                            "<div>" + msg[i]["PART_NO"] + "</div>" +
                                            "<div>" + msg[i]["REASON"] + "</div>" +
-                                           "<div class = 'lnk HidePrint' onclick='closefo(" + msg[i]["FO_NUMBER"] + "," + msg[i]["ROWID"] + ");'>C</div>" +
+                                           cls +
                                            "</div>";
                                 /*
                                 "<div>" + msg[i]["DESCRIPTION"] + "</div>" +
                                 "<br><section>" + msg[i]["DESCR_WORK"] + "</section>" +
 
                                 */
-                            };
                         }
                         document.getElementById("lst").innerHTML = Struct;
 
@@ -178,7 +180,11 @@
             <div id="box">
                     
                     <div id="searchbox">
-                       <input type="text" id="customer" name="customer" placeholder="Customer"><input type="text" id="part" name="part" placeholder="Part"><input type="text" id="pattern" name="pattern" placeholder="Pattern"><button onclick="getList(true);">Search</button>
+                       <input type="text" id="customer" name="customer" placeholder="Customer">
+                        <input type="text" id="part" name="part" placeholder="Part">
+                        <input type="text" id="pattern" name="pattern" placeholder="Pattern">
+                        <input type="checkbox" id="openOnlyCbx" checked>Only Opened
+                        <button onclick="getList(true);">Search</button>
                     </div>
                     
                     <div id="hdr">

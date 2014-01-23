@@ -34,8 +34,8 @@ function rpt(request, response, fullBody) {
 	    case "folist":
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/folist.sql');
-            var OpenOnly = ' 1=1 ';
-	        if (ary['OpenOnly']) {OpenOnly = " (finish_date is null or finish_date = '') ";}
+	        var OpenOnly = ' 1=1 ';
+	        if (ary['OpenOnly']) { if (ary["OpenOnly"] == 'true') { OpenOnly = " (finish_date is null or finish_date = '') "; } }
 	        qry = qry.toString().replace('@OpenOnly', OpenOnly);
 	        qry = qry.toString().replace('@OFFSET', Sanitize(ary["offset"]));
 	        RunIt(request, response, fullBody, qry);
@@ -44,8 +44,9 @@ function rpt(request, response, fullBody) {
 	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/fosearch.sql');
 	        var OpenOnly = ' 1=1 ';
-	        if (ary['OpenOnly']) {OpenOnly = " (finish_date is null or finish_date = '') ";}
+	        if (ary['OpenOnly']) { if (ary["OpenOnly"] == 'true') { OpenOnly = " (finish_date is null or finish_date = '') "; console.log("Got here.");} }
 	        qry = qry.toString().replace('@OpenOnly', OpenOnly);
+	        console.log(OpenOnly + ary["OpenOnly"] );
 	        qry = qry.toString().replace('@OFFSET', 0); //Sanitize(ary["offset"]));
 	        qry = qry.toString().replace('@CUSTOMER', Sanitize(ary["customer"]));
 	        qry = qry.toString().replace('@PART', Sanitize(ary["part"]));
