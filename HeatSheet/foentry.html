@@ -18,8 +18,8 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
 		<link rel="stylesheet" type="text/css" href="/css/cert.css">
-        <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>-->
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
+        <!--script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
         <script src="/js/jquery.autosize.js"></script>
         <!--script src="js/vendor/jquery.validation.js"></script-->
         <script type="text/javascript">
@@ -238,6 +238,7 @@
 
             function submitfo(PrintMe)
             {
+                window.scrollTo(0, 0);
 
                 $.ajax({
                     type: "POST",
@@ -266,7 +267,6 @@
                         $("#formResponse").removeClass('error');
                         $("#formResponse").addClass('success2');
                         $("#formResponse").html("This was successfully submited.");
-                        window.scrollTo(0, 0);
                         if (PrintMe)
                         {
                             sz(document.getElementById('descr_work'));
@@ -318,7 +318,7 @@
                 </div>
             </div>
 
-			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post" onsubmit="submitfo(); return false;">
+			<form id="InputFrm" enctype="application/x-www-form-urlencoded" action="/Report/FormHandler" method="post" onsubmit="submitfo(false); return false;">
 			<input type="hidden" name="table" value="fos" />
             <input type="hidden" name="rowid" id="rowid" value="0" />
                 <div class="foNumber">
@@ -370,7 +370,8 @@
   				
 			            <br>
                 <div id="btndiv">
-	            <input type="submit" class="submit" value="Submit" id="submitbtn"/>
+                <input class="submit" value="Submit" id="submit" onclick="javascript:submitfo(false);"/>
+	            <!--input type="submit" class="submit" value="Submit" id="submitbtn"/>-->
                 <input class="submit" value="Print" id="prtbtn" onclick="javascript:submitfo(true);"/>
                 </div>
 			</form>
