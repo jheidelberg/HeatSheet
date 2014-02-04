@@ -20,245 +20,7 @@
         
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
         <!--script src="js/vendor/jquery.validation.js"></script-->
-        <script type="text/javascript">
-            var rslts;
-            function DisableForm(myForm, cond, reset)
-            {
-                var Frm = document.getElementById(myForm);
-
-                var node_list = Frm.getElementsByTagName('input');
-                for (var i = 0; i < node_list.length; i++)
-                {
-                    var node = node_list[i];
-                    if (node.getAttribute('type') == 'checkbox' || node.getAttribute('type') == 'submit')
-                    {
-                        node.disabled = cond;
-                    }
-                    else { node.readOnly = cond; }
-                    if (reset & node.getAttribute('type') != 'submit' & node.id != 'prtbtn' & node.name != 'table') { node.innerHTML = ''; node.value = ''; };
-
-                }
-
-                var node_list = Frm.getElementsByTagName('textarea');
-                for (var i = 0; i < node_list.length; i++)
-                {
-                    if (reset) { node_list[i].innerHTML = ''; node_list[i].value = ''; };
-                    node_list[i].disabled = cond;
-                }
-                
-               
-
-            };
-            function newObj()
-            {
-                document.getElementById("rowid").value = 0;
-                DisableForm("Input", false, true);
-
-            }
-            function editObj()
-            {
-                if (document.getElementById("rowid").value) { DisableForm('Input', false, false); } else { newObj(); };
-            }
-
-                        function delObj()
-            {
-                if(document.getElementById("rowid").value != 0)
-                {
-                    
-                    if(confirm('Do you really want to delete this?'))                
-                    {
-                        $.ajax({
-                        type: "POST",
-                        url: "/Report/FormHandler",
-                        data: { "rowid": document.getElementById("rowid").value, "table": "GenDel", "Seltable": document.getElementById("table").value },
-                        dataType: "json",
-
-                        success: function (msg)
-                        {
-
-                            $("#formResponse").removeClass('error');
-                            $("#formResponse").removeClass('success');
-                            $("#formResponse").removeClass('success2');
-                            $("#formResponse").addClass("success2");
-                            $("#formResponse").html(msg[0].message);
-                            newObj();                        
-                        },
-                        error: function ()
-                        {
-                            $("#formResponse").removeClass('success');
-                            $("#formResponse").removeClass('success2');
-                            $("#formResponse").addClass('error');
-                            $("#formResponse").html("There was an error deleting the row. Please try again.");
-                        }
-                    });
-
-                    }
-                
-                }
-            }
-
-            function openlist()
-            {
-                DisableForm("Input", true, false);
-                document.getElementById("grayarea").removeAttribute("class", "hidemeall");
-                document.getElementById("ObjList").removeAttribute("class", "hidemeall");
-                document.getElementById("grayarea").setAttribute("class", "HideAll");
-                getList(false);
-
-            }
-            function loaditem(getnumber)
-            {
-                hidegrayarea();
-                $.ajax({
-                    type: "POST",
-                    url: "/Report/FormHandler",
-                    data: { "getnumber": getnumber, "table": document.getElementById("table").value },
-                    dataType: "json",
-
-                    success: function (msg)
-                    {
-
-                        $("#formResponse").removeClass('error');
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass(msg[0].status);
-                        $("#formResponse").html(msg[0].message);
-
-                        var d = new Date;
-                        var itm;
-                        rslts = msg;
-
-                        var id = 0;
-
-                        for (var x in rslts[id])
-                        {
-                            itm = document.getElementById(x);
-                            if (rslts[id][x] == null) { rslts[id][x] = ''; };
-                            if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
-                            if (rslts[id][x] == '') { rslts[id][x] = ''; };
-                            if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; itm.enabled=false;};
-
-                        };
-                    },
-                    error: function ()
-                    {
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass('error');
-                        $("#formResponse").html("There was an error submitting the form. Please try again.");
-                    }
-                });
-
-
-                return false;
-
-            }
-            function hidegrayarea()
-            {
-                document.getElementById("grayarea").removeAttribute("class", "HideAll");
-                document.getElementById("ObjList").setAttribute("class", "hidemeall");
-                document.getElementById("grayarea").setAttribute("class", "hideme");
-            }
-
-            function getList(srch)
-            {
-                var dta = { "table": "GenSearch", "offset": "0", "Seltable": document.getElementById("table").value };
-                if (srch == true)
-                {
-                    dta = {
-                        "table": "GenSearch"
-                        , "Seltable": document.getElementById("table").value
-                        , "Opt1": document.getElementById("Opt1").name
-                        , "Opt2": document.getElementById("Opt2").name
-                        //, "Opt3": document.getElementById("Opt3").name
-                        , "Par1": document.getElementById("Opt1").value
-                        , "Par2": document.getElementById("Opt2").value
-                        //, "Par3": document.getElementById("Opt3").value
-                    };
-                };
-                $.ajax({
-                    type: "POST",
-                    url: "/Report/FormHandler",
-                    data: dta,
-                    dataType: "json",
-
-                    success: function (msg)
-                    {
-                        document.getElementById("lst").innerHTML = "";
-                        $("#formResponse").removeClass('error');
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass(msg[0].status);
-                        $("#formResponse").html(msg[0].message);
-
-                        var d = new Date;
-                        rslts = msg;
-                        var Struct = "";
-                        for (var i = 0; i < msg.length; i++)
-                        {
-                            Struct += "<div class='lstcls' onclick='loadProd(" + msg[i]["rowid"] + ");'>" +
-                                       "<div>" + msg[i]["rowid"] + "</div>" +
-                                       "<div>" + msg[i]["DATE"] + "</div>" +
-                                       "<div>" + msg[i]["HEAT"] + "</div>" +
-                                       "<div>" + msg[i]["TAP"] + "</div>" +
-                                       "</div>";
-
-                        }
-                        document.getElementById("lst").innerHTML = Struct;
-
-                    },
-                    error: function (msg)
-                    {
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass('error');
-                        $("#formResponse").html("There was an error submitting the form. Please try again." + msg[0]);
-                    }
-                });
-                return false;
-            }
-
-            function loadProd(Recordnumber)
-            {
-                hidegrayarea();
-                $.ajax({
-                    type: "POST",
-                    url: "/Report/FormHandler",
-                    data: { "rowid": Recordnumber, "table": "getGen", "Seltable": document.getElementById("table").value },
-                    dataType: "json",
-
-                    success: function (msg)
-                    {
-
-                        $("#formResponse").removeClass('error');
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass(msg[0].status);
-                        $("#formResponse").html(msg[0].message);
-
-                        var d = new Date;
-                        var itm;
-                        rslts = msg;
-
-                        var id = 0;
-
-                        for (var x in rslts[id])
-                        {
-                            itm = document.getElementById(x);
-                            if (rslts[id][x] == null) { rslts[id][x] = ''; };
-                            if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
-                            if (rslts[id][x] == '') { rslts[id][x] = ''; };
-                            if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; };
-                        };
-                    },
-                    error: function ()
-                    {
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass('error');
-                        $("#formResponse").html("There was an error submitting the form. Please try again.");
-                    }
-                });
-
-
-                return false;
-
-            }
-        </script>
+        <script type="text/javascript" src="CodeBehind/GenDataEnt.js"></script>
 	</head>
 
 	<body>
@@ -286,6 +48,11 @@
                     </div>
                     
                     <div id="hdr">
+                        <input type="hidden" id="s1" value="rowid">
+                        <input type="hidden" id="s2" value="DATE">
+                        <input type="hidden" id="s3" value="HEAT">
+                        <input type="hidden" id="s4" value="TAP">
+                        <input type="hidden" id="s5" value="C">
                         <div>Record#</div><div>Date</div><div>Heat</div><div>Tap</div>
                     </div>
                     <div id="lst">
@@ -294,32 +61,32 @@
                 </div>
             </div>
 
-			<form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post" onsubmit="SubmitInfo(); return false;">
 				<input type="hidden" id ="table" name="table" value="ChemData" />
                 <input type="hidden" id="rowid" name="rowid" value="0">
 				<h2>Heat Info</h2>
 				<div class="dataent">
-					<div  class="txtent"><p> Date:  <input type="text"     name="DATE" id="DATE" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> Heat #:  <input type="number" name="HEAT" id="HEAT" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> Tap #: <input type="number"   name="TAP"  id="TAP" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> Date:  <input type="text"     name="DATE" id="date" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> Heat #:  <input type="number" name="HEAT" id="heat" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> Tap #: <input type="number"   name="TAP"  id="tap" required /></p><!-- br --> </div>
 				</div>
 				<h2>Chem</h2>
 				<div class="dataent">
-					<div  class="txtent"><p> C:  <input type="text" name="C"  id="C" /></p><!-- br --> </div>
-					<div  class="txtent"><p> SI: <input type="text" name="SI" id="SI" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> MN: <input type="text" name="MN" id="MN" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> PH: <input type="text" name="PH" id="PH" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> S:  <input type="text" name="S"  id="S" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> CR: <input type="text" name="CR" id="CR" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> MO: <input type="text" name="MO" id="MO" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> NI: <input type="text" name="NI" id="NI" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> AL: <input type="text" name="AL" id="AL" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> CU: <input type="text" name="CU" id="CU" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> TI: <input type="text" name="TI" id="TI" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> V:  <input type="text" name="V"  id="V" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> PB: <input type="text" name="PB" id="PB" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> SN: <input type="text" name="SN" id="SN" required /></p><!-- br --> </div>
-					<div  class="txtent"><p> MG: <input type="text" name="MG" id="MG" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> C:  <input type="text" name="C"  id="c" /></p><!-- br --> </div>
+					<div  class="txtent"><p> SI: <input type="text" name="SI" id="si" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> MN: <input type="text" name="MN" id="mn" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> PH: <input type="text" name="PH" id="ph" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> S:  <input type="text" name="S"  id="s" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> CR: <input type="text" name="CR" id="cr" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> MO: <input type="text" name="MO" id="mo" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> NI: <input type="text" name="NI" id="ni" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> AL: <input type="text" name="AL" id="al" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> CU: <input type="text" name="CU" id="cu" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> TI: <input type="text" name="TI" id="ti" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> V:  <input type="text" name="V"  id="v" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> PB: <input type="text" name="PB" id="pb" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> SN: <input type="text" name="SN" id="sn" required /></p><!-- br --> </div>
+					<div  class="txtent"><p> MG: <input type="text" name="MG" id="mg" required /></p><!-- br --> </div>
 				</div>
 				<br>
 				<input type="submit" class="submit" value="Submit"/>
