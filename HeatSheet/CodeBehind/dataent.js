@@ -115,12 +115,15 @@ function DataEnt(request, response, fullBody) {
             {
                 db.all("select rowid [rowid],  substr((fo_date),3,2) || rowid [fo_number]  from fos order by rowid DESC limit 1", function (err, rows)
                 {
+                    /*
+                    Changed the following to return JSON response instead for quicker data entry.
                     // output the decoded data to the HTTP response          
-
-                    ResponseText = fs.readFileSync('./HeatSheet/response.html');
+                    //ResponseText = fs.readFileSync('./HeatSheet/response.html');
 
                     //Note the included template linkpg.shtml  this will include the dropdown menu
-                    ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+                    //ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+
+                    */
 
                     ResponseText = JSON.stringify(rows);
 
@@ -132,6 +135,10 @@ function DataEnt(request, response, fullBody) {
             }
             else
             {
+                
+                /*
+                Changed to respond back using JSON response instead.
+
                 // output the decoded data to the HTTP response          
 
                 ResponseText = fs.readFileSync('./HeatSheet/response.html');
@@ -142,6 +149,18 @@ function DataEnt(request, response, fullBody) {
                 ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was accepted.  Thank you.')
 
                 response.writeHead(200, "OK", { 'Content-Type': 'text/html' });
+                response.write((ResponseText));
+                response.end();
+                return;
+                */
+                
+                ResponseText = JSON.stringify(
+                    [{
+                        'status':'success' ,
+                        'message':'The entry was posted'
+                        }]);
+
+                response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
                 response.write((ResponseText));
                 response.end();
                 return;

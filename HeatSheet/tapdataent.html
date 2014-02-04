@@ -19,208 +19,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/sc' + 'ript>');</script>
         <!--script src="js/vendor/jquery.validation.js"></script-->
-        <script type="text/javascript">
-            var rslts;
-            function DisableForm(myForm, cond, reset)
-            {
-                var Frm = document.getElementById(myForm);
-
-                var node_list = Frm.getElementsByTagName('input');
-                for (var i = 0; i < node_list.length; i++)
-                {
-                    var node = node_list[i];
-                    if (node.getAttribute('type') == 'checkbox' || node.getAttribute('type') == 'submit')
-                    {
-                        node.disabled = cond;
-                    }
-                    else { node.readOnly = cond; }
-                    if (reset & node.getAttribute('type') != 'submit' & node.id != 'prtbtn' & node.name != 'table') { node.innerHTML = ''; node.value = ''; };
-
-                }
-
-                var node_list = Frm.getElementsByTagName('textarea');
-                for (var i = 0; i < node_list.length; i++)
-                {
-                    if (reset) { node_list[i].innerHTML = ''; node_list[i].value = ''; };
-                    node_list[i].disabled = cond;
-                }
-
-
-
-            };
-            function newObj()
-            {
-                document.getElementById("rowid").value = 0;
-                DisableForm("Input", false, true);
-
-            }
-            function editObj()
-            {
-                if (document.getElementById("rowid").value) { DisableForm('Input', false, false); } else { newObj(); };
-            }
-            function openlist()
-            {
-                DisableForm("Input", true, false);
-                document.getElementById("grayarea").removeAttribute("class", "hidemeall");
-                document.getElementById("ObjList").removeAttribute("class", "hidemeall");
-                document.getElementById("grayarea").setAttribute("class", "HideAll");
-                getList(false);
-
-            }
-            function loaditem(getnumber)
-            {
-                hidegrayarea();
-                $.ajax({
-                    type: "POST",
-                    url: "/Report/FormHandler",
-                    data: { "getnumber": getnumber, "table": document.getElementById("table").value },
-                    dataType: "json",
-
-                    success: function (msg)
-                    {
-
-                        $("#formResponse").removeClass('error');
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass(msg[0].status);
-                        $("#formResponse").html(msg[0].message);
-
-                        var d = new Date;
-                        var itm;
-                        rslts = msg;
-
-                        var id = 0;
-
-                        for (var x in rslts[id])
-                        {
-                            itm = document.getElementById(x);
-                            if (rslts[id][x] == null) { rslts[id][x] = ''; };
-                            if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
-                            if (rslts[id][x] == '') { rslts[id][x] = ''; };
-                            if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; itm.enabled = false; };
-
-                        };
-                    },
-                    error: function ()
-                    {
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass('error');
-                        $("#formResponse").html("There was an error submitting the form. Please try again.");
-                    }
-                });
-
-
-                return false;
-
-            }
-            function hidegrayarea()
-            {
-                document.getElementById("grayarea").removeAttribute("class", "HideAll");
-                document.getElementById("ObjList").setAttribute("class", "hidemeall");
-                document.getElementById("grayarea").setAttribute("class", "hideme");
-            }
-
-            function getList(srch)
-            {
-                var dta = { "table": "GenSearch", "offset": "0", "Seltable": document.getElementById("table").value };
-                if (srch == true)
-                {
-                    dta = {
-                        "table": "GenSearch"
-                        , "Seltable": document.getElementById("table").value
-                        , "Opt1": document.getElementById("Opt1").name
-                        , "Opt2": document.getElementById("Opt2").name
-                        , "Opt3": document.getElementById("Opt3").name
-                        , "Par1": document.getElementById("Opt1").value
-                        , "Par2": document.getElementById("Opt2").value
-                        , "Par3": document.getElementById("Opt3").value
-                    };
-
-                };
-                $.ajax({
-                    type: "POST",
-                    url: "/Report/FormHandler",
-                    data: dta,
-                    dataType: "json",
-
-                    success: function (msg)
-                    {
-                        document.getElementById("lst").innerHTML = "";
-                        $("#formResponse").removeClass('error');
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass(msg[0].status);
-                        $("#formResponse").html(msg[0].message);
-
-                        var d = new Date;
-                        rslts = msg;
-                        var Struct = "";
-                        for (var i = 0; i < msg.length; i++)
-                        {
-                            Struct += "<div class='lstcls' onclick='loadProd(" + msg[i]["rowid"] + ");'>" +
-                                       "<div>" + msg[i]["rowid"] + "</div>" +
-                                       "<div>" + msg[i]["DATE"] + "</div>" +
-                                       "<div>" + msg[i]["HEAT"] + "</div>" +
-                                       "<div>" + msg[i]["TAP"] + "</div>" +
-                                       "</div>";
-
-                        }
-                        document.getElementById("lst").innerHTML = Struct;
-
-                    },
-                    error: function (msg)
-                    {
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass('error');
-                        $("#formResponse").html("There was an error submitting the form. Please try again." + msg[0]);
-                    }
-                });
-                return false;
-            }
-
-            function loadProd(Recordnumber)
-            {
-                hidegrayarea();
-                $.ajax({
-                    type: "POST",
-                    url: "/Report/FormHandler",
-                    data: { "rowid": Recordnumber, "table": "getGen", "Seltable": document.getElementById("table").value },
-                    dataType: "json",
-
-                    success: function (msg)
-                    {
-
-                        $("#formResponse").removeClass('error');
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass(msg[0].status);
-                        $("#formResponse").html(msg[0].message);
-
-                        var d = new Date;
-                        var itm;
-                        rslts = msg;
-
-                        var id = 0;
-
-                        for (var x in rslts[id])
-                        {
-                            itm = document.getElementById(x);
-                            if (rslts[id][x] == null) { rslts[id][x] = ''; };
-                            if (rslts[id][x] == 'null') { rslts[id][x] = ''; };
-                            if (rslts[id][x] == '') { rslts[id][x] = ''; };
-                            if (itm) { itm.innerHTML = rslts[id][x]; itm.value = rslts[id][x]; };
-                        };
-                    },
-                    error: function ()
-                    {
-                        $("#formResponse").removeClass('success');
-                        $("#formResponse").addClass('error');
-                        $("#formResponse").html("There was an error submitting the form. Please try again.");
-                    }
-                });
-
-
-                return false;
-
-            }
-        </script>
+        <script type="text/javascript" src="CodeBehind/GenDataEnt.js"></script>
 	</head>
 
 	<body>
@@ -229,11 +28,14 @@
                 <!--#include virtual="./linkpg.shtml"-->
 				<h1>Tap Data Entry</h1>
 			</header>
+            <div id="formResponse"></div>
+
             <div class="hidemeall" id="grayarea" onclick='hidegrayarea();'>
             </div>
             <label id="openbtn" class="lnklbl" onclick="openlist();">Search</label> &nbsp;&nbsp;
                         <label id="openbtn" class="lnklbl" onclick="javascript: editObj();">Edit</label>&nbsp;&nbsp;
-                        <label id="newbtn" class="lnklbl" onclick="javascript:newObj();"> New </label>
+                        <label id="newbtn" class="lnklbl" onclick="javascript:newObj();">New</label>&nbsp;&nbsp;
+                        <label id="openbtn" class="lnklbl" onclick="javascript: delObj();">Delete</label>
             <div id="ObjList" class="hidemeall">
                 <div id="box">
                     
@@ -245,7 +47,12 @@
                     </div>
                     
                     <div id="hdr">
-                        <div>Record#</div><div>Date</div><div>Heat</div><div>Tap</div>
+                        <input type="hidden" id="s1" value="rowid">
+                        <input type="hidden" id="s2" value="DATE">
+                        <input type="hidden" id="s3" value="HEAT">
+                        <input type="hidden" id="s4" value="TAP">
+                        <input type="hidden" id="s5" value="MATERIAL">
+                        <div>Record#</div><div>Date</div><div>Heat</div><div>Tap</div><div>Material</div>
                     </div>
                     <div id="lst">
                     </div>
@@ -254,37 +61,40 @@
             </div>
 
 			<h2>Heat Info</h2>
-			<form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+			<!-- 
+            <form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post">
+            -->
+            <form id="Input" enctype="application/x-www-form-urlencoded" action="/DataEnt/FormHandler" method="post" onsubmit="SubmitInfo(); return false;">
 			    <input type="hidden" name="table" id="table" value="TapData"          />
                 <input type="hidden" id="rowid" name="rowid" value="0">
 			<div class="dataent">
-				<div  class="txtent"><p> Date:  <input type="text"     name="Date" id="DATE" required          /></p> </div>
-				<div  class="txtent"><p> Heat #:  <input type="number" name="heat" id="HEAT" required          /></p> </div>
-				<div  class="txtent"><p> Tap #: <input type="number"   name="tap"  id="TAP"  required          /></p> </div>
+				<div  class="txtent"><p> Date:  <input type="text"     name="Date" id="date" required          /></p> </div>
+				<div  class="txtent"><p> Heat #:  <input type="number" name="heat" id="heat" required          /></p> </div>
+				<div  class="txtent"><p> Tap #: <input type="number"   name="tap"  id="tap"  required          /></p> </div>
 			</div>
 			<h2>Other</h2>
 			<div class="dataent">
-				<div  class="txtent"><p> Material:  <input type="text" name="MATERIAL"  id="MATERIAL" required          /></p> </div>
-				<div  class="txtent"><p> Furn #:    <input type="text" name="Furn_No"   id="FURN_NO"   required       /></p> </div>
-				<div  class="txtent"><p> Time:      <input type="text" name="Time"      id="TIME"       required   /></p> </div>
-				<div  class="txtent"><p> Amt:       <input type="text" name="Amt"       id="AMT"        required  /></p> </div>
-				<div  class="txtent"><p> Cmg Wire:  <input type="text" name="Cmg_Wire"  id="CMG_WIRE"         /></p> </div>
-				<div  class="txtent"><p> FESI:      <input type="text" name="FESI"      id="FESI"         /></p> </div>
-				<div  class="txtent"><p> Pour Back: <input type="text" name="Pour_Back" id="POUR_BACK"         /></p> </div>
-				<div  class="txtent"><p> Pigged:    <input type="text" name="Pigged"    id="PIGGED"         /></p> </div>
-				<div  class="txtent"><p> Inoc:      <input type="text" name="INOC63"    id="INOC63"         /></p> </div>
-				<div  class="txtent"><p> CU:        <input type="text" name="CU"        id="CU"         /></p> </div>
-				<div  class="txtent"><p> MN:        <input type="text" name="MN"        id="MN"         /></p> </div>
-				<div  class="txtent"><p> CR:        <input type="text" name="CR"        id="CR"         /></p> </div>
-				<div  class="txtent"><p> NI:        <input type="text" name="NI"        id="NI"         /></p> </div>
-				<div  class="txtent"><p> Phos:      <input type="text" name="Phos"      id="PHOS"         /></p> </div>
-				<div  class="txtent"><p> i Pyrite:  <input type="text" name="i_Pyrite"  id="I_PYRITE"         /></p> </div>
-				<div  class="txtent"><p> B Temp:    <input type="text" name="B_Temp"    id="B_TEMP"         /></p> </div>
-				<div  class="txtent"><p> E Temp:    <input type="text" name="E_Temp"    id="E_TEMP"         /></p> </div>
-				<div  class="txtent"><p> M Time:    <input type="text" name="M_PTime"   id="M_PTIME"         /></p> </div>
-				<div  class="txtent"><p> L Time:    <input type="text" name="L_PTime"   id="L_PTIME"         /></p> </div>
-				<div  class="txtent"><p> Notes:     <input type="text" name="Notes"     id="NOTES"         /></p> </div>
-				<div  class="txtent"><p> MO:        <input type="text" name="MO"        id="MO"         /></p> </div>
+				<div  class="txtent"><p> Material:  <input type="text" name="MATERIAL"  id="material" required          /></p> </div>
+				<div  class="txtent"><p> Furn #:    <input type="text" name="Furn_No"   id="furn_no"   required       /></p> </div>
+				<div  class="txtent"><p> Time:      <input type="text" name="Time"      id="time"       required   /></p> </div>
+				<div  class="txtent"><p> Amt:       <input type="text" name="Amt"       id="amt"        required  /></p> </div>
+				<div  class="txtent"><p> Cmg Wire:  <input type="text" name="Cmg_Wire"  id="cmg_wire"         /></p> </div>
+				<div  class="txtent"><p> FESI:      <input type="text" name="FESI"      id="fesi"         /></p> </div>
+				<div  class="txtent"><p> Pour Back: <input type="text" name="Pour_Back" id="pour_back"         /></p> </div>
+				<div  class="txtent"><p> Pigged:    <input type="text" name="Pigged"    id="pigged"         /></p> </div>
+				<div  class="txtent"><p> Inoc:      <input type="text" name="INOC63"    id="inoc63"         /></p> </div>
+				<div  class="txtent"><p> CU:        <input type="text" name="CU"        id="cu"         /></p> </div>
+				<div  class="txtent"><p> MN:        <input type="text" name="MN"        id="mn"         /></p> </div>
+				<div  class="txtent"><p> CR:        <input type="text" name="CR"        id="cr"         /></p> </div>
+				<div  class="txtent"><p> NI:        <input type="text" name="NI"        id="ni"         /></p> </div>
+				<div  class="txtent"><p> Phos:      <input type="text" name="Phos"      id="phos"         /></p> </div>
+				<div  class="txtent"><p> i Pyrite:  <input type="text" name="i_Pyrite"  id="i_pyrite"         /></p> </div>
+				<div  class="txtent"><p> B Temp:    <input type="text" name="B_Temp"    id="b_temp"         /></p> </div>
+				<div  class="txtent"><p> E Temp:    <input type="text" name="E_Temp"    id="e_temp"         /></p> </div>
+				<div  class="txtent"><p> M Time:    <input type="text" name="M_PTime"   id="m_ptime"         /></p> </div>
+				<div  class="txtent"><p> L Time:    <input type="text" name="L_PTime"   id="l_ptime"         /></p> </div>
+				<div  class="txtent"><p> Notes:     <input type="text" name="Notes"     id="notes"         /></p> </div>
+				<div  class="txtent"><p> MO:        <input type="text" name="MO"        id="mo"         /></p> </div>
 			</div>
 				
 			<br>

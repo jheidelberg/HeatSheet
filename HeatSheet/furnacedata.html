@@ -58,6 +58,42 @@
             {
                 if (document.getElementById("rowid").value) { DisableForm('Input', false, false); } else { newObj(); };
             }
+                        function delObj()
+            {
+                if(document.getElementById("rowid").value != 0)
+                {
+                    
+                    if(confirm('Do you really want to delete this?'))                
+                    {
+                        $.ajax({
+                        type: "POST",
+                        url: "/Report/FormHandler",
+                        data: { "rowid": document.getElementById("rowid").value, "table": "GenDel", "Seltable": document.getElementById("table").value },
+                        dataType: "json",
+
+                        success: function (msg)
+                        {
+
+                            $("#formResponse").removeClass('error');
+                            $("#formResponse").removeClass('success');
+                            $("#formResponse").removeClass('success2');
+                            $("#formResponse").addClass("success2");
+                            $("#formResponse").html(msg[0].message);
+                            newObj();                        
+                        },
+                        error: function ()
+                        {
+                            $("#formResponse").removeClass('success');
+                            $("#formResponse").removeClass('success2');
+                            $("#formResponse").addClass('error');
+                            $("#formResponse").html("There was an error deleting the row. Please try again.");
+                        }
+                    });
+
+                    }
+                
+                }
+            }
             function openlist()
             {
                 DisableForm("Input", true, false);
@@ -228,12 +264,14 @@
                 <!--#include virtual="./linkpg.shtml"-->
 				<h1>Furnace Data Entry</h1>
 			</header>
-            
+            <div id="formResponse"></div>
+
             <div class="hidemeall" id="grayarea" onclick='hidegrayarea();'>
             </div>
             <label id="openbtn" class="lnklbl" onclick="openlist();">Search</label> &nbsp;&nbsp;
                         <label id="openbtn" class="lnklbl" onclick="javascript: editObj();">Edit</label>&nbsp;&nbsp;
-                        <label id="newbtn" class="lnklbl" onclick="javascript:newObj();"> New </label>
+                        <label id="newbtn" class="lnklbl" onclick="javascript:newObj();">New</label>&nbsp;&nbsp;
+                        <label id="openbtn" class="lnklbl" onclick="javascript: delObj();">Delete</label>
             <div id="ObjList" class="hidemeall">
                 <div id="box">
                     

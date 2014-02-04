@@ -128,22 +128,27 @@ function rpt(request, response, fullBody) {
             For the generic delete I check for the table name and the row ID and delete accordingly.
         */
 	    case "GenDel":
-            response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	        response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
 	        var qry = fs.readFileSync('./HeatSheet/CodeBehind/GenericDel.sql');
 	        qry = qry.toString().replace('@TABLE', Sanitize(ary["Seltable"]));
 	        qry = qry.toString().replace('@ROWID', Sanitize(ary["rowid"]));
 	        ResponseText = fs.readFileSync('./HeatSheet/response.html');
-	            ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
-	            db.all("Update fos set " + qry.substring(1) + WhereStmt, function (err, rows) {
-	                if (err) {
-	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was <b>NOT</b> deleted.  Please go back and check your entries.  Thank you.');
-	                }
-	                else {
-	                    ResponseText = ResponseText.replace('<!-- Response Hdr -->', '<br>Your entry was deleted.  Thank you.');
-	                }
-	                response.write((ResponseText));
-	                response.end();
-	            });
+	        ResponseText = ResponseText.toString().replace('<!--#include virtual="./linkpg.shtml"-->', fs.readFileSync("./HeatSheet/linkpg.shtml"));
+	        
+	        db.all(qry, function (err, rows)
+	        {
+	            if (err)
+	            {
+	                ResponseText = ('[{"test":"","status":"error","message":"Invalid request: Bad Information recived.  Did not delete the row"}]');
+	            }
+	            else
+	            {
+	                ResponseText = ('[{"test":"","status":"success","message":"Row Deleted."}]');
+	            }
+	            response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+	            response.write((ResponseText));
+	            response.end();
+	        });
 
 	        break;
         /*
